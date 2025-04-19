@@ -5,27 +5,55 @@ module datapath(
     input   wire            fast_clk,
     input   wire            resetn,
 
-    // output
+    
+
+    // input FETCH stage    
+    input wire        PCSrcE, // TODO: control logic, should be an input to the entire module
+    input  wire             StallF,         // the PC flip flop enable line
+    
+    
+    
+    // input DECODE stage
+    input  wire [2:0]       ImmSrcD,        // enable sign extension of the immediate value
+    input  wire             RegWriteW,      // write enable for the register file
+    input  wire             wireFlushD,
+    input  wire             wireStallD,
+    
+    // input EXECUTE stage
+    input  wire [2:0]       ALUControlE,
+    input  wire             ALUSrcE,
+    input  wire             wireFlushE,
+    input  wire             ForwardAE,
+    input  wire             ForwardBE,
+    
+    // input MEMORY ACCESS stage
+    input  wire             MemWriteM,
+    
+    // input WRITEBACK stage
+    input  wire  [1:0]      ResultSrcW,
+
+    // output DECODE stage
     output  wire [6:0]      op,             // operation code from within the instruction
-    output  reg [6:0]       oldOp,
     output  wire [2:0]      funct3,         // funct3 for instruction identification
     output  wire            funct7b5,       // funct7b5
-    output  wire            Zero,           // the ALU has computed a result that is zero (for branching instructions)
-    output  wire [31:0]     ReadDataInstr,  // output from instruction memory
-    output  wire [31:0]     ReadDataData,   // output from data memory
-
-    // input
-    input  wire             PCWrite,        // the PC flip flop enable line, the flip flop stores PCNext and outputs PC
-    input  wire             AdrSrc,         // address source selector
-    input  wire             MemWrite,       // write enable for the memory module
-    input  wire             IRWrite,        // instruction register write
-    input  wire [1:0]       ResultSrc,      // controls the multiplexer that decides what goes onto the Result bus
-    input  wire [2:0]       ALUControl,     // tells the ALU which operation to perform
-    input  wire [1:0]       ALUSrcB,        // decides which line goes into the ALU B parameter input
-    input  wire [1:0]       ALUSrcA,        // decides which line goes into the ALU A parameter input
-    input  wire [2:0]       ImmSrcD,        // enable sign extension of the immediate value
-    input  wire             RegWrite,       // write enable for the register file
-
+    output  wire [4:0]      Rs1D_output,
+    output  wire [4:0]      Rs2D_output,
+    
+    // output EXECUTE stage
+    output  wire            ZeroE,           // the ALU has computed a result that is zero (for branching instructions)
+    output  wire [4:0]      Rs1E_output,
+    output  wire [4:0]      Rs2E_output,
+    output  wire [4:0]      RdE_output,
+    
+    // output MEMORY ACCESS stage
+    output  wire [4:0]      RdM_output,
+    
+    // output WRITEBACK stage
+    output  wire [4:0]      RdW_output,
+    
+    
+    
+    
     // output
     output wire [31:0]      toggle_value    // RAM toggle signal
 );
@@ -34,6 +62,7 @@ module datapath(
     wire [31:0] PCFDash;
     wire [31:0] PCF;
     wire [31:0] PCPlus4F;
+    wire [31:0]     ReadDataInstr;  // output from instruction memory
 
     // Decode Pipeline Stage
     wire [31:0] InstrD;
@@ -43,7 +72,6 @@ module datapath(
     wire [31:0] RD2;
     
     // Execute Pipeline Stage
-    wire        PCSrcE; // TODO: control logic, should be an input to the entire module    
     wire [31:0] RD1E;
     wire [31:0] RD2E;
     wire [31:0] PCE;
@@ -52,16 +80,24 @@ module datapath(
     wire  [4:0] RdE;
     wire [31:0] ImmExtE;
     wire [31:0] PCPlus4E;
+    wire [31:0] PCTargetE;
+    wire [31:0] muxConnectE;
+    wire [31:0] ALUResultE;
     
-    // Memory Pipeline Stage
+    // Memory Access Pipeline Stage
+    wire [31:0] ALUResultM;
+    wire [31:0] WriteDataM;
+    wire [31:0] RdM;
     wire [31:0] PCPlus4M;
-    wire [31:0] SrcB;
-    wire [31:0] Result;
-    wire [31:0] SrcA;
+    wire [31:0] ReadDataM;
+    //output  wire [31:0]     ReadDataData,   // output from data memory
     
     // Writeback Pipeline Stage
-    wire        RegWriteW;
+    
+    wire [31:0] ALUResultW;
+    wire [31:0] ReadDataW;
     wire [11:7] RdW;
+    wire        PCPlus4W;
     wire [31:0] ResultW;
 
 //    wire [31:0] OldPC;
@@ -116,7 +152,7 @@ module datapath(
     );
     
     // increment PC by a single instruction
-    alu_addonly #(32) (
+    alu_addonly #(32) fetch_alu_addonly(
         PCF,
         32'h04,
         PCPlus4F
@@ -169,9 +205,9 @@ module datapath(
 
     // DECODE pipeline registers to transfer state between DECODE and EXECUTE
     
-    flopenr #(32)      RD1_PipelineRegister(clk, FlushD, !StallF, RD1, RD1E);
-    flopenr #(32)      RD2_PipelineRegister(clk, FlushD, !StallF, RD2, RD2E);
-    flopenr #(32)      pcD_PipelineRegister(clk, FlushD, !StallF, PCD, PCE);
+    flopenr #(32)      RD1_PipelineRegister(clk, FlushE, !StallF, RD1, RD1E);
+    flopenr #(32)      RD2_PipelineRegister(clk, FlushE, !StallF, RD2, RD2E);
+    flopenr #(32)      pcD_PipelineRegister(clk, FlushE, !StallF, PCD, PCE);
     flopenr #(5)      rs1D_PipelineRegister(clk, FlushE, 1, InstrD[19:15], Rs1E);
     flopenr #(5)      rs2D_PipelineRegister(clk, FlushE, 1, InstrD[24:20], Rs2E);
     flopenr #(5)       rdD_PipelineRegister(clk, FlushE, 1, InstrD[11:7], RdE);
@@ -180,22 +216,86 @@ module datapath(
     
     
     
+    
+    
+    //
+    // EXECUTE section of the pipeline
+    //
+    
+    assign Rs1E_output = Rs1E;
+    assign Rs2E_output = Rs2E;
+    assign RdE_output = RdE;
+    
+    //                      Input 00    Input 01    Input 10        SelectSignal        Output
+    mux3 #(32) srcAEMux3(RD1E,       ResultW,    ALUResultM,   ForwardAE,            SrcAE);
+    mux3 #(32) srcBEMux3(RD2E,       ResultW,    ALUResultM,   ForwardBE,           muxConnectE);
+    
+    //                 input A          input B     selector    muxed output
+    mux2 #(32) srcBEMux2(muxConnectE,    ImmExtE,     ALUSrcE,     SrcBE);
+    
+    // ALU
+    //              input A         input B         operation           result output       zero flag
+    alu #(32) alu(  SrcAE,          SrcBE,          ALUControlE,        ALUResultE,          ZeroE);    
+    
+    // increment PC by a single instruction
+    alu_addonly #(32) extract_alu_addonly(
+        PCE,
+        ImmExtE,
+        PCTargetE
+    );
+    
+    // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
+    
+    flopenr #(32)      ALUResultE_PipelineRegister(clk, 0, 1, ALUResultE, ALUResultM);
+    flopenr #(32)      WriteDataE_PipelineRegister(clk, 0, 1, WriteDataE, WriteDataM);
+    flopenr #(32)             RdE_PipelineRegister(clk, 0, 1, RdE, RdM);
+    flopenr #(32)        PCPlus4E_PipelineRegister(clk, 0, 1, PCPlus4E, PCPlus4M);
+    
+
+
+
+
 
 
     //
-    // Memory Access section of the pipeline
+    // MEMORY ACCESS section of the pipeline
     //
+    
+    assign RdM_output = RdM;
     
     blk_mem_gen_1 data_memory (
       .clka(fast_clk),      // input wire clka
       .rsta(!resetn),       // input wire rsta
       .ena(resetn),         // input wire ena
       .wea({4{MemWrite}}),  // input wire [3 : 0] wea
-      .addra(adr),          // input wire [31 : 0] addra
-      .dina(WriteData),     // input wire [31 : 0] dina
-      .douta(ReadDataData)//,          // output wire [31 : 0] douta
+      .addra(ALUResultM),          // input wire [31 : 0] addra
+      .dina(WriteDataM),     // input wire [31 : 0] dina
+      .douta(ReadDataM)//,          // output wire [31 : 0] douta
       //.rsta_busy(rsta_busy)  // output wire rsta_busy
     );
+    
+    // MEMORY ACCESS pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
+    
+    flopenr #(32)      ALUResultM_PipelineRegister(clk, 0, 1, ALUResultM, ALUResultW);
+    flopenr #(32)       ReadDataM_PipelineRegister(clk, 0, 1, ReadDataM, ReadDataW);
+    flopenr #(32)             RdM_PipelineRegister(clk, 0, 1, RdM, RdW);
+    flopenr #(32)        PCPlus4M_PipelineRegister(clk, 0, 1, PCPlus4M, PCPlus4W);
+    
+    
+    
+    
+    
+    //
+    // WRITEBACK section of the pipeline
+    //
+    
+    assign RdW_output = RdW;
+    
+    //                      Input 00    Input 01    Input 10        SelectSignal        Output
+    mux3 #(32) resultWMux3(ALUResultW,       ReadDataW,    PCPlus4W,   ResultSrcW,            ResultW);
+    
+    
+    
     
 /*
     //                    clock     reset,      enable,     input       output
@@ -275,3 +375,16 @@ module datapath(
 */
 
 endmodule
+
+
+
+/*
+// input DECODE stage
+    input  wire             AdrSrc,         // address source selector
+    input  wire             MemWrite,       // write enable for the memory module
+    input  wire             IRWrite,        // instruction register write
+    input  wire [1:0]       ResultSrc,      // controls the multiplexer that decides what goes onto the Result bus
+    input  wire [2:0]       ALUControl,     // tells the ALU which operation to perform
+    input  wire [1:0]       ALUSrcB,        // decides which line goes into the ALU B parameter input
+    input  wire [1:0]       ALUSrcA,        // decides which line goes into the ALU A parameter input
+    */
