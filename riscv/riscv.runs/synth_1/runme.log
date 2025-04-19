@@ -8,13 +8,13 @@
   **** SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
   **** IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
   **** SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-  **** Start of session at: Fri Apr 18 15:06:04 2025
+  **** Start of session at: Sat Apr 19 13:08:52 2025
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source top.tcl -notrace
-Command: read_checkpoint -auto_incremental -incremental C:/dev/fpga/MultiCycleRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from C:/dev/fpga/MultiCycleRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp for incremental synthesis
+Command: read_checkpoint -auto_incremental -incremental C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top top -part xc7s25csga324-1
 Starting synth_design
@@ -25,53 +25,64 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 1832
+INFO: [Synth 8-7075] Helper process launched with PID 1200
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1043.395 ; gain = 466.738
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1043.629 ; gain = 466.230
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-6901] identifier 'resetn' is used before its declaration [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/top.v:39]
-INFO: [Synth 8-6157] synthesizing module 'top' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/top.v:1]
-INFO: [Synth 8-6157] synthesizing module 'riscv_multi' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/riscv_multi.v:1]
-INFO: [Synth 8-6157] synthesizing module 'controller' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/controller.v:5]
-INFO: [Synth 8-6157] synthesizing module 'aludec' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/aludec.v:2]
-INFO: [Synth 8-6155] done synthesizing module 'aludec' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/aludec.v:2]
-INFO: [Synth 8-6157] synthesizing module 'immsrcdec' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/immsrcdec.v:9]
-INFO: [Synth 8-6155] done synthesizing module 'immsrcdec' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/immsrcdec.v:9]
-WARNING: [Synth 8-567] referenced signal 'op' should be on the sensitivity list [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/controller.v:259]
-INFO: [Synth 8-6155] done synthesizing module 'controller' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/controller.v:5]
-INFO: [Synth 8-6157] synthesizing module 'datapath' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:1]
-WARNING: [Synth 8-567] referenced signal 'adr' should be on the sensitivity list [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:54]
-WARNING: [Synth 8-567] referenced signal 'WriteData' should be on the sensitivity list [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:54]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7092-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7092-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'rsta_busy' of module 'blk_mem_gen_0' is unconnected for instance 'ram' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:63]
-WARNING: [Synth 8-7023] instance 'ram' of module 'blk_mem_gen_0' has 8 connections declared, but only 7 given [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:63]
-INFO: [Synth 8-6157] synthesizing module 'flopenr' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-11241] undeclared symbol 'ReadData', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
+INFO: [Synth 8-11241] undeclared symbol 'ReadData', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
+WARNING: [Synth 8-6901] identifier 'resetn' is used before its declaration [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:39]
+INFO: [Synth 8-6157] synthesizing module 'top' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:1]
+INFO: [Synth 8-6157] synthesizing module 'riscv_multi' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:1]
+INFO: [Synth 8-6157] synthesizing module 'controller' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
+INFO: [Synth 8-6157] synthesizing module 'aludec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'aludec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
+INFO: [Synth 8-6157] synthesizing module 'immsrcdec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v:9]
+INFO: [Synth 8-6155] done synthesizing module 'immsrcdec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v:9]
+WARNING: [Synth 8-567] referenced signal 'op' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:259]
+INFO: [Synth 8-6155] done synthesizing module 'controller' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
+WARNING: [Synth 8-689] width (1) of port connection 'ReadData' does not match port width (32) of module 'controller' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
+INFO: [Synth 8-6157] synthesizing module 'datapath' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
+WARNING: [Synth 8-567] referenced signal 'adr' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:55]
+WARNING: [Synth 8-567] referenced signal 'WriteData' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:55]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'rsta_busy' of module 'blk_mem_gen_0' is unconnected for instance 'instruction_memory' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:64]
+WARNING: [Synth 8-7023] instance 'instruction_memory' of module 'blk_mem_gen_0' has 8 connections declared, but only 7 given [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:64]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_1' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+WARNING: [Synth 8-7071] port 'rsta_busy' of module 'blk_mem_gen_1' is unconnected for instance 'data_memory' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:74]
+WARNING: [Synth 8-7023] instance 'data_memory' of module 'blk_mem_gen_1' has 8 connections declared, but only 7 given [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:74]
+INFO: [Synth 8-6157] synthesizing module 'flopenr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'flopenr' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopenr.v:2]
-INFO: [Synth 8-6157] synthesizing module 'mux2' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux2.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'flopenr' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6157] synthesizing module 'mux2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux2.v:1]
-INFO: [Synth 8-6157] synthesizing module 'flopr' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopr.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v:1]
+WARNING: [Synth 8-689] width (1) of port connection 'd' does not match port width (32) of module 'flopenr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
+INFO: [Synth 8-6157] synthesizing module 'flopr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v:4]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'flopr' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopr.v:4]
-INFO: [Synth 8-6157] synthesizing module 'regfile' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/regfile.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'regfile' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/regfile.v:3]
-INFO: [Synth 8-6157] synthesizing module 'extend' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/extend.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'extend' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/extend.v:1]
-INFO: [Synth 8-6157] synthesizing module 'mux4' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux4.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'flopr' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v:4]
+WARNING: [Synth 8-689] width (1) of port connection 'd' does not match port width (32) of module 'flopr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:103]
+INFO: [Synth 8-6157] synthesizing module 'regfile' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'regfile' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v:3]
+INFO: [Synth 8-6157] synthesizing module 'extend' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'extend' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v:1]
+INFO: [Synth 8-6157] synthesizing module 'mux4' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux4' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux4.v:1]
-INFO: [Synth 8-6157] synthesizing module 'mux3' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux3.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'mux4' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v:1]
+INFO: [Synth 8-6157] synthesizing module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux3' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux3.v:1]
-INFO: [Synth 8-6157] synthesizing module 'alu' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/alu.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'mux3' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
+INFO: [Synth 8-6157] synthesizing module 'alu' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/alu.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'riscv_multi' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/riscv_multi.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/top.v:1]
-WARNING: [Synth 8-6014] Unused sequential element uart_tx_counter_reg was removed.  [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/top.v:118]
+INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'riscv_multi' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:1]
+WARNING: [Synth 8-3848] Net ReadData in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
+WARNING: [Synth 8-3848] Net ReadData in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
+WARNING: [Synth 8-6014] Unused sequential element uart_tx_counter_reg was removed.  [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:118]
 WARNING: [Synth 8-7129] Port instr[6] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[5] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[4] in module extend is either unconnected or has no load
@@ -112,59 +123,62 @@ WARNING: [Synth 8-7129] Port ReadData[2] in module controller is either unconnec
 WARNING: [Synth 8-7129] Port ReadData[1] in module controller is either unconnected or has no load
 WARNING: [Synth 8-7129] Port ReadData[0] in module controller is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.121 ; gain = 581.465
+Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.121 ; gain = 581.465
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.121 ; gain = 581.465
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.036 . Memory (MB): peak = 1158.121 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1158.070 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [c:/dev/fpga/MultiCycleRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'rvmulti/dp/ram'
-Finished Parsing XDC File [c:/dev/fpga/MultiCycleRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'rvmulti/dp/ram'
-Parsing XDC File [C:/dev/fpga/MultiCycleRISCV/riscv/Arty-S7-25-Master.xdc]
-Finished Parsing XDC File [C:/dev/fpga/MultiCycleRISCV/riscv/Arty-S7-25-Master.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/dev/fpga/MultiCycleRISCV/riscv/Arty-S7-25-Master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Parsing XDC File [c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'rvmulti/dp/instruction_memory'
+Finished Parsing XDC File [c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'rvmulti/dp/instruction_memory'
+Parsing XDC File [c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1/blk_mem_gen_1_in_context.xdc] for cell 'rvmulti/dp/data_memory'
+Finished Parsing XDC File [c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1/blk_mem_gen_1_in_context.xdc] for cell 'rvmulti/dp/data_memory'
+Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/Arty-S7-25-Master.xdc]
+Finished Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/Arty-S7-25-Master.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/dev/fpga/PipelinedRISCV/riscv/Arty-S7-25-Master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Parsing XDC File [C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/dont_touch.xdc]
-Finished Parsing XDC File [C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/dont_touch.xdc]
+Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1244.117 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1243.734 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1244.117 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1243.734 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1244.117 ; gain = 667.461
+Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1244.117 ; gain = 667.461
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
-Applied set_property KEEP_HIERARCHY = SOFT for rvmulti/dp/ram. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for rvmulti/dp/instruction_memory. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for rvmulti/dp/data_memory. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1244.117 ; gain = 667.461
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'toggle_value_reg_reg' [C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v:58]
+WARNING: [Synth 8-327] inferring latch for variable 'toggle_value_reg_reg' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:59]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1244.117 ; gain = 667.461
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -213,26 +227,27 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3332] Sequential element (rvmulti/dp/toggle_value_reg_reg[1]) is unused and will be removed from module top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:37 ; elapsed = 00:00:38 . Memory (MB): peak = 1339.734 ; gain = 763.078
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1243.734 ; gain = 666.336
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 1348.332 ; gain = 771.676
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1353.742 ; gain = 776.344
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:46 . Memory (MB): peak = 1378.852 ; gain = 802.195
+Finished Timing Optimization : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1382.672 ; gain = 805.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:47 ; elapsed = 00:00:47 . Memory (MB): peak = 1380.848 ; gain = 804.191
+Finished Technology Mapping : Time (s): cpu = 00:00:34 ; elapsed = 00:00:34 . Memory (MB): peak = 1382.922 ; gain = 805.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -250,37 +265,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished IO Insertion : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -291,52 +306,48 @@ Report BlackBoxes:
 |      |BlackBox name |Instances |
 +------+--------------+----------+
 |1     |blk_mem_gen_0 |         1|
+|2     |blk_mem_gen_1 |         1|
 +------+--------------+----------+
 
 Report Cell Usage: 
 +------+------------+------+
 |      |Cell        |Count |
 +------+------------+------+
-|1     |blk_mem_gen |     1|
-|2     |BUFG        |     3|
-|3     |CARRY4      |    29|
-|4     |LUT1        |    10|
-|5     |LUT2        |    32|
-|6     |LUT3        |    40|
-|7     |LUT4        |    35|
-|8     |LUT5        |   137|
-|9     |LUT6        |   859|
-|10    |MUXF7       |   256|
-|11    |MUXF8       |    64|
-|12    |FDCE        |   230|
-|13    |FDRE        |  1067|
-|14    |LD          |    32|
-|15    |IBUF        |     1|
-|16    |OBUF        |     4|
+|1     |blk_mem_gen |     2|
+|3     |BUFG        |     2|
+|4     |CARRY4      |    14|
+|5     |LUT1        |     2|
+|6     |LUT2        |     3|
+|7     |LUT3        |     2|
+|8     |LUT4        |    59|
+|9     |LUT6        |     9|
+|10    |FDCE        |    60|
+|11    |FDRE        |    33|
+|12    |IBUF        |     1|
+|13    |OBUF        |     4|
 +------+------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:39 ; elapsed = 00:00:51 . Memory (MB): peak = 1576.590 ; gain = 913.938
-Synthesis Optimization Complete : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1576.590 ; gain = 999.934
+Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:26 ; elapsed = 00:00:37 . Memory (MB): peak = 1580.047 ; gain = 916.984
+Synthesis Optimization Complete : Time (s): cpu = 00:00:39 ; elapsed = 00:00:40 . Memory (MB): peak = 1580.047 ; gain = 1002.648
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1585.773 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 381 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1580.047 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 14 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1589.445 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1580.047 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 32 instances were transformed.
-  LD => LDCE: 32 instances
+No Unisim elements were transformed.
 
-Synth Design complete | Checksum: f8984f6
+Synth Design complete | Checksum: 43ddab82
 INFO: [Common 17-83] Releasing license: Synthesis
-51 Infos, 48 Warnings, 0 Critical Warnings and 0 Errors encountered.
+55 Infos, 56 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:57 ; elapsed = 00:01:01 . Memory (MB): peak = 1589.445 ; gain = 1174.371
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1589.445 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/top.dcp' has been generated.
+synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:00:46 . Memory (MB): peak = 1580.047 ; gain = 1166.098
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1580.047 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/top.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Apr 18 15:07:14 2025...
+INFO: [Common 17-206] Exiting Vivado at Sat Apr 19 13:09:48 2025...

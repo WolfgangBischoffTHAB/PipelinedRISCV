@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/synth_1/top.tcl"
+  variable script "C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/top.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,6 +56,7 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 2
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga324-1
 
@@ -63,36 +64,39 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/dev/fpga/MultiCycleRISCV/riscv/riscv.cache/wt [current_project]
-set_property parent.project_path C:/dev/fpga/MultiCycleRISCV/riscv/riscv.xpr [current_project]
+set_property webtalk.parent_dir C:/dev/fpga/PipelinedRISCV/riscv/riscv.cache/wt [current_project]
+set_property parent.project_path C:/dev/fpga/PipelinedRISCV/riscv/riscv.xpr [current_project]
 set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part_repo_paths {C:/Users/user9/AppData/Roaming/Xilinx/Vivado/2024.2/xhub/board_store/xilinx_board_store} [current_project]
 set_property board_part digilentinc.com:arty-s7-25:part0:1.1 [current_project]
-set_property ip_output_repo c:/dev/fpga/MultiCycleRISCV/riscv/riscv.cache/ip [current_project]
+set_property ip_output_repo c:/dev/fpga/PipelinedRISCV/riscv/riscv.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-add_files C:/dev/fpga/MultiCycleRISCV/riscv/coe/initial_bram.coe
+add_files C:/dev/fpga/PipelinedRISCV/riscv/coe/initial_bram.coe
 read_verilog -library xil_defaultlib {
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/alu.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/aludec.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/controller.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/datapath.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/extend.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopenr.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/flopr.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/immsrcdec.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux2.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux3.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/mux4.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/regfile.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/riscv_multi.v
-  C:/dev/fpga/MultiCycleRISCV/riscv/rtl/top.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v
 }
-read_ip -quiet C:/dev/fpga/MultiCycleRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
-set_property used_in_implementation false [get_files -all c:/dev/fpga/MultiCycleRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]
+read_ip -quiet C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
+set_property used_in_implementation false [get_files -all c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]
+
+read_ip -quiet c:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1.xci
+set_property used_in_implementation false [get_files -all c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -103,14 +107,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/dev/fpga/MultiCycleRISCV/riscv/Arty-S7-25-Master.xdc
-set_property used_in_implementation false [get_files C:/dev/fpga/MultiCycleRISCV/riscv/Arty-S7-25-Master.xdc]
+read_xdc C:/dev/fpga/PipelinedRISCV/riscv/Arty-S7-25-Master.xdc
+set_property used_in_implementation false [get_files C:/dev/fpga/PipelinedRISCV/riscv/Arty-S7-25-Master.xdc]
 
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/dev/fpga/MultiCycleRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp
+read_checkpoint -auto_incremental -incremental C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/utils_1/imports/synth_1/top_testbench.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

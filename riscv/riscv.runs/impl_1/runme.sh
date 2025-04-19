@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/dev/fpga/MultiCycleRISCV/riscv/riscv.runs/impl_1'
+HD_PWD='C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/impl_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

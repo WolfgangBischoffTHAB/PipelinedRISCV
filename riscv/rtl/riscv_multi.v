@@ -18,7 +18,8 @@ module riscv_multi(
 
     wire            RegWrite;
     wire            Zero;
-    wire [31:0]     ReadData;   // instruction memory
+    wire [31:0]     ReadDataInstr;  // instruction memory
+    wire [31:0]     ReadDataData;   // data memory
 
     wire PCWrite;
     wire AdrSrc;
@@ -80,7 +81,8 @@ module riscv_multi(
         funct3,
         funct7b5,
         Zero,
-        ReadData,       // instruction memory
+        ReadDataInstr,  // read data from instruction memory
+        ReadDataData,   // read data from data memory
 
         // input
         PCWrite,
@@ -92,7 +94,7 @@ module riscv_multi(
         ALUSrcB,        // decides which line goes into the ALU B parameter input
         ALUSrcA,        // decides which line goes into the ALU A parameter input
         ImmSrc,         // enable sign extension of the immediate value
-        RegWrite,        // write enable for the register file
+        RegWrite,       // write enable for the register file
 
         toggle_value
     );

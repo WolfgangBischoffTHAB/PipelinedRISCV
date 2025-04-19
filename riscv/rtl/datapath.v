@@ -11,7 +11,8 @@ module datapath(
     output  wire [2:0]      funct3,         // funct3 for instruction identification
     output  wire            funct7b5,       // funct7b5
     output  wire            Zero,           // the ALU has computed a result that is zero (for branching instructions)
-    output  wire [31:0]     ReadData,       // output from instruction memory
+    output  wire [31:0]     ReadDataInstr,  // output from instruction memory
+    output  wire [31:0]     ReadDataData,   // output from data memory
 
     // input
     input  wire             PCWrite,        // the PC flip flop enable line, the flip flop stores PCNext and outputs PC
@@ -29,7 +30,7 @@ module datapath(
     output wire [31:0]      toggle_value    // RAM toggle signal
 );
 
-    wire [31:0]     PC;
+    wire [31:0] PC;
     
     wire [31:0] OldPC;
     wire [31:0] adr;
@@ -60,14 +61,25 @@ module datapath(
     end
     assign toggle_value = toggle_value_reg;
     
-    blk_mem_gen_0 ram (
+    blk_mem_gen_0 instruction_memory (
       .clka(fast_clk),      // input wire clka
       .rsta(!resetn),       // input wire rsta
       .ena(resetn),         // input wire ena
       .wea({4{MemWrite}}),  // input wire [3 : 0] wea
       .addra(adr),          // input wire [31 : 0] addra
       .dina(WriteData),     // input wire [31 : 0] dina
-      .douta(ReadData)      // output wire [31 : 0] douta
+      .douta(ReadDataInstr)      // output wire [31 : 0] douta
+    );
+    
+    blk_mem_gen_1 data_memory (
+      .clka(fast_clk),      // input wire clka
+      .rsta(!resetn),       // input wire rsta
+      .ena(resetn),         // input wire ena
+      .wea({4{MemWrite}}),  // input wire [3 : 0] wea
+      .addra(adr),          // input wire [31 : 0] addra
+      .dina(WriteData),     // input wire [31 : 0] dina
+      .douta(ReadDataData)//,          // output wire [31 : 0] douta
+      //.rsta_busy(rsta_busy)  // output wire rsta_busy
     );
 
     //            clk     write enable    addr        data            output read data
