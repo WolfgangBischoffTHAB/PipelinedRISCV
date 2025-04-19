@@ -56,6 +56,7 @@ module extend(
                 $display("[extend] instr: %h, immsrc: %d", instr, immsrc);
                 immext <= 32'bx; // undefined
             end
+            
         endcase
 
 endmodule
