@@ -56,10 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param synth.incrementalSynthesisCache C:/Users/user9/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-11660-DESKTOP-91CSLS9/incrSyn
-set_param checkpoint.writeSynthRtdsInDcp 1
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga324-1
 
@@ -88,6 +84,7 @@ read_verilog -library xil_defaultlib {
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v

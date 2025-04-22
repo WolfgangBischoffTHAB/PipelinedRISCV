@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s25csga324-1" LaunchTime="1745340025" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/top_testbench.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7s25csga324-1" LaunchTime="1745342586" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/top_testbench.dcp">
   <File Type="PA-TCL" Name="top.tcl"/>
   <File Type="REPORTS-TCL" Name="top_reports.tcl"/>
   <File Type="RDS-RDS" Name="top.vds"/>
@@ -68,6 +68,13 @@
       </FileInfo>
     </File>
     <File Path="$PPRDIR/rtl/flopenr.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/rtl/hazard_unit.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>

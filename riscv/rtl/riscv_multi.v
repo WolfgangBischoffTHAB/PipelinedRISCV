@@ -56,7 +56,7 @@ module riscv_multi(
     // input EXECUTE stage
       wire [2:0]       ALUControlE;
       wire             ALUSrcE;
-      wire             wireFlushE;
+      wire             FlushE;
       wire             ForwardAE;
       wire             ForwardBE;
     
@@ -182,7 +182,7 @@ module riscv_multi(
     // input EXECUTE stage
     /*input  wire [2:0]  */     ALUControlE,
     /*input  wire    */         ALUSrcE,
-    /*input  wire   */          wireFlushE,
+    /*input  wire   */          FlushE,
     /*input  wire  */           ForwardAE,
     /*input  wire  */           ForwardBE,
     
@@ -218,6 +218,43 @@ module riscv_multi(
     
     // output
    /* output wire [31:0]  */    toggle_value    // RAM toggle signal
+    );
+    
+    hazard_unit hu(
+    
+        // input FETCH stage
+    
+    
+        // input DECODE stage
+        /*input  wire [4:0]*/       .Rs1D(Rs1D_output),
+        /*input  wire [4:0] */      .Rs2D(Rs2D_output),
+        
+        // input EXECUTE stage
+        /*input  wire [1:0] */      .ResultSrcE(ResultSrcE),
+       /* input  wire      */       .PCSrcE(PCSrcE),
+        /*input  wire [4:0] */      .Rs1E(Rs1E_output),
+        /*input  wire [4:0] */      .Rs2E(Rs2E_output),
+       /* input  wire [4:0]*/       .RdE(RdE_output),
+        
+        // input MEMORY ACCESS stage
+        /*input  wire        */     .RegWriteM(MemWriteM),
+        /*input  wire [4:0]  */     .RdM(RdM_output),
+        
+        // input WRITEBACK stage
+       /* input  wire [4:0] */      .RdW(RdW_output),
+        /*input  wire    */         .RegWriteW(RegWriteW),
+        
+        // output FETCH stage
+        /*output  wire    */        .StallF(StallF),
+    
+        // output DECODE stage
+        /*output  wire  */          .StallD(StallD),
+        /*output  wire   */         .FlushD(FlushD),
+        
+        // output EXECUTE stage
+       /* output  wire    */        .FlushE(FlushE),
+       /* input  wire [1:0]  */     .ForwardAE(ForwardAE),
+       /* input  wire [1:0]  */     .ForwardBE(ForwardBE)
     );
 
 endmodule
