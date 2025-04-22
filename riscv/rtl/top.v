@@ -20,6 +20,30 @@ module top(
     assign slow_clock = slow_clock_counter[20]; // quick
     //assign slow_clock = slow_clock_counter[24]; // slow
     //assign slow_clock = slow_clock_counter[22]; // slow
+    
+    
+    //
+    // Reset logic
+    //
+
+    // https://stackoverflow.com/questions/38030768/icestick-yosys-using-the-global-set-reset-gsr
+    wire resetn;
+    //reg [24:0] rststate = 0; // long reset
+    //reg [15:0] rststate = 0; // long reset
+    //reg [4:0] rststate = 0; // short reset for the testbench / simulation
+    reg [6:0] rststate = 0; // short reset for the testbench / simulation
+
+    always @(posedge CLK12MHZ) // for simulation
+    //always @(posedge slow_clock)
+    begin
+        rststate <= rststate + !resetn; // once resetn turns to 1, rststate is not incremented any more
+    end
+
+    //assign resetn = 0;
+    assign resetn = &rststate; // and all bits of rststate together which yields a 1 only after rststate reached 0x0F.
+
+
+
 
     //
     // memory mapped I/O
@@ -41,26 +65,7 @@ module top(
         //D4 = 0;
     end
 
-    //
-    // Reset logic
-    //
-
-    // https://stackoverflow.com/questions/38030768/icestick-yosys-using-the-global-set-reset-gsr
-    wire resetn;
-    //reg [24:0] rststate = 0; // long reset
-    //reg [15:0] rststate = 0; // long reset
-    //reg [4:0] rststate = 0; // short reset for the testbench / simulation
-    reg [6:0] rststate = 0; // short reset for the testbench / simulation
-
-    always @(posedge CLK12MHZ) // for simulation
-    //always @(posedge slow_clock)
-    begin
-        rststate <= rststate + !resetn; // once resetn turns to 1, rststate is not incremented any more
-    end
-
-    //assign resetn = 0;
-    assign resetn = &rststate; // and all bits of rststate together which yields a 1 only after rststate reached 0x0F.
-
+    
 /*
     //
     // UART

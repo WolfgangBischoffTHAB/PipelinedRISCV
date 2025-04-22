@@ -8,7 +8,7 @@
   **** SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
   **** IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
   **** SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-  **** Start of session at: Sat Apr 19 13:08:52 2025
+  **** Start of session at: Tue Apr 22 18:40:31 2025
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
@@ -25,64 +25,83 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 1200
+INFO: [Synth 8-7075] Helper process launched with PID 3720
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1043.629 ; gain = 466.230
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1044.723 ; gain = 465.355
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-11241] undeclared symbol 'ReadData', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
-INFO: [Synth 8-11241] undeclared symbol 'ReadData', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
-WARNING: [Synth 8-6901] identifier 'resetn' is used before its declaration [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:39]
+INFO: [Synth 8-11241] undeclared symbol 'FlushD', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:164]
+INFO: [Synth 8-11241] undeclared symbol 'FlushE', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:209]
+INFO: [Synth 8-11241] undeclared symbol 'WriteDataE', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:252]
+INFO: [Synth 8-11241] undeclared symbol 'MemWrite', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:272]
+INFO: [Synth 8-11241] undeclared symbol 'RegWriteM', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:130]
 INFO: [Synth 8-6157] synthesizing module 'top' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:1]
 INFO: [Synth 8-6157] synthesizing module 'riscv_multi' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:1]
 INFO: [Synth 8-6157] synthesizing module 'controller' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
+INFO: [Synth 8-6157] synthesizing module 'controller_single_cycle' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:1]
+INFO: [Synth 8-6157] synthesizing module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'maindec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:2]
 INFO: [Synth 8-6157] synthesizing module 'aludec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
 INFO: [Synth 8-6155] done synthesizing module 'aludec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
-INFO: [Synth 8-6157] synthesizing module 'immsrcdec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v:9]
-INFO: [Synth 8-6155] done synthesizing module 'immsrcdec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v:9]
-WARNING: [Synth 8-567] referenced signal 'op' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:259]
-INFO: [Synth 8-6155] done synthesizing module 'controller' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
-WARNING: [Synth 8-689] width (1) of port connection 'ReadData' does not match port width (32) of module 'controller' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
-INFO: [Synth 8-6157] synthesizing module 'datapath' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
-WARNING: [Synth 8-567] referenced signal 'adr' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:55]
-WARNING: [Synth 8-567] referenced signal 'WriteData' should be on the sensitivity list [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:55]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'rsta_busy' of module 'blk_mem_gen_0' is unconnected for instance 'instruction_memory' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:64]
-WARNING: [Synth 8-7023] instance 'instruction_memory' of module 'blk_mem_gen_0' has 8 connections declared, but only 7 given [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:64]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_1' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-13552-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
-WARNING: [Synth 8-7071] port 'rsta_busy' of module 'blk_mem_gen_1' is unconnected for instance 'data_memory' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:74]
-WARNING: [Synth 8-7023] instance 'data_memory' of module 'blk_mem_gen_1' has 8 connections declared, but only 7 given [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:74]
+INFO: [Synth 8-6155] done synthesizing module 'controller_single_cycle' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:1]
 INFO: [Synth 8-6157] synthesizing module 'flopenr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
-	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter WIDTH bound to: 1 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'flopenr' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized0' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+	Parameter WIDTH bound to: 2 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized1' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+	Parameter WIDTH bound to: 3 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'controller' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
+INFO: [Synth 8-6157] synthesizing module 'datapath' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
 INFO: [Synth 8-6157] synthesizing module 'mux2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v:1]
-WARNING: [Synth 8-689] width (1) of port connection 'd' does not match port width (32) of module 'flopenr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
-INFO: [Synth 8-6157] synthesizing module 'flopr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v:4]
+INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
 	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'flopr' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v:4]
-WARNING: [Synth 8-689] width (1) of port connection 'd' does not match port width (32) of module 'flopr' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:103]
+INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized2' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7312-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7312-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'alu_addonly' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v:24]
+	Parameter WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'alu_addonly' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v:24]
 INFO: [Synth 8-6157] synthesizing module 'regfile' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v:3]
 INFO: [Synth 8-6155] done synthesizing module 'regfile' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v:3]
 INFO: [Synth 8-6157] synthesizing module 'extend' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'extend' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v:1]
-INFO: [Synth 8-6157] synthesizing module 'mux4' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v:1]
-	Parameter WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux4' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v:1]
+INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+	Parameter WIDTH bound to: 5 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized3' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
 INFO: [Synth 8-6157] synthesizing module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'mux3' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
 INFO: [Synth 8-6157] synthesizing module 'alu' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
+WARNING: [Synth 8-689] width (1) of port connection 'd' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:252]
+WARNING: [Synth 8-689] width (5) of port connection 'd' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:253]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_1' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7312-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7312-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+WARNING: [Synth 8-689] width (5) of port connection 'q' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:283]
+WARNING: [Synth 8-689] width (1) of port connection 'q' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:284]
+WARNING: [Synth 8-689] width (1) of port connection 'd2' does not match port width (32) of module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:297]
 INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
+WARNING: [Synth 8-689] width (1) of port connection 'ForwardAE' does not match port width (2) of module 'datapath' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:186]
+WARNING: [Synth 8-689] width (1) of port connection 'ForwardBE' does not match port width (2) of module 'datapath' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:187]
 INFO: [Synth 8-6155] done synthesizing module 'riscv_multi' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:1]
-WARNING: [Synth 8-3848] Net ReadData in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:100]
-WARNING: [Synth 8-3848] Net ReadData in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:52]
-WARNING: [Synth 8-6014] Unused sequential element uart_tx_counter_reg was removed.  [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:118]
+WARNING: [Synth 8-3848] Net toggle_value in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:53]
+WARNING: [Synth 8-3848] Net FlushD in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:164]
+WARNING: [Synth 8-3848] Net FlushE in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:209]
+WARNING: [Synth 8-3848] Net MemWrite in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:272]
+WARNING: [Synth 8-3848] Net WriteDataE in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:252]
+WARNING: [Synth 8-3848] Net StallF in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:48]
+WARNING: [Synth 8-3848] Net wireFlushD in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:53]
+WARNING: [Synth 8-3848] Net wireStallD in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:54]
+WARNING: [Synth 8-3848] Net wireFlushE in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:59]
+WARNING: [Synth 8-3848] Net ForwardAE in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:60]
+WARNING: [Synth 8-3848] Net ForwardBE in module/entity riscv_multi does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:61]
+WARNING: [Synth 8-6014] Unused sequential element uart_tx_counter_reg was removed.  [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:123]
 WARNING: [Synth 8-7129] Port instr[6] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[5] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[4] in module extend is either unconnected or has no load
@@ -90,51 +109,57 @@ WARNING: [Synth 8-7129] Port instr[3] in module extend is either unconnected or 
 WARNING: [Synth 8-7129] Port instr[2] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[1] in module extend is either unconnected or has no load
 WARNING: [Synth 8-7129] Port instr[0] in module extend is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[31] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[30] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[29] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[28] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[27] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[26] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[25] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[24] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[23] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[22] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[21] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[20] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[19] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[18] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[17] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[16] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[15] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[14] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[13] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[12] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[11] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[10] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[9] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[8] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[7] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[6] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[5] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[4] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[3] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[2] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[1] in module controller is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ReadData[0] in module controller is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[31] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[30] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[29] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[28] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[27] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[26] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[25] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[24] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[23] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[22] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[21] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[20] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[19] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[18] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[17] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[16] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[15] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[14] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[13] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[12] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[11] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[10] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[9] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[8] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[7] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[6] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[5] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[4] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[3] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[2] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[1] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port toggle_value[0] in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port wireFlushD in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port wireStallD in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port wireFlushE in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port MemWriteM in module datapath is either unconnected or has no load
+WARNING: [Synth 8-7129] Port Zero in module controller_single_cycle is either unconnected or has no load
+WARNING: [Synth 8-7129] Port resetn in module controller is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
+Finished RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1158.453 ; gain = 579.086
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1158.453 ; gain = 579.086
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1158.070 ; gain = 580.672
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1158.453 ; gain = 579.086
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1158.070 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.045 . Memory (MB): peak = 1158.453 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -151,22 +176,22 @@ Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/dont_touch
 Finished Parsing XDC File [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1243.734 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1245.090 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1243.734 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1245.090 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
+Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1245.090 ; gain = 665.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1245.090 ; gain = 665.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -174,43 +199,33 @@ Start Applying 'set_property' XDC Constraints
 Applied set_property KEEP_HIERARCHY = SOFT for rvmulti/dp/instruction_memory. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for rvmulti/dp/data_memory. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1245.090 ; gain = 665.723
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'toggle_value_reg_reg' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:59]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1243.734 ; gain = 666.336
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1245.090 ; gain = 665.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   32 Bit       Adders := 1     
+	   2 Input   32 Bit       Adders := 3     
 	   3 Input   32 Bit       Adders := 1     
 	   2 Input    7 Bit       Adders := 1     
 +---XORs : 
 	   2 Input     32 Bit         XORs := 1     
 +---Registers : 
-	               32 Bit    Registers := 39    
-	                7 Bit    Registers := 2     
-	                5 Bit    Registers := 1     
-	                1 Bit    Registers := 4     
+	               32 Bit    Registers := 49    
+	                7 Bit    Registers := 1     
+	                5 Bit    Registers := 3     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 12    
 +---Muxes : 
 	   2 Input   32 Bit        Muxes := 10    
-	   2 Input    5 Bit        Muxes := 1     
-	   2 Input    4 Bit        Muxes := 3     
-	  15 Input    4 Bit        Muxes := 1     
-	   3 Input    4 Bit        Muxes := 1     
 	   2 Input    3 Bit        Muxes := 2     
-	   6 Input    3 Bit        Muxes := 1     
-	   8 Input    2 Bit        Muxes := 1     
-	   2 Input    2 Bit        Muxes := 3     
-	   5 Input    2 Bit        Muxes := 1     
-	  11 Input    2 Bit        Muxes := 2     
-	   2 Input    1 Bit        Muxes := 41    
-	   4 Input    1 Bit        Muxes := 1     
-	   6 Input    1 Bit        Muxes := 1     
-	   9 Input    1 Bit        Muxes := 1     
+	   5 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 32    
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -227,27 +242,26 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-WARNING: [Synth 8-3332] Sequential element (rvmulti/dp/toggle_value_reg_reg[1]) is unused and will be removed from module top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1243.734 ; gain = 666.336
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1247.594 ; gain = 668.227
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1353.742 ; gain = 776.344
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1352.113 ; gain = 772.746
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1382.672 ; gain = 805.273
+Finished Timing Optimization : Time (s): cpu = 00:00:41 ; elapsed = 00:00:42 . Memory (MB): peak = 1443.633 ; gain = 864.266
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:34 ; elapsed = 00:00:34 . Memory (MB): peak = 1382.922 ; gain = 805.523
+Finished Technology Mapping : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1443.633 ; gain = 864.266
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -264,38 +278,70 @@ Start Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[31]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[30]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[29]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[28]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[27]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[26]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[25]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[24]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[23]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[22]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[21]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[20]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[19]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[18]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[17]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[16]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[15]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[14]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[13]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[12]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[11]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[10]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[9]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[8]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[7]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[6]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[5]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[4]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[3]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[2]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[1]
+CRITICAL WARNING: [Synth 8-4442] BlackBox module \rvmulti/dp/instruction_memory  has unconnected pin dina[0]
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished IO Insertion : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -315,39 +361,43 @@ Report Cell Usage:
 +------+------------+------+
 |1     |blk_mem_gen |     2|
 |3     |BUFG        |     2|
-|4     |CARRY4      |    14|
-|5     |LUT1        |     2|
-|6     |LUT2        |     3|
-|7     |LUT3        |     2|
-|8     |LUT4        |    59|
-|9     |LUT6        |     9|
-|10    |FDCE        |    60|
-|11    |FDRE        |    33|
-|12    |IBUF        |     1|
-|13    |OBUF        |     4|
+|4     |CARRY4      |    45|
+|5     |LUT1        |     3|
+|6     |LUT2        |    57|
+|7     |LUT3        |    71|
+|8     |LUT4        |   122|
+|9     |LUT5        |    56|
+|10    |LUT6        |   761|
+|11    |MUXF7       |   256|
+|12    |MUXF8       |    64|
+|13    |FDCE        |   329|
+|14    |FDRE        |  1087|
+|15    |IBUF        |     1|
+|16    |OBUF        |     4|
 +------+------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:26 ; elapsed = 00:00:37 . Memory (MB): peak = 1580.047 ; gain = 916.984
-Synthesis Optimization Complete : Time (s): cpu = 00:00:39 ; elapsed = 00:00:40 . Memory (MB): peak = 1580.047 ; gain = 1002.648
+Synthesis finished with 0 errors, 32 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:46 . Memory (MB): peak = 1591.102 ; gain = 925.098
+Synthesis Optimization Complete : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1591.102 ; gain = 1011.734
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1580.047 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 14 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.054 . Memory (MB): peak = 1591.102 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 365 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1580.047 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1591.102 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 43ddab82
+Synth Design complete | Checksum: 6cb9448f
 INFO: [Common 17-83] Releasing license: Synthesis
-55 Infos, 56 Warnings, 0 Critical Warnings and 0 Errors encountered.
+66 Infos, 65 Warnings, 32 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:00:46 . Memory (MB): peak = 1580.047 ; gain = 1166.098
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1580.047 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 1591.102 ; gain = 1175.316
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1591.102 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/top.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Apr 19 13:09:48 2025...
+INFO: [Common 17-206] Exiting Vivado at Tue Apr 22 18:41:40 2025...

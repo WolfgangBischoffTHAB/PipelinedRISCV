@@ -56,7 +56,10 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
+set_param synth.incrementalSynthesisCache C:/Users/user9/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-11660-DESKTOP-91CSLS9/incrSyn
+set_param checkpoint.writeSynthRtdsInDcp 1
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga324-1
 
@@ -78,16 +81,16 @@ OPTRACE "Adding files" START { }
 add_files C:/dev/fpga/PipelinedRISCV/riscv/coe/initial_bram.coe
 read_verilog -library xil_defaultlib {
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v
+  C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v
-  C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopr.v
-  C:/dev/fpga/PipelinedRISCV/riscv/rtl/immsrcdec.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v
-  C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux4.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/regfile.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v
@@ -95,7 +98,7 @@ read_verilog -library xil_defaultlib {
 read_ip -quiet C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
 set_property used_in_implementation false [get_files -all c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]
 
-read_ip -quiet c:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1.xci
+read_ip -quiet C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1.xci
 set_property used_in_implementation false [get_files -all c:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1_ooc.xdc]
 
 OPTRACE "Adding files" END { }

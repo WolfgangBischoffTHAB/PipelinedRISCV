@@ -5,13 +5,9 @@ module datapath(
     input   wire            fast_clk,
     input   wire            resetn,
 
-    
-
-    // input FETCH stage    
-    input wire        PCSrcE, // TODO: control logic, should be an input to the entire module
-    input  wire             StallF,         // the PC flip flop enable line
-    
-    
+    // input FETCH stage
+    input   wire            PCSrcE,         // TODO: control logic, should be an input to the entire module
+    input   wire            StallF,         // the PC flip flop enable line
     
     // input DECODE stage
     input  wire [2:0]       ImmSrcD,        // enable sign extension of the immediate value
@@ -23,14 +19,16 @@ module datapath(
     input  wire [2:0]       ALUControlE,
     input  wire             ALUSrcE,
     input  wire             wireFlushE,
-    input  wire             ForwardAE,
-    input  wire             ForwardBE,
+    input  wire [1:0]       ForwardAE,
+    input  wire [1:0]       ForwardBE,
     
     // input MEMORY ACCESS stage
     input  wire             MemWriteM,
     
     // input WRITEBACK stage
     input  wire  [1:0]      ResultSrcW,
+    
+    // output FETCH stage
 
     // output DECODE stage
     output  wire [6:0]      op,             // operation code from within the instruction
@@ -49,10 +47,7 @@ module datapath(
     output  wire [4:0]      RdM_output,
     
     // output WRITEBACK stage
-    output  wire [4:0]      RdW_output,
-    
-    
-    
+    output  wire [4:0]      RdW_output,    
     
     // output
     output wire [31:0]      toggle_value    // RAM toggle signal
@@ -62,11 +57,12 @@ module datapath(
     wire [31:0] PCFDash;
     wire [31:0] PCF;
     wire [31:0] PCPlus4F;
-    wire [31:0]     ReadDataInstr;  // output from instruction memory
+    wire [31:0] ReadDataInstr;  // output from instruction memory
 
     // Decode Pipeline Stage
     wire [31:0] InstrD;
     wire [31:0] ImmExtD;
+    wire [31:0] PCD;
     wire [31:0] PCPlus4D;
     wire [31:0] RD1;
     wire [31:0] RD2;
@@ -80,9 +76,12 @@ module datapath(
     wire  [4:0] RdE;
     wire [31:0] ImmExtE;
     wire [31:0] PCPlus4E;
+    wire [31:0] ReadDataE;
     wire [31:0] PCTargetE;
     wire [31:0] muxConnectE;
     wire [31:0] ALUResultE;
+    wire [31:0] SrcAE;
+    wire [31:0] SrcBE;
     
     // Memory Access Pipeline Stage
     wire [31:0] ALUResultM;
@@ -112,10 +111,10 @@ module datapath(
 //    wire [31:0] ALUOut;    
     
     
-    
+/*    
     // memory mapped hardware to toggle the LED
     reg [31:0] toggle_value_reg;
-    always @(fast_clk)
+    always @(fast_clk, adr)
     begin
         if (adr == 32'd52)
         begin
@@ -123,7 +122,7 @@ module datapath(
         end
     end
     assign toggle_value = toggle_value_reg;
-    
+ */   
     
     
     
@@ -145,10 +144,12 @@ module datapath(
       .clka(fast_clk),      // input wire clka
       .rsta(!resetn),       // input wire rsta
       .ena(resetn),         // input wire ena
-      .wea({4{MemWrite}}),  // input wire [3 : 0] wea
-      .addra(adr),          // input wire [31 : 0] addra
-      .dina(WriteData),     // input wire [31 : 0] dina
-      .douta(ReadDataInstr)      // output wire [31 : 0] douta
+      .wea({4{0}}),  // input wire [3 : 0]  // the instruction memory is never written to, therefore it is disabled by supplying 0
+      .addra(PCF),          // input wire [31 : 0] addra
+//      .dina(WriteData),     // input wire [31 : 0] dina
+      .dina(),
+      .douta(ReadDataInstr),      // output wire [31 : 0] douta
+      .rsta_busy()
     );
     
     // increment PC by a single instruction
@@ -214,7 +215,8 @@ module datapath(
     flopenr #(32)  immExtD_PipelineRegister(clk, FlushE, 1, ImmExtD, ImmExtE);
     flopenr #(32) pcPlus4D_PipelineRegister(clk, FlushE, 1, PCPlus4D, PCPlus4E);
     
-    
+    assign Rs1D_output = InstrD[19:15];
+    assign Rs2D_output = InstrD[24:20];
     
     
     
@@ -270,8 +272,8 @@ module datapath(
       .wea({4{MemWrite}}),  // input wire [3 : 0] wea
       .addra(ALUResultM),          // input wire [31 : 0] addra
       .dina(WriteDataM),     // input wire [31 : 0] dina
-      .douta(ReadDataM)//,          // output wire [31 : 0] douta
-      //.rsta_busy(rsta_busy)  // output wire rsta_busy
+      .douta(ReadDataM),//,          // output wire [31 : 0] douta
+      .rsta_busy()  // output wire rsta_busy
     );
     
     // MEMORY ACCESS pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
@@ -291,8 +293,8 @@ module datapath(
     
     assign RdW_output = RdW;
     
-    //                      Input 00    Input 01    Input 10        SelectSignal        Output
-    mux3 #(32) resultWMux3(ALUResultW,       ReadDataW,    PCPlus4W,   ResultSrcW,            ResultW);
+    //                     Input 00    Input 01      Input 10    SelectSignal        Output
+    mux3 #(32) resultWMux3(ALUResultW, ReadDataW,    PCPlus4W,   ResultSrcW,         ResultW);
     
     
     
