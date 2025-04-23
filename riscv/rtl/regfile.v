@@ -1,5 +1,10 @@
 // RV32 register file for all 32 32-bit registers
 // three ported register file
+//
+// Page 444 - The register file is written during
+// the first half of the cycle and read during the second half of the cycle, so
+// a register can be written and read back in the same cycle without introducing
+// a hazard.
 module regfile(
     input   wire            clk,    // clock
     input   wire            resetn,
@@ -21,7 +26,10 @@ module regfile(
     //output wire [31:0]      toggle_value    // RAM toggle signal
 );
 
-    reg [31:0] rf[31:0];
+    reg [31:0]  rf[31:0];
+    
+    reg [31:0]  rd1_temp;
+    reg [31:0]  rd2_temp;
     
     // write third port on rising edge of clock (A3/WD3/WE3)
     //
@@ -77,10 +85,13 @@ module regfile(
         end
     end
 
-    // read two ports combinationally (= no clock edge / clock tick needed)
-    // (A1/RD1, A2/RD2)
-    // register 0 hardwired to 0 (if a1 or a2 or both are register 0, return a hardcoded 0)
-    assign rd1 = (a1 != 0) ? rf[a1] : 0;
-    assign rd2 = (a2 != 0) ? rf[a2] : 0;
+    always @(negedge clk)
+    begin
+        rd1_temp = (a1 != 0) ? rf[a1] : 0;
+        rd2_temp = (a2 != 0) ? rf[a2] : 0;
+    end
+    
+    assign rd1 = rd1_temp;
+    assign rd2 = rd2_temp;
 
 endmodule

@@ -26,11 +26,9 @@ module alu_addonly #(parameter WIDTH = 32) (
     // input
     input  wire [WIDTH-1:0]     a_in,
     input  wire [WIDTH-1:0]     b_in,
-    //input  wire [2:0]           ALUControl, // operation to perform
 
     // output
-    output reg  [WIDTH-1:0]     ALUResult//, // result to output
-    //output reg                  Z // zero
+    output reg  [WIDTH-1:0]     ALUResult   // result to output
 );
 
     // compute the result

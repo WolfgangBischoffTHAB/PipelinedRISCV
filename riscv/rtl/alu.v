@@ -8,8 +8,8 @@ module alu #(parameter WIDTH = 32) (
     input  wire [2:0]           ALUControl, // operation to perform
 
     // output
-    output reg  [WIDTH-1:0]     ALUResult, // result to output
-    output reg                  Z // zero
+    output reg  [WIDTH-1:0]     ALUResult,  // result to output
+    output reg                  Z           // zero
 );
 
     // compute the result
@@ -23,7 +23,7 @@ module alu #(parameter WIDTH = 32) (
             begin
                 //$display("[ALU] add. a_in=%0d, b_in=%0d", a_in, b_in);
                 ALUResult = a_in + b_in;
-                $display("[ALU] add. a_in=%0d, b_in=%0d, ALUResult=%0d", a_in, b_in, ALUResult);
+                //$display("[ALU] add. a_in=%0d, b_in=%0d, ALUResult=%0d", a_in, b_in, ALUResult);
 
                 // compute zero
                 Z <= (ALUResult == 0);
@@ -32,19 +32,19 @@ module alu #(parameter WIDTH = 32) (
             // sub
             3'b001:
             begin
-                $display("[ALU] sub. a_in=%0d, b_in=%0d", a_in, b_in);
+                //$display("[ALU] sub. a_in=%0d, b_in=%0d", a_in, b_in);
                 ALUResult = a_in + (~b_in + 1'b1);
 
                 // compute zero
                 Z <= (ALUResult == 0);
 
-                $display("[ALU] sub. Z=%0d", Z);
+                //$display("[ALU] sub. Z=%0d", Z);
             end
 
             // and, andi
             3'b010:
             begin
-                $display("[ALU] and, andi");
+                //$display("[ALU] and, andi");
                 ALUResult = a_in & b_in;
 
                 // compute zero
@@ -55,7 +55,7 @@ module alu #(parameter WIDTH = 32) (
             3'b011:
             begin
                 ALUResult = a_in ^ b_in;
-                $display("[ALU] xor. a_in=%0d, b_in=%0d, ALUResult=%0d", a_in, b_in, ALUResult);
+                //$display("[ALU] xor. a_in=%0d, b_in=%0d, ALUResult=%0d", a_in, b_in, ALUResult);
 
                 // compute zero
                 Z <= (ALUResult == 0);
@@ -67,7 +67,7 @@ module alu #(parameter WIDTH = 32) (
             // as signed numbers, else 0 is written to rd.
             3'b101:
             begin
-                $display("[ALU] slt, slti");
+                //$display("[ALU] slt, slti");
                 ALUResult = a_in < b_in ? 1 : 0;
 
                 // compute zero
@@ -77,7 +77,7 @@ module alu #(parameter WIDTH = 32) (
             // or, ori
             3'b110:
             begin
-                $display("[ALU] or, ori");
+                //$display("[ALU] or, ori");
                 ALUResult = a_in | b_in;
 
                 // compute zero
@@ -87,7 +87,7 @@ module alu #(parameter WIDTH = 32) (
             default:
             begin
                 // https://stackoverflow.com/questions/69184139/alu-noop-case-infers-a-latch-is-this-ok
-                $display("[ALU] default");
+                //$display("[ALU] default");
                 ALUResult = 32'b01010101010101010101010101010101;
 
                 // compute zero

@@ -40,35 +40,6 @@ module controller (
     // output WRITEBACK stage
     output      wire            RegWriteW,      // to datapath and to hazard unit
     output      wire [1:0]      ResultSrcW
-
-
-//    // input
-//    input   wire [6:0]  op,         // operation code from within the instruction
-//    input   wire [6:0]  oldOp,      //
-//    input   wire [2:0]  funct3,     // funct3 for instruction identification. This encodes the operation that the ALU has to execute
-//    input   wire        funct7b5,     // funct7b5 (all R-Type (register) operations have funct7, e.g. add)
-//    input   wire        Zero,       // the ALU has computed a result that is zero (for branching instruction making)
-//    input   wire [31:0] ReadData,
-
-//    // output
-//    output  wire        o_PCWrite,    // the PC flip flop enable line, the flip flop stores PCNext and outputs PC
-//    output  wire        o_AdrSrc,     // address source selector
-//    output  wire        o_MemWrite,   // write enable for the memory module
-//    output  wire        o_IRWrite,    // instruction register write
-//    output  wire [1:0]  o_ResultSrc,  // controls the multiplexer that decides what goes onto the Result bus
-//    output  wire [2:0]  o_ALUControl,
-//    output  wire [1:0]  o_ALUSrcB,    // decides which line goes into the ALU B parameter input
-//    output  wire [1:0]  o_ALUSrcA,    // decides which line goes into the ALU A parameter input
-//    output  wire [2:0]  o_ImmSrc,
-//    output  wire        o_RegWrite//,   // write enable for the register file
-
-    // // DEBUG UART
-    // output reg [7:0]   tx_Data,
-    // output reg         tx_DataValid
-
-    // DEBUG UART
-    //output wire [7:0]   tx_Data,
-    //output wire         tx_DataValid
 );
 
     // Fetch Pipeline Stage    
@@ -96,25 +67,15 @@ module controller (
     
     
     
-    
+/*    
     // reset logic
-    // sequential memory of the Moore FSM
     always @(posedge clk)
     begin
         if (resetn == 1)
         begin
-            //$display("[controller] next state");
-            //current_state <= next_state;
         end
-/*
-        else
-        begin
-            $display("[controller] Resetting.");
-            current_state <= ResetState;
-        end
-*/
     end
-    
+*/    
     
     
     
@@ -165,7 +126,6 @@ module controller (
     // EXECUTE section of the pipeline
     //
     
-    //assign PCSrcE = JumpE || ( BranchE && ZeroE );
     assign PCSrcE = ( BranchE & ZeroE ) | JumpE;
     
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS

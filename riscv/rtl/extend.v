@@ -6,6 +6,7 @@ module extend(
 
     // output
     output reg [31:0] immext
+
 );
 
     always @(instr, immsrc)
@@ -16,21 +17,21 @@ module extend(
             // lui (00134313)
             3'b000:
             begin
-                $display("[extend] I Type");
+                //$display("[extend] I Type");
                 immext <= { { 20{instr[31]} }, instr[31:20] };
             end
 
             // S−type (stores) (sw)
             3'b001:
             begin
-                $display("[extend] S Type");
+                //$display("[extend] S Type");
                 immext <= { { 20{instr[31]} }, instr[31:25], instr[11:7] };
             end
 
             // B−type (branches) (BEQ, ...)
             3'b010:
             begin
-                $display("[extend] B Type");
+                //$display("[extend] B Type");
                 immext <= { { 20{instr[31]} }, instr[7], instr[30:25], instr[11:8], 1'b0 };
             end
 
@@ -39,7 +40,7 @@ module extend(
             // example: lui x7, 0x15 - 0x000153b7
             3'b100:
             begin
-                $display("[extend] U Type");
+                //$display("[extend] U Type");
                 immext <= { { 12{instr[31]} }, instr[31:12] };
             end
 
@@ -47,13 +48,13 @@ module extend(
             3'b011:
             begin
                 immext <= { {12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0 };
-                $display("[extend] J Type. immext = 0x%08h", immext);
+                //$display("[extend] J Type. immext = 0x%08h", immext);
             end
 
             default:
             begin
-                $display("[extend] default");
-                $display("[extend] instr: %h, immsrc: %d", instr, immsrc);
+                //$display("[extend] default");
+                //$display("[extend] instr: %h, immsrc: %d", instr, immsrc);
                 immext <= 32'bx; // undefined
             end
             

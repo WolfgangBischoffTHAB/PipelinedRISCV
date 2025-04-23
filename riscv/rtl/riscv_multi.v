@@ -5,7 +5,7 @@ module riscv_multi(
     input wire fast_clk,
     input wire resetn,
 
-    output wire [31:0]      toggle_value//,
+    output wire [31:0]      toggle_value
 
     // // DEBUG UART
     // output reg [7:0]   tx_Data,
@@ -15,85 +15,54 @@ module riscv_multi(
  //   output wire [7:0]   tx_Data,
  //   output wire         tx_DataValid
 );
-/*
-    wire            RegWrite;
-    wire            Zero;
-    wire [31:0]     ReadDataInstr;  // instruction memory
-    wire [31:0]     ReadDataData;   // data memory
-
-    wire PCWrite;
-    wire AdrSrc;
-    wire MemWrite;
-    wire IRWrite;
-
-    wire [1:0]      ResultSrc;
-    wire [2:0]      ImmSrc;
-    wire [2:0]      ALUControl;
-
-    wire [6:0]      op;
-    wire [6:0]      oldOp;
-    wire [2:0]      funct3;
-    wire            funct7b5;
-    wire [1:0]      ALUSrcB;
-    wire [1:0]      ALUSrcA;
-    */
-    
-    // clock and resetn
-       //wire            clk;
-       //wire            fast_clk;
-       //wire            resetn;
 
     // input FETCH stage
-       wire            PCSrcE;         // TODO: control logic, should be an input to the entire module
-       wire            StallF;         // the PC flip flop enable line
+    wire            PCSrcE;         // TODO: control logic, should be an input to the entire module
+    wire            StallF;         // the PC flip flop enable line
     
     // input DECODE stage
-      wire [2:0]       ImmSrcD;        // enable sign extension of the immediate value
-      //wire             RegWriteW;      // write enable for the register file
-      wire             wireFlushD;
-      wire             wireStallD;
+    wire [2:0]       ImmSrcD;        // enable sign extension of the immediate value
+    wire             wireFlushD;
+    wire             wireStallD;
     
     // input EXECUTE stage
-      wire [2:0]       ALUControlE;
-      wire             ALUSrcE;
-      wire             FlushE;
-      wire             ForwardAE;
-      wire             ForwardBE;
+    wire [2:0]       ALUControlE;
+    wire             ALUSrcE;
+    wire             FlushE;
+    wire             ForwardAE;
+    wire             ForwardBE;
     
     // input MEMORY ACCESS stage
-      wire             MemWriteM;
-      wire             RegWriteW;
+    wire             MemWriteM;
+    wire             RegWriteW;
     
     // input WRITEBACK stage
-      wire  [1:0]      ResultSrcW;
+    wire  [1:0]      ResultSrcW;
     
     // output FETCH stage
 
     // output DECODE stage
-      wire [6:0]      op;             // operation code from within the instruction
-      wire [2:0]      funct3;         // funct3 for instruction identification
-      wire            funct7b5;       // funct7b5
-      wire [4:0]      Rs1D_output;
-      wire [4:0]      Rs2D_output;
+    wire [6:0]      op;             // operation code from within the instruction
+    wire [2:0]      funct3;         // funct3 for instruction identification
+    wire            funct7b5;       // funct7b5
+    wire [4:0]      Rs1D_output;
+    wire [4:0]      Rs2D_output;
     
     // output EXECUTE stage
-      wire            ZeroE;           // the ALU has computed a result that is zero (for branching instructions)
-      wire [4:0]      Rs1E_output;
-      wire [4:0]      Rs2E_output;
-      wire [4:0]      RdE_output;
-      wire [1:0]      ResultSrcE;
+    wire            ZeroE;           // the ALU has computed a result that is zero (for branching instructions)
+    wire [4:0]      Rs1E_output;
+    wire [4:0]      Rs2E_output;
+    wire [4:0]      RdE_output;
+    wire [1:0]      ResultSrcE;
     
     // output MEMORY ACCESS stage
-      wire [4:0]      RdM_output;
+    wire [4:0]      RdM_output;
     
     // output WRITEBACK stage
-      wire [4:0]      RdW_output;
-    
-    
-    
+    wire [4:0]      RdW_output;
     
     // output
-     //wire [31:0]      toggle_value;    // RAM toggle signal
+    //wire [31:0]      toggle_value;    // RAM toggle signal
 
     controller ctr (
 
@@ -133,33 +102,6 @@ module riscv_multi(
         // output WRITEBACK stage
         /*output      wire */           .RegWriteW(RegWriteW),      // to datapath and to hazard unit
         /*output      wire [1:0]  */    .ResultSrcW(ResultSrcW)
-
-
-/*
-        // input
-        op,             // operation code from within the instruction
-//        oldOp,
-        funct3,
-        funct7b5,
-        Zero,           // ALU result is zero
-//        ReadData,
-
-        // output
-        PCWrite,
-        AdrSrc,
-        MemWrite,       // enable line for write operation into memory
-        IRWrite,
-        ResultSrc,      // controls the multiplexer that decides what goes onto the Result bus
-        ALUControl,     // tells the ALU which operation to perform
-        ALUSrcB,        // decides which line goes into the ALU B parameter input
-        ALUSrcA,        // decides which line goes into the ALU A parameter input
-        ImmSrc,         // enable sign extension of the immediate value
-        RegWrite//,       // write enable for the register file
-
-        // DEBUG UART
-   //     tx_Data,
-   //     tx_DataValid
-   */
     );
 
     datapath dp (
@@ -213,11 +155,8 @@ module riscv_multi(
     // output WRITEBACK stage
     /*output  wire [4:0]   */   RdW_output,
     
-    
-    
-    
     // output
-   /* output wire [31:0]  */    toggle_value    // RAM toggle signal
+    /* output wire [31:0]  */    toggle_value    // RAM toggle signal
     );
     
     hazard_unit hu(
