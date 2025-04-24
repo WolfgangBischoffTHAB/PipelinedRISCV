@@ -30,8 +30,8 @@ module top(
     wire resetn;
     //reg [24:0] rststate = 0; // long reset
     //reg [15:0] rststate = 0; // long reset
-    //reg [4:0] rststate = 0; // short reset for the testbench / simulation
-    reg [6:0] rststate = 0; // short reset for the testbench / simulation
+    //reg [6:0] rststate = 0; // short reset for the testbench / simulation
+    reg [4:0] rststate = 0; // very short reset for the testbench / simulation
 
     always @(posedge CLK12MHZ) // for simulation
     //always @(posedge slow_clock)
@@ -141,10 +141,10 @@ module top(
 
     riscv_multi rvmulti(
         // clock and reset
-        //CLK12MHZ, // for simulation
-        //slow_clock_counter[1],// for simulation
-        //slow_clock_counter[0],// for simulation
-        slow_clock,
+        CLK12MHZ,                 // for simulation
+        //slow_clock_counter[1],    // for simulation
+        //slow_clock_counter[0],    // for simulation
+        //slow_clock,               // slow_clock for FPGA
         
         // fast clock, RAM clock
         //slow_clock_counter[0], // for simulation

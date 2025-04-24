@@ -9,6 +9,7 @@ module flopenr #(parameter WIDTH = 32) (
 
     // output
     output reg [WIDTH-1:0] q
+
 );
 
     always @(posedge clk, negedge resetn)

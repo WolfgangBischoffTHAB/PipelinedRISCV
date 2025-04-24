@@ -40,6 +40,7 @@ module controller (
     // output WRITEBACK stage
     output      wire            RegWriteW,      // to datapath and to hazard unit
     output      wire [1:0]      ResultSrcW
+
 );
 
     // Fetch Pipeline Stage    
@@ -63,6 +64,11 @@ module controller (
     wire [1:0]  ResultSrcM;
     
     // Writeback Pipeline Stage
+
+/*
+    wire ALUSrcE_wire;
+    wire ALUSrcE_reg;
+*/
     
     
     
@@ -111,16 +117,23 @@ module controller (
     
     // DECODE pipeline registers to transfer state between DECODE and EXECUTE
     
-    flopenr #(1)        RegWriteD_PipelineRegister(clk, 0, 1, RegWriteD, RegWriteE);
-    flopenr #(2)       ResultSrcD_PipelineRegister(clk, 0, 1, ResultSrcD, ResultSrcE);
-    flopenr #(1)        MemWriteD_PipelineRegister(clk, 0, 1, MemWriteD, MemWriteE);
-    flopenr #(1)            JumpD_PipelineRegister(clk, 0, 1, JumpD, JumpE);
-    flopenr #(1)          BranchD_PipelineRegister(clk, 0, 1, BranchD, BranchE);
-    flopenr #(3)      ALUControlD_PipelineRegister(clk, 0, 1, ALUControlD, ALUControlE);
-    flopenr #(1)          ALUSrcD_PipelineRegister(clk, 0, 1, ALUSrcD, ALUSrcE);
+    //                                                  resetn  enable
+    flopenr #(1)        RegWriteD_PipelineRegister(clk, resetn, 1,          RegWriteD, RegWriteE);
+    flopenr #(2)       ResultSrcD_PipelineRegister(clk, resetn, 1,          ResultSrcD, ResultSrcE);
+    flopenr #(1)        MemWriteD_PipelineRegister(clk, resetn, 1,          MemWriteD, MemWriteE);
+    flopenr #(1)            JumpD_PipelineRegister(clk, resetn, 1,          JumpD, JumpE);
+    flopenr #(1)          BranchD_PipelineRegister(clk, resetn, 1,          BranchD, BranchE);
+    flopenr #(3)      ALUControlD_PipelineRegister(clk, resetn, 1,          ALUControlD, ALUControlE);
+    flopenr #(1)          ALUSrcD_PipelineRegister(clk, resetn, 1,          ALUSrcD, ALUSrcE);
     
-    
-    
+    /*
+    always @(posedge clk)
+    begin
+        ALUSrcE = ALUSrcE_wire;
+    end
+
+    assign ALUSrcE = ALUSrcE_reg;
+        */
     
     //
     // EXECUTE section of the pipeline
@@ -130,9 +143,10 @@ module controller (
     
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     
-    flopenr #(1)        RegWriteE_PipelineRegister(clk, 0, 1, RegWriteE, RegWriteM);
-    flopenr #(2)       ResultSrcE_PipelineRegister(clk, 0, 1, ResultSrcE, ResultSrcM);
-    flopenr #(1)        MemWriteE_PipelineRegister(clk, 0, 1, MemWriteE, MemWriteM);
+    //                                                  resetn  enable
+    flopenr #(1)        RegWriteE_PipelineRegister(clk, resetn, 1,      RegWriteE, RegWriteM);
+    flopenr #(2)       ResultSrcE_PipelineRegister(clk, resetn, 1,      ResultSrcE, ResultSrcM);
+    flopenr #(1)        MemWriteE_PipelineRegister(clk, resetn, 1,      MemWriteE, MemWriteM);
     
     
     //
@@ -141,8 +155,9 @@ module controller (
     
     // MEMORY ACCESS pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     
-    flopenr #(1)        RegWriteM_PipelineRegister(clk, 0, 1, RegWriteM, RegWriteW);
-    flopenr #(2)       ResultSrcM_PipelineRegister(clk, 0, 1, ResultSrcM, ResultSrcW);
+    //                                                  resetn  enable
+    flopenr #(1)        RegWriteM_PipelineRegister(clk, resetn, 1,      RegWriteM, RegWriteW);
+    flopenr #(2)       ResultSrcM_PipelineRegister(clk, resetn, 1,      ResultSrcM, ResultSrcW);
     
     
     

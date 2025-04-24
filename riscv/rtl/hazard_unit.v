@@ -29,9 +29,9 @@ module hazard_unit(
     output  wire            FlushD,
     
     // output EXECUTE stage
-    output  wire             FlushE,
-    output  wire [1:0]       ForwardAE,
-    output  wire [1:0]       ForwardBE
+    output  wire            FlushE,
+    output  wire [1:0]      ForwardAE,
+    output  wire [1:0]      ForwardBE
     
     // output MEMORY ACCESS stage
     
@@ -49,7 +49,7 @@ module hazard_unit(
     assign lwStall = ResultSrcE & ((Rs1D == RdE) | (Rs2D == RdE));
     assign StallF = lwStall;
     assign StallD = lwStall;
-    assign FlushE = lwStall;
+    //assign FlushE = lwStall;
 
     // page 451
     

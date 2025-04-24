@@ -77,7 +77,7 @@ module top_testbench();
     // generate clock to sequence tests
     always
     begin
-        $display("tick %d", $time);
+        //$display("tick %d", $time);
         clk <= 1;
         #1;
         clk <= 0;

@@ -15,7 +15,28 @@ module controller_single_cycle(
 
     wire [1:0] ALUOp;
 
-    maindec md(op, ResultSrc, MemWrite, Branch, ALUSrc, RegWrite, Jump, ImmSrc, ALUOp);
-    aludec ad(op[5], funct3, funct7b5, ALUOp, ALUControl);
+    maindec md(
+    
+        // input
+        op, 
+        
+        // output
+        ResultSrc, MemWrite, Branch, ALUSrc, RegWrite, Jump, ImmSrc, ALUOp
+    
+    );
+    
+    
+    aludec ad(
+    
+        // input
+        op[5], 
+        funct3, 
+        funct7b5, 
+        ALUOp, 
+        
+        // output
+        ALUControl
+        
+    );
 
 endmodule

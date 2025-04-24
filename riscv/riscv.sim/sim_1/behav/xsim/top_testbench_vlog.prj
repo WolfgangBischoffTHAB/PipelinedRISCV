@@ -1,0 +1,26 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../riscv.gen/sources_1/ip/blk_mem_gen_1/sim/blk_mem_gen_1.v" \
+"../../../../riscv.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" \
+"../../../../rtl/alu.v" \
+"../../../../riscv.srcs/sources_1/new/alu_addonly.v" \
+"../../../../rtl/aludec.v" \
+"../../../../rtl/controller.v" \
+"../../../../rtl/controller_single_cycle.v" \
+"../../../../rtl/datapath.v" \
+"../../../../rtl/extend.v" \
+"../../../../rtl/flopenr.v" \
+"../../../../rtl/hazard_unit.v" \
+"../../../../rtl/maindec.v" \
+"../../../../rtl/mux2.v" \
+"../../../../rtl/mux3.v" \
+"../../../../rtl/regfile.v" \
+"../../../../rtl/riscv_multi.v" \
+"../../../../rtl/top.v" \
+"../../../../rtl/top_testbench.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

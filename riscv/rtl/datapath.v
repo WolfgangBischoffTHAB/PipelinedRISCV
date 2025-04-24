@@ -12,13 +12,13 @@ module datapath(
     // input DECODE stage
     input  wire [2:0]       ImmSrcD,        // enable sign extension of the immediate value
     input  wire             RegWriteW,      // write enable for the register file
-    input  wire             wireFlushD,
-    input  wire             wireStallD,
+    input  wire             FlushD,
+    input  wire             StallD,
     
     // input EXECUTE stage
     input  wire [2:0]       ALUControlE,
     input  wire             ALUSrcE,
-    input  wire             wireFlushE,
+    input  wire             FlushE,
     input  wire [1:0]       ForwardAE,
     input  wire [1:0]       ForwardBE,
     
@@ -55,7 +55,8 @@ module datapath(
 
     // Fetch Pipeline Stage
     wire [31:0] PCFDash;
-    wire [31:0] PCF;
+    reg  [31:0] PCF;
+    wire [31:0] PCF_wire;
     wire [31:0] PCPlus4F;
     wire [31:0] ReadDataInstr;  // output from instruction memory
 
@@ -99,6 +100,19 @@ module datapath(
     wire        PCPlus4W;
     wire [31:0] ResultW;
     
+    // reset logic
+    always @(posedge fast_clk, negedge resetn)
+    begin
+        if (resetn == 0)
+        begin
+            PCF = 32'b0;
+        end
+        else
+        begin
+            PCF = PCF_wire;
+        end
+    end
+    
 /*    
     // memory mapped hardware to toggle the LED
     reg [31:0] toggle_value_reg;
@@ -123,17 +137,17 @@ module datapath(
     // current PC logic (PCFDash is the input which is stored in posedge clock.)
     // The flip flop will output the stored data onto PCF
     //                  clock       resetn,     enable,     input       output
-    flopenr #(32) pcreg(clk,        1,          !StallF,    PCFDash,     PCF);
+    flopenr #(32) pcreg(clk,        resetn,     !StallF,    PCFDash,     PCF_wire);
     
     blk_mem_gen_0 instruction_memory (
-      .clka(fast_clk),      // input wire clka
-      .rsta(!resetn),       // input wire rsta
-      .ena(resetn),         // input wire ena
-      .wea({4{0}}),  // input wire [3 : 0]  // the instruction memory is never written to, therefore it is disabled by supplying 0
-      .addra(PCF),          // input wire [31 : 0] addra
+      .clka(fast_clk),          // input wire clka
+      .rsta(!resetn),           // input wire rsta
+      .ena(resetn),             // input wire ena
+      .wea({4{0}}),             // input wire [3 : 0]  // the instruction memory is never written to, therefore it is disabled by supplying 0
+      .addra(PCF),              // input wire [31 : 0] addra
 //      .dina(WriteData),     // input wire [31 : 0] dina
       .dina(),
-      .douta(ReadDataInstr),      // output wire [31 : 0] douta
+      .douta(ReadDataInstr),    // output wire [31 : 0] douta
       .rsta_busy()
     );
     
@@ -146,9 +160,10 @@ module datapath(
     
     // FETCH pipeline registers to transfer state between FETCH and DECODE
     
-    flopenr #(32)   instrF_PipelineRegister(clk, FlushD, !StallF, ReadDataInstr, InstrD);
-    flopenr #(32)      pcF_PipelineRegister(clk, FlushD, !StallF, PCF, PCD);
-    flopenr #(32) pcPlus4F_PipelineRegister(clk, FlushD, !StallF, PCPlus4F, PCPlus4D);
+    //                                              resetn              enable
+    flopenr #(32)   instrF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, ReadDataInstr, InstrD);
+    flopenr #(32)      pcF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, PCF, PCD);
+    flopenr #(32) pcPlus4F_PipelineRegister(clk,    (resetn & !FlushD), !StallD, PCPlus4F, PCPlus4D);
 
 
 
@@ -191,14 +206,14 @@ module datapath(
 
     // DECODE pipeline registers to transfer state between DECODE and EXECUTE
     
-    flopenr #(32)      RD1_PipelineRegister(clk, FlushE, !StallF, RD1, RD1E);
-    flopenr #(32)      RD2_PipelineRegister(clk, FlushE, !StallF, RD2, RD2E);
-    flopenr #(32)      pcD_PipelineRegister(clk, FlushE, !StallF, PCD, PCE);
-    flopenr #(5)      rs1D_PipelineRegister(clk, FlushE, 1, InstrD[19:15], Rs1E);
-    flopenr #(5)      rs2D_PipelineRegister(clk, FlushE, 1, InstrD[24:20], Rs2E);
-    flopenr #(5)       rdD_PipelineRegister(clk, FlushE, 1, InstrD[11:7], RdE);
-    flopenr #(32)  immExtD_PipelineRegister(clk, FlushE, 1, ImmExtD, ImmExtE);
-    flopenr #(32) pcPlus4D_PipelineRegister(clk, FlushE, 1, PCPlus4D, PCPlus4E);
+    flopenr #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1, RD1E);
+    flopenr #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
+    flopenr #(32)      pcD_PipelineRegister(clk, (resetn & !FlushE), !StallF,   PCD, PCE);
+    flopenr #(5)      rs1D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[19:15], Rs1E);
+    flopenr #(5)      rs2D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[24:20], Rs2E);
+    flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[11:7], RdE);
+    flopenr #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
+    flopenr #(32) pcPlus4D_PipelineRegister(clk, (resetn & !FlushE), 1,         PCPlus4D, PCPlus4E);
     
     assign Rs1D_output = InstrD[19:15];
     assign Rs2D_output = InstrD[24:20];
@@ -233,10 +248,10 @@ module datapath(
     
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     
-    flopenr #(32)      ALUResultE_PipelineRegister(clk, 0, 1, ALUResultE, ALUResultM);
-    flopenr #(32)      WriteDataE_PipelineRegister(clk, 0, 1, WriteDataE, WriteDataM);
-    flopenr #(32)             RdE_PipelineRegister(clk, 0, 1, RdE, RdM);
-    flopenr #(32)        PCPlus4E_PipelineRegister(clk, 0, 1, PCPlus4E, PCPlus4M);
+    flopenr #(32)      ALUResultE_PipelineRegister(clk, resetn, 1, ALUResultE, ALUResultM);
+    flopenr #(32)      WriteDataE_PipelineRegister(clk, resetn, 1, WriteDataE, WriteDataM);
+    flopenr #(32)             RdE_PipelineRegister(clk, resetn, 1, RdE, RdM);
+    flopenr #(32)        PCPlus4E_PipelineRegister(clk, resetn, 1, PCPlus4E, PCPlus4M);
     
 
 
@@ -254,7 +269,7 @@ module datapath(
       .clka(fast_clk),      // input wire clka
       .rsta(!resetn),       // input wire rsta
       .ena(resetn),         // input wire ena
-      .wea({4{MemWrite}}),  // input wire [3 : 0] wea
+      .wea({4{0}}),  // input wire [3 : 0] wea
       .addra(ALUResultM),          // input wire [31 : 0] addra
       .dina(WriteDataM),     // input wire [31 : 0] dina
       .douta(ReadDataM),//,          // output wire [31 : 0] douta
@@ -263,10 +278,10 @@ module datapath(
     
     // MEMORY ACCESS pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     
-    flopenr #(32)      ALUResultM_PipelineRegister(clk, 0, 1, ALUResultM, ALUResultW);
-    flopenr #(32)       ReadDataM_PipelineRegister(clk, 0, 1, ReadDataM, ReadDataW);
-    flopenr #(32)             RdM_PipelineRegister(clk, 0, 1, RdM, RdW);
-    flopenr #(32)        PCPlus4M_PipelineRegister(clk, 0, 1, PCPlus4M, PCPlus4W);
+    flopenr #(32)      ALUResultM_PipelineRegister(clk, resetn, 1, ALUResultM, ALUResultW);
+    flopenr #(32)       ReadDataM_PipelineRegister(clk, resetn, 1, ReadDataM, ReadDataW);
+    flopenr #(32)             RdM_PipelineRegister(clk, resetn, 1, RdM, RdW);
+    flopenr #(32)        PCPlus4M_PipelineRegister(clk, resetn, 1, PCPlus4M, PCPlus4W);
     
     
     

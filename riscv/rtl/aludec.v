@@ -1,10 +1,15 @@
 // decodes ALU control signals from the instruction
 module aludec(
+
+    // input
     input   wire                opb5,
     input   wire    [2:0]       funct3,
     input   wire                funct7b5,
     input   wire    [1:0]       ALUOp,
+    
+    // output
     output  reg     [2:0]       ALUControl
+    
 );
 
     wire  RtypeSub;
@@ -26,7 +31,8 @@ module aludec(
                     3'b010: begin ALUControl = 3'b101; end // slt, slti
                     3'b110: begin ALUControl = 3'b011; end // or, ori
                     3'b111: begin ALUControl = 3'b010; end // and, andi
-                    default: begin ALUControl = 3'bxxx; end // ???
+//                    default: begin ALUControl = 3'bxxx; end // ???
+                    default: begin ALUControl = 3'b000; end // ???
                 endcase
             end
         endcase
