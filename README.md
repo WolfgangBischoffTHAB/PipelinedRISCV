@@ -110,3 +110,15 @@ After toggling, the outer loop jumps back to it's start and the application cont
 
 What is the purpose of toggling cell 0x34? If you have a memory mapped peripheral such as a LED mapped to that exact memory cell and to the least significant bit, then the application will make the LED blink.
 
+# Next Steps
+
+- Check which instructions work and implement all instructions
+- Deploy on the ARTY S7
+- Run the blinky .coe example above
+- Add memory mapped LED
+- Add a UART
+- Add a bootloader with custom protocol so that applications can be transferred without rebuilding a bitstream everytime
+- Reorganize the datapath to only contain a single memory (Von-Neumann instead of Harvard architecture)
+- Add debugging extension and add JTAG support
+- Add SDRAM controller?
+
