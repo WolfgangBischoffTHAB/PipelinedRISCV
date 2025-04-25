@@ -1,4 +1,5 @@
 # PipelinedRISCV
+
 Pipelined Implementation of a RISC-V CPU as described in the book "Digital Design and Computer Architecture - RISC-V Edition" by Harris &amp;amp; Harris
 
 # Implementing the Design by Harris & Harris
@@ -14,3 +15,71 @@ Each pipeline register has a stall and a clear input. Using the stall input, a p
 Some hardware duplication is added in order to make the pipeline possible. There are two additional adder hardware parts in addition to the ALU. One adder to increment the PC and one Adder to compute the new PC target address after branch or jump conditions.
 
 A hazard unit is added. The hazard unit is working very similar to the control logic in that it takes in individual signals as input and creates signals that affect the datapath. The hazard unit creates the stall and clear signals that control the pipeline registers. The difference between the hazard unit and the control logic is that the control logic contains a statemachine whereas the hazard unit contains only combinational logic.
+
+## Testing
+
+The CPU does currently not use SDRAM to store instrucations or data. Instead it uses BRAM created using Vivado's Block Memory Generator. The generated BRAM allows the use of "Coefficient Files" .coe to initialze the BRAM. 
+
+To test the CPU initialize the BRAM with a .coe files.
+
+In order to change the .coe file, the BRAM IP has to be regenerated since the simulation does not read the original .coe file but instead it looks at artefacts generated during BRAM IP creation! These artefacts contain the .coe data and changing the original .coe file will not trigger a regeneration of the BRAM IP. The steps to change the .coe file and to make the changed code available in the simulation are as such:
+
+1. Quit vivado so that it does not lock the project folders under Microsoft Windows. You will have to delete some of the project folders for the solution. 
+
+2. delete the project .sim directory [..] and also delete the project.ip_user_files directory and re-launching the sim.
+
+	For example, delete these two folders:
+
+```
+	C:\dev\fpga\PipelinedRISCV\riscv\riscv.sim
+	C:\dev\fpga\PipelinedRISCV\riscv\riscv.ip_user_files
+```
+	
+3. Restart Vivado
+	
+4. Reset the IP so that it is regenerated again. To reset the IP:
+
+	1. Switch to IP Sources in the Project Manager > Sources > Tab 
+	2. right click on the Block Design containing the IP, (or the IP itself if not contained in a BD) 
+	3. and select "Reset Output Products...".
+
+Here are some examples.
+
+### Simple addi test
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293;
+```
+
+This code increments the value in the x5 register by 1 constantly. You can check the simulation by making the top_testbench the top module and simulating it from within vivado.
+
+### Loop and Branch test
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00000293,
+00000313,
+000003b7,
+00238393,
+00728663,
+00128293,
+ff9ff06f,
+03402303,
+00134313,
+02602a23,
+fd9ff06f;
+```
+
