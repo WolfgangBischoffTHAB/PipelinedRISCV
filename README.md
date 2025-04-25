@@ -18,11 +18,11 @@ A hazard unit is added. The hazard unit is working very similar to the control l
 
 ## Testing
 
-The CPU does currently not use SDRAM to store instrucations or data. Instead it uses BRAM created using Vivado's Block Memory Generator. The generated BRAM allows the use of "Coefficient Files" .coe to initialze the BRAM. 
+The CPU does currently not use SDRAM to store instrucations or data. Instead it uses BRAM created using Vivado's Block Memory Generator. The generated BRAM allows the use of "Coefficient Files" .coe to initialze the BRAM. .coe files are ASCII text files that contain a very simple file format. The .coe file format is documented here: https://docs.amd.com/r/en-US/ug896-vivado-ip/COE-File-Syntax
 
-To test the CPU initialize the BRAM with a .coe files.
+To test the CPU initialize the BRAM with a .coe file.
 
-In order to change the .coe file, the BRAM IP has to be regenerated since the simulation does not read the original .coe file but instead it looks at artefacts generated during BRAM IP creation! These artefacts contain the .coe data and changing the original .coe file will not trigger a regeneration of the BRAM IP. The steps to change the .coe file and to make the changed code available in the simulation are as such:
+In order to change the .coe file afte the initial BRAM generation, it is not enough to just enter new code into the .coe file! The BRAM IP has to be regenerated since the simulation does not read the original .coe file but instead it looks at artefacts generated during BRAM IP creation! These artefacts contain the .coe data and changing the original .coe file will not trigger a regeneration of the BRAM IP. The steps to change the .coe file and to make the changed code available in the simulation are as such:
 
 1. Quit vivado so that it does not lock the project folders under Microsoft Windows. You will have to delete some of the project folders for the solution. 
 
@@ -82,4 +82,31 @@ ff9ff06f,
 02602a23,
 fd9ff06f;
 ```
+
+The application above is the assembled machine code for this RISC V assembly application
+
+```
+00000293 		// addi x5, x0, 0
+00000313		// addi x6, x0, 0
+000003b7		// lui x7, 0
+00238393        // addi x7, x7, 2
+00728663		// beq x5, x7, 12
+00128293		// addi x5, x5, 1
+ff9ff06f		// jal x0, -8
+03402303        // lw x6, 52(x0)
+00134313		// xori x6, x6, 1
+02602a23		// sw x6, 52(x0)
+fd9ff06f		// jal x0, -40
+```
+
+The purpose of this application is to run an outer loop which contains an inner loop.
+The outer loop is endless and basically keeps the CPU busy constantly. It has the same purpose as the loop() function in an Arduino sketch in that it is called eternally the system is powered down.
+
+The inner loop counts wastes time by counting to a certain integer value. In the example above, the inner loop counts from zero to two. This sample is made for simulations or for CPUs clocked using a very slow clock. A real CPU counts from zero to two in a couple of nanoseconds whereas in a simulation or for a very slow CPU, counting from zero to two is actually a reasonable task.
+
+After the inner loop has wasted time, the application proceeds. It reads the memory cell at address 52 decimal or 0x34 hex. It will xor that value by 1 in order to toggle the least significant bit. Then it will write the toggled value back to memory at address 52d or 0x34.
+
+After toggling, the outer loop jumps back to it's start and the application continues doing the same thing indefinitely.
+
+What is the purpose of toggling cell 0x34? If you have a memory mapped peripheral such as a LED mapped to that exact memory cell and to then the application will make the LED blink.
 
