@@ -89,24 +89,24 @@ The application above is the assembled machine code for this RISC V assembly app
 00000293 		// addi x5, x0, 0
 00000313		// addi x6, x0, 0
 000003b7		// lui x7, 0
-00238393        // addi x7, x7, 2
+00238393		// addi x7, x7, 2
 00728663		// beq x5, x7, 12
 00128293		// addi x5, x5, 1
 ff9ff06f		// jal x0, -8
-03402303        // lw x6, 52(x0)
+03402303		// lw x6, 52(x0)
 00134313		// xori x6, x6, 1
 02602a23		// sw x6, 52(x0)
 fd9ff06f		// jal x0, -40
 ```
 
 The purpose of this application is to run an outer loop which contains an inner loop.
-The outer loop is endless and basically keeps the CPU busy constantly. It has the same purpose as the loop() function in an Arduino sketch in that it is called eternally the system is powered down.
+The outer loop is endless and basically keeps the CPU busy constantly. It has the same purpose as the loop() function in an Arduino sketch in that it is called eternally until the system is powered down.
 
-The inner loop counts wastes time by counting to a certain integer value. In the example above, the inner loop counts from zero to two. This sample is made for simulations or for CPUs clocked using a very slow clock. A real CPU counts from zero to two in a couple of nanoseconds whereas in a simulation or for a very slow CPU, counting from zero to two is actually a reasonable task.
+The inner loop wastes time by counting to a certain integer value. In the example above, the inner loop counts from zero to two. This sample is made for simulations or for CPUs clocked using a very slow clock. A real CPU counts from zero to two in a couple of nanoseconds whereas in a simulation or for a very slow CPU, counting from zero to two is a reasonable task.
 
 After the inner loop has wasted time, the application proceeds. It reads the memory cell at address 52 decimal or 0x34 hex. It will xor that value by 1 in order to toggle the least significant bit. Then it will write the toggled value back to memory at address 52d or 0x34.
 
 After toggling, the outer loop jumps back to it's start and the application continues doing the same thing indefinitely.
 
-What is the purpose of toggling cell 0x34? If you have a memory mapped peripheral such as a LED mapped to that exact memory cell and to then the application will make the LED blink.
+What is the purpose of toggling cell 0x34? If you have a memory mapped peripheral such as a LED mapped to that exact memory cell and to the least significant bit, then the application will make the LED blink.
 
