@@ -63,12 +63,13 @@ module hazard_unit(
     begin
     
         // Forward to solve data hazards when possible:
+        
+        // Case 1: The RS1 register in the execute phase is the same as the target register of the instruction currently in memory phase, forward Rd to Rs1
         if (((Rs1E == RdM) & RegWriteM) & (Rs1E != 5'b0))
         begin
             ForwardAE_temp = 2'b10;
         end     
-        else 
-        if (((Rs1E == RdW) & RegWriteW) & (Rs1E != 0))
+        else if (((Rs1E == RdW) & RegWriteW) & (Rs1E != 5'b0))
         begin
             ForwardAE_temp = 2'b01;
         end
@@ -89,8 +90,7 @@ module hazard_unit(
         begin
             ForwardBE_temp = 2'b10;
         end     
-        else 
-        if (((Rs2E == RdW) & RegWriteW) & (Rs2E != 0))
+        else if (((Rs2E == RdW) & RegWriteW) & (Rs2E != 5'b0))
         begin
             ForwardBE_temp = 2'b01;
         end

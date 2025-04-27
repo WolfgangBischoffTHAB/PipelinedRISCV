@@ -110,6 +110,157 @@ After toggling, the outer loop jumps back to it's start and the application cont
 
 What is the purpose of toggling cell 0x34? If you have a memory mapped peripheral such as a LED mapped to that exact memory cell and to the least significant bit, then the application will make the LED blink.
 
+## Forwarding
+
+Digital Design & Computer Architecture RISC-V Edition, Page 446
+
+Pseudo Code
+
+```
+s2 = 0
+s3 = 3
+s4 = 4
+s5 = 5
+s7 = 0
+s8 = 0
+s9 = 0
+t2 = 2
+t6 = 6
+s8 = s4 + s5	# s8 = 4 + 5 = 9
+s2 = s8 - s3    # s2 = 9 - 3 = 6
+s9 = t6 | s8    # s9 = 6 | 9 = 0110 | 1001 = 1111 = 15
+s7 = s8 & t2    # s7 = 9 & 2 = 1001 & 0010 = 0000 = 0
+```
+
+The content of the registers after executing this code is
+
+s2 / x18 = 6
+s3 / x19 = 3
+s4 / x20 = 4
+s5 / x21 = 5
+s7 / x23 = 0
+s8 / x24 = 9
+s9 / x25 = 15
+t2 / x7  = 2
+t6 / x31 = 6
+
+Assembly
+
+```
+lui s2, 0
+lui s3, 3
+lui s4, 4
+lui s5, 5
+lui s7, 0
+lui s8, 0
+lui s9, 0
+lui t2, 2
+lui t6, 6
+add s8, s4, s5
+sub s2, s8, s3
+or s9, t6, s8
+and s7, s8, t2
+```
+
+Machine Code
+
+```
+00000937
+000039b7
+00004a37
+00005ab7
+00000bb7
+00000c37
+00000cb7
+000023b7
+00006fb7
+015a0c33
+413c0933
+018fecb3
+007c7bb3
+```
+
+As .coe file for Vivado
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00000937,
+000039b7,
+00004a37,
+00005ab7,
+00000bb7,
+00000c37,
+00000cb7,
+000023b7,
+00006fb7,
+015a0c33,
+413c0933,
+018fecb3,
+007c7bb3;
+```
+
+## Pipeline Stall
+
+```
+1w s7, 40(s5)
+and s8, s7, t3
+or t2, s6, s7
+sub s3, s7, s2
+```
+
+## Pipeline Flush
+
+```
+		beq s1, s2, L1
+		sub s8, t1, s3
+		or s9, t6, s5
+L1: 	add s7, s3, s4
+```
+
+## Glitch with .coe Files
+
+There is a glitch with .coe files and the simulator. When the .coe file is updated, the simulator will still use the old file. 
+
+https://adaptivesupport.amd.com/s/question/0D52E00006iHjGmSAK/simulation-with-bram-ip-coe-file-updated-but-simulated-contents-do-not?language=en_US
+
+To solve that issue,
+
+1. Quit vivado so that it does not lock the project folders. 
+   You will have to delete some of the project folders for the solution. 
+
+2. delete the project .sim directory [..] and also delete the project.ip_user_files directory and re-launching the sim.
+
+	For example, delete these two folders:
+
+	C:\dev\fpga\PipelinedRISCV\riscv\riscv.sim
+	C:\dev\fpga\PipelinedRISCV\riscv\riscv.ip_user_files
+	
+3. Restart Vivado
+	
+4. Reset the IP so that it is regenerated. To reset the IP:
+
+	1. Switch to IP Sources in the Project Manager > Sources > Tab 
+	2. right click on the Block Design containing the IP, (or the IP itself if not contained in a BD) 
+	3. and select "Reset Output Products...".
+
+I'd suggest that you reset IP output product prior to regenerating IP output product.
+When IP customization is not changed, the previous IP cached result will be referenced. 
+In simulation, .coe is not used directly. 
+Instead, the associated .mif file is used. 
+So if IP output product is actually untouched, there's no difference in simulation.
+
+Thanks Patocarr & Graces! Resetting the IP products was the key. 
+For those not experienced with the procedure, don't become discouraged when the option is greyed out in the Sources/Hierarchy tab. 
+1. Switch to IP Sources, 
+2. right click on the Block Design containing the IP, (or the IP itself if not contained in a BD) 
+3. and select "Reset Output Products...".
+
+At first I couldn't figure out how to reset the output products so I tried just deleting the sim & ip_user_files directories. When the ip_user_files directory was recreated the updated COE file was present but the corresponding MIF file contained the old data (viewable in a text editor). Vivado appears to have a bug that allows these two files to be out of sync. Since 2019.2.1 is a pretty recent version, I'll see if I can submit a bug report about this.
+Thanks All!
+
+Another tipp: The .ceo parser seems to parse the comments! It is advisable to not place syntactically incorrect hex numbers or other code into the comments! The parser will parse the comments and fail which prevents the generation of IPs!
+
 # Next Steps
 
 - Check which instructions work and implement all instructions
