@@ -134,15 +134,38 @@ s7 = s8 & t2    # s7 = 9 & 2 = 1001 & 0010 = 0000 = 0
 
 The content of the registers after executing this code is
 
-s2 / x18 = 6
-s3 / x19 = 3
-s4 / x20 = 4
-s5 / x21 = 5
-s7 / x23 = 0
-s8 / x24 = 9
-s9 / x25 = 15
-t2 / x7  = 2
-t6 / x31 = 6
+t6    / x31 = 6
+t5    / x30
+t4    / x29
+t3    / x28
+s11   / x27
+s10   / x26
+s9    / x25 = 15
+s8    / x24 = 9
+s7    / x23 = 0
+s6    / x22
+s5    / x21 = 5
+s4    / x20 = 4
+s3    / x19 = 3
+s2    / x18 = 6
+a7    / x17
+a6    / x16
+a5    / x15
+a4    / x14
+a3    / x13
+a2    / x12
+a1    / x11
+a0    / x10
+s1    / x9
+s0/fp / x8
+t2    / x7  = 2
+t1    / x6
+t0    / x5
+tp    / x4
+gp    / x3
+sp    / x2
+ra    / x1
+zero  / x0
 
 Assembly
 
@@ -202,12 +225,105 @@ memory_initialization_vector=
 
 ## Pipeline Stall
 
+Pseudo Code
+
 ```
-1w s7, 40(s5)
+s5 = 0x08			# s5 = 8
+sw 0x28(s5), 0x77	# [0x08+0x28=0x30=48dec] = 0x77 = 119d
+t3 = 3				# t3 = 3
+s2 = 2				# s2 = 2
+s6 = 6				# s6 = 6
+1w s7, 40(s5)		# s7 = [8+40=48=0x30] =  = 119d
+s8 = s7 & t3		# s8 = 0x77 & 0x03 = 01110111 & 00000011 = 00000011 = 0x03
+t2 = s6 | s7        # t2 = 0x06 | 0x77 = 00100100 | 01110111 = 01110111 = 0x77
+s3 = s7 - s2        # s3 = 0x77 - 0x02 = 0x75
+```
+
+```
+lui x21, 0x08		# x21 = 8
+lui x6, 0x77 		# x6 = 119d
+sw x6, 40(x21)		# store value 0x77 to address 0x48 = 72dec
+lui x28, 0x03		# x28 = 3
+lui x18, 0x02		# x18 = 2
+lui x22, 0x06		# x22 = 6
+lw x23, 40(x21)		# x23 = 119d
+and x24, x23, x28	# x24 = 3
+or x7, x22, x23		# x7 = 119d
+sub x19, x23, x18	# x19 = 0x75 = 117d
+```
+
+```
+lui s5, 8
+lui t1, 0x77
+sw t1, 40(s5)
+lui t3, 3
+lui s2, 2
+lui s6, 6
+lw s7, 40(s5)
 and s8, s7, t3
 or t2, s6, s7
 sub s3, s7, s2
 ```
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00008ab7,
+00077337,
+026aa423,
+00003e37,
+00002937,
+00006b37,
+028aab83,
+01cbfc33,
+017b63b3,
+412b89b3;
+```
+
+```
+00008ab7		# lui x21, 8			# OK ## x21 = 8
+00077337        # lui x6, 119			# OK ## x6 = 119d
+026aa423        # sw x6, 40(x21)      	# OK ## address is 40 + 08 = 48dec = 0x30, stored value is 0x77 = 119d, [0x30, 48d] = 0x77,119d
+00003e37        # lui x28, 3			# OK ## x28 = 3
+00002937        # lui x18, 2			# OK ## x18 = 2
+00006b37        # lui x22, 6		    # OK ## x22 = 6
+028aab83        # lw x23, 40(x21)       # ER ## x23 = 0x77,119d
+01cbfc33        # and x24, x23, x28     # ?? ## x24 = 3
+017b63b3        # or x7, x22, x23       # ?? ## x7 = 119d
+412b89b3        # sub x19, x23, x18	    # ?? ## x19 = 0x75 = 117d
+```
+
+x1: 0
+x2: 0
+x3: 0
+x4: 0
+x5: 0
+x6: 119 = 0x77
+x7: 119 = 0x77
+x8: 0
+x9: 0
+x10: 0
+x11: 0
+x12: 0
+x13: 0
+x14: 0
+x15: 0
+x16: 0
+x17: 0
+x18: 2
+x19: 117  = 0x75
+x20: 0
+x21: 8
+x22: 6
+x23: 119
+x24: 3
+x25: 0
+x26: 0
+x27: 0
+x28: 3
+x29: 0
+x30: 0
+x31: 0
 
 ## Pipeline Flush
 

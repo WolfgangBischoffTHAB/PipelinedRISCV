@@ -249,7 +249,7 @@ module datapath(
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     
     flopenr #(32)      ALUResultE_PipelineRegister(clk, resetn, 1, ALUResultE, ALUResultM);
-    flopenr #(32)      WriteDataE_PipelineRegister(clk, resetn, 1, WriteDataE, WriteDataM);
+    flopenr #(32)      WriteDataE_PipelineRegister(clk, resetn, 1, muxConnectE, WriteDataM);
     flopenr #(32)             RdE_PipelineRegister(clk, resetn, 1, RdE, RdM);
     flopenr #(32)        PCPlus4E_PipelineRegister(clk, resetn, 1, PCPlus4E, PCPlus4M);
     
@@ -269,7 +269,7 @@ module datapath(
       .clka(fast_clk),      // input wire clka
       .rsta(!resetn),       // input wire rsta
       .ena(resetn),         // input wire ena
-      .wea({4{0}}),  // input wire [3 : 0] wea
+      .wea({4{MemWriteM}}),  // input wire [3 : 0] wea
       .addra(ALUResultM),          // input wire [31 : 0] addra
       .dina(WriteDataM),     // input wire [31 : 0] dina
       .douta(ReadDataM),//,          // output wire [31 : 0] douta
