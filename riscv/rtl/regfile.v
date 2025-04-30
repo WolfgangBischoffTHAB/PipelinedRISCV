@@ -32,9 +32,12 @@ module regfile(
     reg [31:0]  rd2_temp;
     
     // write third port on rising edge of clock (A3/WD3/WE3)
+    // This means a register write is executed on the first half cycle
     //
-    // Note: any write to register zero is actually executed.
-    // Therefore, the read operation needs to return the hardcoded zero.
+    // Note: any write to register zero is actually executed and not blocked.
+    // This means register zero will contain any value the user writes into it.
+    // Instead of returning the real value, the register 0 is intercepted during a 
+    // read operation and the hardcoded value 0 is returned.
     always @(posedge clk)
     begin
         if (resetn == 0)
@@ -85,6 +88,7 @@ module regfile(
         end
     end
 
+    // read in the second half cycle
     always @(negedge clk)
     begin
         rd1_temp = (a1 != 0) ? rf[a1] : 0;

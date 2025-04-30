@@ -46,10 +46,10 @@ module hazard_unit(
     
     // Stall when a load hazard occurs:
     wire lwStall;
-    assign lwStall = ResultSrcE & ((Rs1D == RdE) | (Rs2D == RdE));
+    assign lwStall = ResultSrcE[0] & ((Rs1D == RdE) | (Rs2D == RdE));
     assign StallF = lwStall;
     assign StallD = lwStall;
-    //assign FlushE = lwStall;
+    //assign FlushE = lwStall; // diabled because new definition on page 451
 
     // page 451
     

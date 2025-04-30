@@ -47,6 +47,8 @@ Here are some examples.
 
 ### Simple addi test
 
+00128293 == addi x5, x5, 1
+
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
@@ -64,6 +66,75 @@ memory_initialization_vector=
 ```
 
 This code increments the value in the x5 register by 1 constantly. You can check the simulation by making the top_testbench the top module and simulating it from within vivado.
+
+### store word (sw), load word (lw) test 
+
+pseudo code
+
+```
+x1 = 0x04			# x1 = 4
+x2 = 0x04			# s2 = 4
+[x1 + 0x04] = x2    # store the value 0x04 into the memory cell with address 0x08
+```
+
+Assembly
+
+```
+lui x1, 4
+lui x2, 4
+sw x2, 0x04(x1)
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+lw x3, 0x04(x1)
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+```
+
+Machine Code
+
+```
+000040b7	# lui x1, 4
+00004137	# lui x2, 4
+0020a223	# sw x2, 0x04(x1)
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+0040a183	# lw x3, 0x04(x1)
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+```
+
+.coe
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+000040b7,
+00004137,
+0020a223,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293,
+0040a183,
+00128293,
+00128293,
+00128293,
+00128293,
+00128293;
+```
 
 ### Loop and Branch test
 
@@ -223,7 +294,7 @@ memory_initialization_vector=
 007c7bb3;
 ```
 
-## Pipeline Stall
+## Pipeline Stall (page 449)
 
 Pseudo Code
 
@@ -233,7 +304,7 @@ sw 0x28(s5), 0x77	# [0x08+0x28=0x30=48dec] = 0x77 = 119d
 t3 = 3				# t3 = 3
 s2 = 2				# s2 = 2
 s6 = 6				# s6 = 6
-1w s7, 40(s5)		# s7 = [8+40=48=0x30] =  = 119d
+1w s7, 40(s5)		# s7 = [8+40=48d=0x30] =  = 119d
 s8 = s7 & t3		# s8 = 0x77 & 0x03 = 01110111 & 00000011 = 00000011 = 0x03
 t2 = s6 | s7        # t2 = 0x06 | 0x77 = 00100100 | 01110111 = 01110111 = 0x77
 s3 = s7 - s2        # s3 = 0x77 - 0x02 = 0x75
@@ -246,7 +317,7 @@ sw x6, 40(x21)		# store value 0x77 to address 0x48 = 72dec
 lui x28, 0x03		# x28 = 3
 lui x18, 0x02		# x18 = 2
 lui x22, 0x06		# x22 = 6
-lw x23, 40(x21)		# x23 = 119d
+lw x23, 40(x21)		# x23 = 119d, 40 = 40d = 0x28, 0x28 + 0x08 = 0x30 = 48d
 and x24, x23, x28	# x24 = 3
 or x7, x22, x23		# x7 = 119d
 sub x19, x23, x18	# x19 = 0x75 = 117d
@@ -287,7 +358,7 @@ memory_initialization_vector=
 00003e37        # lui x28, 3			# OK ## x28 = 3
 00002937        # lui x18, 2			# OK ## x18 = 2
 00006b37        # lui x22, 6		    # OK ## x22 = 6
-028aab83        # lw x23, 40(x21)       # ER ## x23 = 0x77,119d
+028aab83        # lw x23, 40(x21)       # ER ## x23 = 0x77,119d    time = 100 to 102 ns: ResultDataW contains the value 0x77. Why is it not written into reg x23 = 0x17
 01cbfc33        # and x24, x23, x28     # ?? ## x24 = 3
 017b63b3        # or x7, x22, x23       # ?? ## x7 = 119d
 412b89b3        # sub x19, x23, x18	    # ?? ## x19 = 0x75 = 117d
