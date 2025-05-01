@@ -225,11 +225,14 @@ module datapath(
 //    flopenr #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1, RD1E);
 //    flopenr #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
 
-    flopenr_anyclock #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1_muxed, RD1E);
-    flopenr_anyclock #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
+    //flopenr_anyclock #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), 1,   RD1_muxed, RD1E);
+    //flopenr_anyclock #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), 1,   RD2, RD2E);
+    
+    flopenr_anyclock #(32)      RD1_PipelineRegister(clk, 1, 1,   RD1_muxed, RD1E);    
+    flopenr_anyclock #(32)      RD2_PipelineRegister(clk, 1, 1,   RD2, RD2E);
 
     
-    flopenr #(32)      pcD_PipelineRegister(clk, (resetn & !FlushE), !StallF,   PCD, PCE);
+    flopenr #(32)      pcD_PipelineRegister(clk, (resetn & !FlushE), 1,   PCD, PCE);
     flopenr #(5)      rs1D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[19:15], Rs1E);
     flopenr #(5)      rs2D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[24:20], Rs2E);
     //flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[11:7], Rs2E);
