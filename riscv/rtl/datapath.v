@@ -79,6 +79,7 @@ module datapath(
     wire  [4:0] Rs1E;
     wire  [4:0] Rs2E;
     wire  [4:0] RdE;
+    //wire [31:0] ImmExtE_wire;
     wire [31:0] ImmExtE;
     wire [31:0] PCPlus4E;
     wire [31:0] ReadDataE;
@@ -220,7 +221,7 @@ module datapath(
 
     // DECODE pipeline registers to transfer state between DECODE and EXECUTE
 
-    //                                           resetn   
+    //                                           resetn              enable    in       out
 //    flopenr #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1, RD1E);
 //    flopenr #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
 
@@ -232,9 +233,11 @@ module datapath(
     flopenr #(5)      rs1D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[19:15], Rs1E);
     flopenr #(5)      rs2D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[24:20], Rs2E);
     //flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[11:7], Rs2E);
-    flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         RdD, RdE);
+    //flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         RdD, RdE);
+    flopenr #(5)       rdD_PipelineRegister(clk, 1, 1,         RdD, RdE);
     //flopenr #(5)       rdD_PipelineRegister(clk, (resetn), 1,         RdD, RdE);
-    flopenr #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
+    //flopenr #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
+    flopenr #(32)  immExtD_PipelineRegister(clk, 1, 1,         ImmExtD, ImmExtE);
     flopenr #(32) pcPlus4D_PipelineRegister(clk, (resetn & !FlushE), 1,         PCPlus4D, PCPlus4E);
     
     assign Rs1D_output = InstrD[19:15];

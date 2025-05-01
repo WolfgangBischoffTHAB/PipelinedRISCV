@@ -559,6 +559,11 @@ manuell dorthin scrollen muss. In einem Debugging Szenario wird geändert und ne
 Fehler an einer bestimmten Position zu fixen, dann möchte man immer wieder zu dem Marker zurück.
 Eventuell sollte diese Funktion togglebar sein.
 
+Verbesserungvorschlag: Neue Signale sollten nicht immer ganz unten eingefügt werden sondern der Benutzer 
+sollte wählen aus: Unterhalb/Oberhalb markiertem Signal einfügen, am Start einfügen, am Ende einfügen.
+Oder das eingefügt Signal sollte erstmal am Cursor kleben und dann erst eingefügt werden, wenn der Benutzer
+den Ort mit dem Cursor gefunden hat und dann die linke Maustaste klickt.
+
 
 ## Pipeline Stall (page 449)
 
@@ -624,11 +629,41 @@ memory_initialization_vector=
 00003e37        # lui x28, 3			# OK ## x28 = 3
 00002937        # lui x18, 2			# OK ## x18 = 2
 00006b37        # lui x22, 6		    # OK ## x22 = 6
-028aab83        # lw x23, 40(x21)       # ER ## x23 = 0x77,119d    time = 100 to 102 ns: ResultDataW contains the value 0x77. Why is it not written into reg x23 = 0x17
+028aab83        # lw x23, 40(x21)       # OK ## x23 = 0x77,119d
 01cbfc33        # and x24, x23, x28     # ?? ## x24 = 3
 017b63b3        # or x7, x22, x23       # ?? ## x7 = 119d
 412b89b3        # sub x19, x23, x18	    # ?? ## x19 = 0x75 = 117d
 ```
+
+### Instruction 028aab83 (lw x23, 40(x21))
+
+1. Look at InstrD[] and find 028aab83 (Decode Phase)
+	- dp.RD1 has to be 0x08 because this value has been loaded into register x21 via lui beforehand [OK]
+	- ImmExtD = 40dec = 0x28 [OK]
+	
+2. Execute Phase (ALU computes 40d + 0x08 to compute the memory address)
+	- ALUSrcE = 1 [OK]
+	- ImmSrcD = 3'b000 (this is the code for I-type instruction which lw is an I-type)
+//	- ImmExtE = 40dec = 0x28 [ERROR] the value is 0!!! The register performs a reset spontaneously! I do not know why?
+	- ImmExtE = 40dec = 0x28 [OK] the value is 0!!!
+	- SrcAE =  8dec [OK]
+	- SrcBE = 40dec = 0x28 [OK]
+	- ALUResultE = 0x30 = 48d [OK]
+	
+3. MemoryPhase 
+	- ALUResultM = 0x30 = 48d [OK]
+	- MemWriteM = 0 [OK]
+	- ReadDataM = 0x77, 119d [OK]
+	
+	
+### Instruction 01cbfc33 (and x24, x23, x28)
+
+Here, a stall is required because it is not possible to forward into the future!
+
+The condition is 
+
+lwStall = ResultSrcE[0] & ((Rs1D == RdE) | (Rs2D == RdE))
+StallF = StallD = FlushE = lwStall
 
 x1: 0
 x2: 0
@@ -661,6 +696,39 @@ x28: 3
 x29: 0
 x30: 0
 x31: 0
+
+
+x31: 0
+x30: 0
+x29: 0
+x28: 3
+x27: 0
+x26: 0
+x25: 0
+x24: 3
+x23: 119
+x22: 6
+x21: 8
+x20: 0
+x19: 117  = 0x75
+x18: 2
+x17: 0
+x16: 0
+x15: 0
+x14: 0
+x13: 0
+x12: 0
+x11: 0
+x10: 0
+x9: 0
+x8: 0
+x7: 119 = 0x77
+x6: 119 = 0x77
+x5: 0
+x4: 0
+x3: 0
+x2: 0
+x1: 0
 
 ## Pipeline Flush
 

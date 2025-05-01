@@ -55,7 +55,7 @@ module hazard_unit(
 
     // page 451
     
-    //Flush when a branch is taken or a load introduces a bubble:
+    // Flush when a branch is taken or a load introduces a bubble:
     assign FlushD = PCSrcE;
     assign FlushE = lwStall | PCSrcE;
 

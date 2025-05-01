@@ -12,8 +12,19 @@ module extend(
     always @(instr, immsrc)
 
         case (immsrc)
+        
+                // R-Type is register type. Register type instructions have no immediates encoded in the instruction machine code
+            // R-type 
+            // (and)
+            3'b111:
+            begin
+                //$display("[extend] S Type");
+                //immext <= { { 20{instr[31]} }, instr[31:25], instr[11:7] };
+                immext <= immext; // dummy 
+            end
 
-            // I−type, load word (lw)
+            // I-type
+            // load word (lw)
             // lui (00134313)
             3'b000:
             begin
@@ -21,21 +32,21 @@ module extend(
                 immext <= { { 20{instr[31]} }, instr[31:20] };
             end
 
-            // S−type (stores) (sw)
+            // S-type (stores) (sw)
             3'b001:
             begin
                 //$display("[extend] S Type");
                 immext <= { { 20{instr[31]} }, instr[31:25], instr[11:7] };
             end
 
-            // B−type (branches) (BEQ, ...)
+            // B-type (branches) (BEQ, ...)
             3'b010:
             begin
                 //$display("[extend] B Type");
                 immext <= { { 20{instr[31]} }, instr[7], instr[30:25], instr[11:8], 1'b0 };
             end
 
-            // U−type (lui, auipc)
+            // U-type (lui, auipc)
             // example: lui x7, 0x00 - 000003b7
             // example: lui x7, 0x15 - 0x000153b7
             3'b100:
@@ -44,7 +55,7 @@ module extend(
                 immext <= { { 12{instr[31]} }, instr[31:12] };
             end
 
-            // J−type (jal)
+            // J-type (jal)
             3'b011:
             begin
                 immext <= { {12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0 };
@@ -55,7 +66,8 @@ module extend(
             begin
                 //$display("[extend] default");
                 //$display("[extend] instr: %h, immsrc: %d", instr, immsrc);
-                immext <= 32'bx; // undefined
+                //immext <= 32'bx; // undefined
+                immext <= immext;
             end
             
         endcase

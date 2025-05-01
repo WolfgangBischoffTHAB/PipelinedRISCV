@@ -16,6 +16,7 @@ module flopenr #(parameter WIDTH = 32) (
     begin
         if (resetn == 0)
         begin
+            //q <= 1; // for debbugging
             q <= 0;
         end
         else

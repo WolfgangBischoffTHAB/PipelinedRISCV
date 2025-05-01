@@ -1,8 +1,12 @@
 module controller_single_cycle(
+
+    // input
     input   wire [6:0]  op,
     input   wire [2:0]  funct3,
     input   wire        funct7b5,
     input   wire        Zero,
+    
+    // output
     output  wire [1:0]  ResultSrc,
     output  wire        MemWrite,
     output  wire        ALUSrc,
