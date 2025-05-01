@@ -45,9 +45,60 @@ In order to change the .coe file afte the initial BRAM generation, it is not eno
 
 Here are some examples.
 
+
+
+
+
 ### Simple addi test
 
 00128293 == addi x5, x5, 1
+
+Pseudo Code
+
+```
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+x5 = x5 + 1
+```
+
+Assembly
+
+```
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+addi x5, x5, 1
+```
+
+Machine Code
+
+```
+00128293
+00128293
+00128293
+00128293
+00128293
+00128293
+00128293
+00128293
+00128293
+00128293
+```
+
+.coe
 
 ```
 memory_initialization_radix=16;
@@ -61,11 +112,17 @@ memory_initialization_vector=
 00128293,
 00128293,
 00128293,
-00128293,
 00128293;
 ```
 
+The result is:
+
+x5 = 10;        0x0a
+
 This code increments the value in the x5 register by 1 constantly. You can check the simulation by making the top_testbench the top module and simulating it from within vivado.
+
+
+
 
 ### store word (sw), load word (lw) test 
 
@@ -115,6 +172,20 @@ Machine Code
 00128293	# addi x5, x5, 1
 ```
 
+### Instruction 0020a223 (sw x2, 0x04(x1))
+
+1. Two cycles after the decode phase in the memory access phase, 
+	- ALUResultM which is the address has to be 0x08 [OK]
+	- WriteDataM which is the data to store has to be 0x04 [OK]
+	- MemWriteM which is used as WE (write enable) has to be 0x01 [OK]
+	
+### Instruction 0040a183 (lw x3, 0x04(x1))
+
+1. Two cycles after the decode phase in the memory access phase, 
+	- ALUResultM which is the address has to be 0x08 [OK]
+	- MemWriteM which is used as WE (write enable) has to be 0x00 [OK]
+	- ReadDataM which is the data retrieved from the memory block has to be 0x04 [OK]
+
 .coe
 
 ```
@@ -135,6 +206,41 @@ memory_initialization_vector=
 00128293,
 00128293;
 ```
+
+Register values after execution
+
+x31: 0
+x30: 0
+x29: 0
+x28: 0
+x27: 0
+x26: 0
+x25: 0
+x24: 0
+x23: 0
+x22: 0
+x21: 0
+x20: 0
+x19: 0
+x18: 0
+x17: 0
+x16: 0
+x15: 0
+x14: 0
+x13: 0
+x12: 0
+x11: 0
+x10: 0
+x9: 0
+x8: 0
+x7: 0
+x6: 0
+x5: 10
+x4: 0
+x3: 4
+x2: 4
+x1: 4
+x0: 0
 
 ### Loop and Branch test
 

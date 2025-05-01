@@ -16,11 +16,12 @@ module top(
 
     // slow clock signal
     wire slow_clock;
+    assign slow_clock = slow_clock_counter[2]; // for simulation
     //assign slow_clock = slow_clock_counter[16]; // way to fast to see
-    assign slow_clock = slow_clock_counter[20]; // quick
+    //assign slow_clock = slow_clock_counter[20]; // quick
     //assign slow_clock = slow_clock_counter[24]; // slow
     //assign slow_clock = slow_clock_counter[22]; // slow
-    
+   
     
     //
     // Reset logic
@@ -141,7 +142,8 @@ module top(
 
     riscv_multi rvmulti(
         // clock and reset
-        CLK12MHZ,                 // for simulation
+        //CLK12MHZ,                 // for simulation
+        slow_clock,
         //slow_clock_counter[1],    // for simulation
         //slow_clock_counter[0],    // for simulation
         //slow_clock,               // slow_clock for FPGA
