@@ -248,11 +248,12 @@ module datapath(
     //                 input A          input B     selector    muxed output
     mux2 #(32) srcBEMux2(WriteDataE,    ImmExtE,     ALUSrcE,     SrcBE);
     
-    // ALU
+    // ALU for arithmetic operations
     //              input A         input B         operation           result output       zero flag
     alu #(32) alu(  SrcAE,          SrcBE,          ALUControlE,        ALUResultE,          ZeroE);    
     
-    // increment PC by a single instruction
+    // ALU to increment PC for jumps and branches
+    //
     alu_addonly #(32) extract_alu_addonly(
         PCE,
         ImmExtE,

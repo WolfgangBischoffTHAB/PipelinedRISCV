@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="62.080 ns"></ZoomStartTime>
-      <ZoomEndTime time="114.316 ns"></ZoomEndTime>
-      <Cursor1Time time="72.000 ns"></Cursor1Time>
+      <ZoomStartTime time="78.940 ns"></ZoomStartTime>
+      <ZoomEndTime time="107.156 ns"></ZoomEndTime>
+      <Cursor1Time time="91.250 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="209"></NameColumnWidth>
+      <NameColumnWidth column_width="202"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="93" />
+   <WVObjectSize size="105" />
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -312,6 +312,22 @@
       <obj_property name="ElementShortName">RegWriteW</obj_property>
       <obj_property name="ObjectShortName">RegWriteW</obj_property>
    </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/Rs1E" type="array">
+      <obj_property name="ElementShortName">Rs1E[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs1E[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/Rs2E" type="array">
+      <obj_property name="ElementShortName">Rs2E[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs2E[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/Rs1E_output" type="array">
+      <obj_property name="ElementShortName">Rs1E_output[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs1E_output[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/Rs2E_output" type="array">
+      <obj_property name="ElementShortName">Rs2E_output[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs2E_output[4:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs1E" type="array">
       <obj_property name="ElementShortName">Rs1E[4:0]</obj_property>
       <obj_property name="ObjectShortName">Rs1E[4:0]</obj_property>
@@ -319,6 +335,7 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/rf/rf" type="array">
       <obj_property name="ElementShortName">rf[31:0][31:0]</obj_property>
       <obj_property name="ObjectShortName">rf[31:0][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/data_memory/clka" type="logic">
       <obj_property name="ElementShortName">clka</obj_property>
@@ -380,9 +397,17 @@
       <obj_property name="ElementShortName">WriteDataM[31:0]</obj_property>
       <obj_property name="ObjectShortName">WriteDataM[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RdM" type="array">
+      <obj_property name="ElementShortName">RdM[4:0]</obj_property>
+      <obj_property name="ObjectShortName">RdM[4:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs1D" type="array">
       <obj_property name="ElementShortName">Rs1D[4:0]</obj_property>
       <obj_property name="ObjectShortName">Rs1D[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs1E" type="array">
+      <obj_property name="ElementShortName">Rs1E[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs1E[4:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RdE" type="array">
       <obj_property name="ElementShortName">RdE[4:0]</obj_property>
@@ -391,5 +416,29 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs2D" type="array">
       <obj_property name="ElementShortName">Rs2D[4:0]</obj_property>
       <obj_property name="ObjectShortName">Rs2D[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs2E" type="array">
+      <obj_property name="ElementShortName">Rs2E[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Rs2E[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/ALUResultM" type="array">
+      <obj_property name="ElementShortName">ALUResultM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ALUResultM[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/ALUResultE" type="array">
+      <obj_property name="ElementShortName">ALUResultE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ALUResultE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RegWriteM" type="logic">
+      <obj_property name="ElementShortName">RegWriteM</obj_property>
+      <obj_property name="ObjectShortName">RegWriteM</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/RegWriteM" type="logic">
+      <obj_property name="ElementShortName">RegWriteM</obj_property>
+      <obj_property name="ObjectShortName">RegWriteM</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RdW" type="array">
+      <obj_property name="ElementShortName">RdW[4:0]</obj_property>
+      <obj_property name="ObjectShortName">RdW[4:0]</obj_property>
    </wvobject>
 </wave_config>

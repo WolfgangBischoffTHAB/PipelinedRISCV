@@ -177,7 +177,7 @@ module riscv_multi(
        /* input  wire [4:0]*/       .RdE(RdE_output),
         
         // input MEMORY ACCESS stage
-        /*input  wire        */     .RegWriteM(MemWriteM),
+        /*input  wire        */     .RegWriteM(RegWriteM),
         /*input  wire [4:0]  */     .RdM(RdM_output),
         
         // input WRITEBACK stage

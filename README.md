@@ -203,6 +203,22 @@ s9 = t6 | s8    # s9 = 6 | 9 = 0110 | 1001 = 1111 = 15
 s7 = s8 & t2    # s7 = 9 & 2 = 1001 & 0010 = 0000 = 0
 ```
 
+```
+x18 = 0
+x19 = 3
+x20 = 4
+x21 = 5
+x23 = 0
+x24 = 0
+x25 = 0
+x5 = 2
+x31 = 6
+x24 = x20 + x21		# s8 = 4 + 5 = 9
+x18 = x24 - x19    	# s2 = 9 - 3 = 6
+x25 = x31 | x24    	# s9 = 6 | 9 = 0110 | 1001 = 1111 = 15
+x23 = x24 & x7    	# s7 = 9 & 2 = 1001 & 0010 = 0000 = 0
+```
+
 The content of the registers after executing this code is
 
 t6    / x31 = 6
@@ -213,7 +229,7 @@ s11   / x27
 s10   / x26
 s9    / x25 = 15
 s8    / x24 = 9
-s7    / x23 = 0
+s7    / x23
 s6    / x22
 s5    / x21 = 5
 s4    / x20 = 4
@@ -259,19 +275,19 @@ and s7, s8, t2
 Machine Code
 
 ```
-00000937
-000039b7
-00004a37
-00005ab7
-00000bb7
-00000c37
-00000cb7
-000023b7
-00006fb7
-015a0c33
-413c0933
-018fecb3
-007c7bb3
+00000937	# lui x18, 0
+000039b7	# lui x19, 3
+00004a37	# lui x20, 4
+00005ab7	# lui x21, 5
+00000bb7	# lui x23, 0
+00000c37	# lui x24, 0
+00000cb7	# lui x25, 0
+000023b7	# lui x7, 2
+00006fb7	# lui x31, 6
+015a0c33	# add x24, x20, x21
+413c0933	# sub x18, x24, x19
+018fecb3	# or x25, x31, x24
+007c7bb3	# and x23, x24, x7
 ```
 
 As .coe file for Vivado
@@ -293,6 +309,150 @@ memory_initialization_vector=
 018fecb3,
 007c7bb3;
 ```
+
+## Reading the WireChart diagram to see where errors are:
+
+### Instruction 00000937
+1. Look at InstrD[] and find 00000937
+2. Four cycles later (where InstrD[] is filled with 00000c37) the instruction 00000937 is in it's write back phase and the register is updated
+3. Check if register x18 has the value 0 
+[OK]
+
+### Instruction 000039b7
+1. Look at InstrD[] and find 000039b7
+2. Four cycles later (where InstrD[] is filled with 00000c37) the instruction 000039b7 is in it's write back phase and the register is updated
+3. Check if register x19 has the value 3 
+[OK]
+
+### Instruction 00004a37
+1. Look at InstrD[] and find 00004a37
+2. Four cycles later (where InstrD[] is filled with 00000cb7) the instruction 00004a37 is in it's write back phase and the register is updated
+3. Check if register x20 has the value 4
+[OK]
+
+### Instruction 00005ab7
+1. Look at InstrD[] and find 00005ab7
+2. Four cycles later (where InstrD[] is filled with 000023b7) the instruction 00005ab7 is in it's write back phase and the register is updated
+3. Check if register x21 has the value 5
+[OK]
+
+### Instruction 00000bb7
+1. Look at InstrD[] and find 00000bb7
+2. Four cycles later (where InstrD[] is filled with 00006fb7) the instruction 00000bb7 is in it's write back phase and the register is updated
+3. Check if register x23 has the value 0
+[OK]
+
+### Instruction 00000c37
+1. Look at InstrD[] and find 00000c37
+2. Four cycles later (where InstrD[] is filled with 015a0c33) the instruction 00000c37 is in it's write back phase and the register is updated
+3. Check if register x24 has the value 0
+[OK]
+
+### Instruction 00000cb7
+1. Look at InstrD[] and find 00000cb7
+2. Four cycles later (where InstrD[] is filled with 413c0933) the instruction 00000cb7 is in it's write back phase and the register is updated
+3. Check if register x25 has the value 0
+[OK]
+
+### Instruction 000023b7
+1. Look at InstrD[] and find 000023b7
+2. Four cycles later (where InstrD[] is filled with 018fecb3) the instruction 000023b7 is in it's write back phase and the register is updated
+3. Check if register x7 has the value 2
+[OK]
+
+### Instruction 00006fb7 (lui x31, 6)
+1. Look at InstrD[] and find 00006fb7 (execute phase)
+2. Four cycles later (where InstrD[] is filled with 007c7bb3) the instruction 00006fb7 is in it's write back phase and the register is updated
+3. Check if register x31 has the value 6
+[OK]
+
+### Instruction 015a0c33 (add x24, x20, x21)
+1. Look at InstrD[] and find 015a0c33. This is the Decode Phase!
+
+2. One cycle later (InstrD[] = 413c0933) in the Execute Phase, the register ALUResultE has to contain the value 9
+[OK]
+
+3. Two cycles later (InstrD[] = 007c7bb3) in the Memory Access Phase, the register ALUResultM has to contain the value 9
+[OK]
+
+4. Three cycles later (where InstrD[] is filled with 00000000) the instruction 015a0c33 is in it's write back phase and the registers are update
+
+5. Check if register x24 has the value 5 + 4 = 9
+[OK]
+
+### Instruction 413c0933 (sub x18, x24, x19). 
+HINT: This is where a forward from the last instruction should take place!
+The last instruction computed a value for register x24 but that value is not written to the register x24 when the sub instruction is executed!
+The forward will provide the value to the sub instructions first parameter
+1. Look at InstrD[] and find 413c0933 (Decode Phase)
+2. In the execute phase P(413c0933) + 1 (InstrD[] = 018fecb3)
+	- ALUResultM has to contain the result from the previous add instruction: 9 [OK]
+	- The hazard unit has to output a ForwardAE = 10 signal. [ERROR]
+		- hu.RDM = x24 = 0x18 [OK]
+		- hu.RS1E = x24 = 0x18 [OK]
+		- hu.RegWriteM = x24 = 0x18 []
+2. Four cycles later (where InstrD[] is filled with 00000000) the instruction 413c0933 is in it's write back phase and the register are update
+3. Check if register x18 has the value 9 - 3 = 6
+[OK]
+
+### Instruction 018fecb3 (or x25, x31, x24)
+
+WRITE_BACK PHASE:	00006fb7 (lui x31, 6) -> ResultW == ResultDataW is 6 (this value is used 
+MEMORY PHASE:  		015a0c33 (add x24, x20, x21)
+EXECUTE PHASE: 		413c0933 (sub x18, x24, x19)
+DECODE PHASE:  		018fecb3 (or x25, x31, x24)
+
+PROBLEM: the LUI instruction that loads register x31 is not yet done with it's writeback phase!
+The pipeline incorrectly uses x31 register value 0x00 because the lui value 6 has not yet arrived in register x31!
+The correct value 6 is currently located in 
+
+HINT: The hazard unit has to forward the register x24 from the instruction 015a0c33 (add x24, x20, x21) 
+into the register RD2E of the execute Phase or-instruction
+
+1. Look at InstrD[] and find 018fecb3 (Decode Phase)
+	- dp.RD1 muss den Wert von Register x31 = 0x06 enthalten!
+		PROBLEM: Der Wert 0x06 der lui instruction is jetzt noch nicht in das Register zurückgeschrieben worden!
+		Die Pipeline merkt sich den inkorrekten Wert 0x00.
+		Der Compiler muss lui für x31 so verschieben, dass fünf takte zwischen dem lui und der Verwendung des Rd
+		register liegen. Oder die Hazard Unit muss einen korrekten Forward machen! Der Wert 0x06 liegt in ALUResultM
+		which is the MemoryPhase's ALUResult register. 
+		
+		I think there is no forward hardware in the pipeline that supports forwarding ResultW == ResultDataW 
+		to the Decode phase! There is no mux between the register file output RD1 and the pipeline gate register RD1D!
+		
+		dp.ForwardAE muss 10 sein
+
+2. In the execute phase P(018fecb3) + 1 (Execute Phase) (InstrD[] = 007c7bb3)
+	- dp.SrcAE has to be the value of register x31, which is 6 [ERROR]
+		- hu.ForwardAE muss 01 sein damit der Registerinhalt aus der writeback phase verwendt wird (ReadDataW --> SrcAE) [Error]
+		- dp.ForwardAE muss 01 sein
+			(((hu.Rs1E == hu.RdW) & RegWriteW) & (hu.Rs1E != 5'b0))
+		- dp.ForwardBE muss 00 sein damit der Register inhalt direkt verwendet wird (RD1E --> SrcAE) [OK]
+		- dp.RD1E muss den Wert 0x06 enthalten, da dies der Wert des Registers x31 ist. [ERROR]
+	- dp.SrcBE has to be the value of register x24, which is 9 [OK]
+
+3. Check if register x25 has the value 15d = 0x0F
+
+
+
+
+
+
+
+Verbesserungsvorschlag für wiretrace-Darstellung: 
+Signale mit hierarchischen Namen anzeigen.
+Wenn zwei komponenten die gleichen Signalnamen verwenden, muss man erst mit der Maus hovern um einen
+Tooltip zu erhalten, der zeigt, welchen Wert aus welcher Komponente man gerade betrachtet.
+Es wäre schneller, wenn die Namen direkt hierarchisch angezeigt werden.
+Bsp. dp.RdM und hu.RdM
+
+Verbesserungsvorschlag für wiretrace-Darstellung: 
+Das WireTrace merkt sich die Zeit / den Ort des Markers.
+Die Ansicht sollte nach dem laden direkt zu diesem Marker springen, so dass der Benutzer nicht
+manuell dorthin scrollen muss. In einem Debugging Szenario wird geändert und neu simuliert um einen
+Fehler an einer bestimmten Position zu fixen, dann möchte man immer wieder zu dem Marker zurück.
+Eventuell sollte diese Funktion togglebar sein.
+
 
 ## Pipeline Stall (page 449)
 

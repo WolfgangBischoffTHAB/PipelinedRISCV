@@ -64,7 +64,7 @@ module hazard_unit(
     
         // Forward to solve data hazards when possible:
         
-        // Case 1: The RS1 register in the execute phase is the same as the target register of the instruction currently in memory phase, forward Rd to Rs1
+        // Case 1: The RS1 register in the execute phase is the same as the target register of the instruction currently in memory phase, forward Rd of predecessor to Rs1 of current instruction
         if (((Rs1E == RdM) & RegWriteM) & (Rs1E != 5'b0))
         begin
             ForwardAE_temp = 2'b10;
