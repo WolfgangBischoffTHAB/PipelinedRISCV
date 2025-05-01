@@ -75,7 +75,7 @@ module alu #(parameter WIDTH = 32) (
             end
 
             // or, ori
-            3'b110:
+            3'b110: // 6 dec
             begin
                 //$display("[ALU] or, ori");
                 ALUResult = a_in | b_in;

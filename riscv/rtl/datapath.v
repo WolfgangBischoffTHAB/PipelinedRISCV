@@ -14,6 +14,7 @@ module datapath(
     input  wire             RegWriteW,      // write enable for the register file
     input  wire             FlushD,
     input  wire             StallD,
+    input  wire             ForwardRD1,
     
     // input EXECUTE stage
     input  wire [2:0]       ALUControlE,
@@ -36,6 +37,7 @@ module datapath(
     output  wire            funct7b5,       // funct7b5
     output  wire [4:0]      Rs1D_output,
     output  wire [4:0]      Rs2D_output,
+    //output  wire [4:0]      A1,
     
     // output EXECUTE stage
     output  wire            ZeroE,           // the ALU has computed a result that is zero (for branching instructions)
@@ -66,8 +68,9 @@ module datapath(
     wire [31:0] PCD;
     wire [31:0] PCPlus4D;
     wire [31:0] RD1;
+    wire [31:0] RD1_muxed;
     wire [31:0] RD2;
-    wire [4:0] RdD;
+    wire [4:0]  RdD;
     
     // Execute Pipeline Stage
     wire [31:0] RD1E;
@@ -88,7 +91,7 @@ module datapath(
     // Memory Access Pipeline Stage
     wire [31:0] ALUResultM;
     wire [31:0] WriteDataM;
-    wire [4:0] RdM;
+    wire [4:0]  RdM;
     wire [31:0] PCPlus4M;
     wire [31:0] ReadDataM;
     //output  wire [31:0]     ReadDataData,   // output from data memory
@@ -100,6 +103,7 @@ module datapath(
     wire [4:0]  RdW;
     wire        PCPlus4W;
     wire [31:0] ResultW;
+    wire [31:0] ResultDataW;
     
 //    // reset logic
 //    //always @(posedge fast_clk, negedge resetn)
@@ -203,6 +207,11 @@ module datapath(
         .rd2(RD2)               // [out] the output where the value from register a2 appears
     );
     
+    // WBI: forward ReadDataW into the decode phase for lui instructions in their writeback phase affecting arithmetic instructions in their decode phase
+    //                 input A          input B     selector    muxed output
+    //mux2 #(32) srcRD1Mux2(RD1,    ResultW,     ForwardRD1,     RD1_muxed);
+    mux2 #(32) srcRD1Mux2(RD1,    ResultW,     0,     RD1_muxed);
+    
     // sign extend module
     // param 1 = instruction bits (part of the instruction to sign extend)
     // param 2 = type of instruction that is sign extension applied to
@@ -215,7 +224,7 @@ module datapath(
 //    flopenr #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1, RD1E);
 //    flopenr #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
 
-    flopenr_anyclock #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1, RD1E);
+    flopenr_anyclock #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD1_muxed, RD1E);
     flopenr_anyclock #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), !StallF,   RD2, RD2E);
 
     

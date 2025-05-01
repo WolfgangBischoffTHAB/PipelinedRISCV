@@ -29,7 +29,7 @@ module aludec(
                             ALUControl = 3'b000; // add, addi
                     end
                     3'b010: begin ALUControl = 3'b101; end // slt, slti
-                    3'b110: begin ALUControl = 3'b011; end // or, ori
+                    3'b110: begin ALUControl = 3'b110; end // or, ori
                     3'b111: begin ALUControl = 3'b010; end // and, andi
 //                    default: begin ALUControl = 3'bxxx; end // ???
                     default: begin ALUControl = 3'b000; end // ???

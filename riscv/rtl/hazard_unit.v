@@ -31,16 +31,18 @@ module hazard_unit(
     // output EXECUTE stage
     output  wire            FlushE,
     output  wire [1:0]      ForwardAE,
-    output  wire [1:0]      ForwardBE
+    output  wire [1:0]      ForwardBE,
     
     // output MEMORY ACCESS stage
     
     // output WRITEBACK stage
+    output wire             ForwardRD1
 
 );
 
-    reg [1:0] ForwardAE_temp;
-    reg [1:0] ForwardBE_temp;
+    reg [1:0]   ForwardAE_temp;
+    reg [1:0]   ForwardBE_temp;
+    reg         ForwardRD1_temp;
 
     // page 450
     
@@ -102,5 +104,21 @@ module hazard_unit(
     end
     
     assign ForwardBE = ForwardBE_temp;
+    
+    always @*
+    begin
+    
+        if ((RdW == Rs1D) & (RdW != 5'b0))
+        begin
+            ForwardRD1_temp = 1;
+        end
+        else
+        begin
+            ForwardRD1_temp = 0;
+        end
+    
+    end
+    
+    assign ForwardRD1 = ForwardRD1_temp;
     
 endmodule

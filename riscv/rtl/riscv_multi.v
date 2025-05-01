@@ -25,6 +25,7 @@ module riscv_multi(
     wire [2:0]      ImmSrcD;        // enable sign extension of the immediate value
     wire            wireFlushD;
     wire            wireStallD;
+    wire            wireForwardRD1;
     
     // input EXECUTE stage
     wire [2:0]      ALUControlE;
@@ -48,6 +49,7 @@ module riscv_multi(
     wire            funct7b5;       // funct7b5
     wire [4:0]      Rs1D_output;
     wire [4:0]      Rs2D_output;
+//    wire [4:0]      A1_wire;
     
     // output EXECUTE stage
     wire            ZeroE;           // the ALU has computed a result that is zero (for branching instructions)
@@ -121,6 +123,7 @@ module riscv_multi(
     /*input  wire  */           .RegWriteW(RegWriteW),      // write enable for the register file
     /*input  wire   */          .FlushD(FlushD),
     /*input  wire  */           .StallD(StallD),
+                                .ForwardRD1(wireForwardRD1),
     
     // input EXECUTE stage
     /*input  wire [2:0]  */     .ALUControlE(ALUControlE),
@@ -143,6 +146,7 @@ module riscv_multi(
     /*output  wire*/            .funct7b5(funct7b5),       // funct7b5
     /*output  wire [4:0] */     .Rs1D_output(Rs1D_output),
     /*output  wire [4:0]  */    .Rs2D_output(Rs2D_output),
+//                                .A1(A1_wire),
     
     // output EXECUTE stage
     /*output  wire      */      .ZeroE(ZeroE),           // the ALU has computed a result that is zero (for branching instructions)
@@ -194,7 +198,10 @@ module riscv_multi(
         // output EXECUTE stage
        /* output  wire    */        .FlushE(FlushE),
        /* input  wire [1:0]  */     .ForwardAE(ForwardAE),
-       /* input  wire [1:0]  */     .ForwardBE(ForwardBE)
+       /* input  wire [1:0]  */     .ForwardBE(ForwardBE),
+       
+       // output writeback stage
+                                    .ForwardRD1(wireForwardRD1)
     );
 
 endmodule
