@@ -4,7 +4,7 @@ module controller_single_cycle(
     input   wire [6:0]  op,
     input   wire [2:0]  funct3,
     input   wire        funct7b5,
-    input   wire        Zero,
+    input   wire        Zero,       // not used!
     
     // output
     output  wire [1:0]  ResultSrc,

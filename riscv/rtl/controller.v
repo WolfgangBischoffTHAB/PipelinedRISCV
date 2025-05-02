@@ -17,6 +17,7 @@ module controller (
     
     // input EXECUTE stage
     input       wire            ZeroE,          // the ALU has computed a result that is zero (for branching instructions)
+    input       wire            Negative,
     
     // input MEMORY ACCESS stage
     
@@ -139,7 +140,7 @@ module controller (
     // EXECUTE section of the pipeline
     //
     
-    assign PCSrcE = ( BranchE & ZeroE ) | JumpE;
+    assign PCSrcE = ( BranchE & ( ZeroE | Negative ) ) | JumpE;
     
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     

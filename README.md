@@ -564,6 +564,9 @@ sollte wählen aus: Unterhalb/Oberhalb markiertem Signal einfügen, am Start ein
 Oder das eingefügt Signal sollte erstmal am Cursor kleben und dann erst eingefügt werden, wenn der Benutzer
 den Ort mit dem Cursor gefunden hat und dann die linke Maustaste klickt.
 
+Verbesserungsvorschlag: The IDE should keep the same tabs open in the same order to allow the user
+to keep working where they took off last time more quickly and easily.
+
 
 ## Pipeline Stall (page 449)
 
@@ -630,9 +633,9 @@ memory_initialization_vector=
 00002937        # lui x18, 2			# OK ## x18 = 2
 00006b37        # lui x22, 6		    # OK ## x22 = 6
 028aab83        # lw x23, 40(x21)       # OK ## x23 = 0x77,119d
-01cbfc33        # and x24, x23, x28     # ?? ## x24 = 3
+01cbfc33        # and x24, x23, x28     # OK ## x24 = 3
 017b63b3        # or x7, x22, x23       # ?? ## x7 = 119d
-412b89b3        # sub x19, x23, x18	    # ?? ## x19 = 0x75 = 117d
+412b89b3        # sub x19, x23, x18	    # OK ## x19 = 0x75 = 117d
 ```
 
 ### Instruction 028aab83 (lw x23, 40(x21))
@@ -664,6 +667,13 @@ The condition is
 
 lwStall = ResultSrcE[0] & ((Rs1D == RdE) | (Rs2D == RdE))
 StallF = StallD = FlushE = lwStall
+
+### Instruction 017b63b3 (or x7, x22, x23)
+
+1. Look at InstrD[] and find 017b63b3 (Decode Phase)
+
+
+Register values
 
 x31: 0
 x30: 0
@@ -705,6 +715,281 @@ x1: 0
 		or s9, t6, s5
 L1: 	add s7, s3, s4
 ```
+
+
+
+
+
+
+
+### Example modulo
+
+mod_res = a % b
+3 = 15 % 6
+
+Pseudo Application
+
+```
+	int a = 15;
+	int b = 6;
+
+	int a_temp = a;
+	int mod_res = 0;
+		
+modulo_label:
+	
+	if a_temp < b		
+		goto modulo_end
+	
+	a_temp = a_temp - b
+	mod_res = a_temp;
+	
+	goto modulo_label;
+		
+modulo_end:
+```
+
+Simpler Pseudo Application
+
+```
+	int a = 15;
+	int b = 6;
+	int mod_res = 0;
+	
+modulo_label:
+	
+	if a < b		
+		goto modulo_end
+	
+	a = a - b
+	mod_res = a;
+	
+	goto modulo_label;
+		
+modulo_end:
+```
+
+Assembly
+
+```
+	lui x5, 15
+	lui x6, 6
+
+module_label:
+	blt x5, x6, modulo_end
+	sub x5, x5, x6
+	mv x7, x5
+	j module_label
+	
+modulo_end:
+```
+
+Machine Code:
+
+```
+0000f2b7		# lui x5, 15			# 0x00
+00006337		# lui x6, 6				# 0x04
+0062c863		# blt x5, x6, 16		# 0x08
+406282b3		# sub x5, x5, x6		# 0x0C
+00028393		# addi x7, x5, 0		# 0x10
+ff5ff06f		# jal x0, -12			# 0x14
+```
+
+
+
+### Instruction 0062c863 (blt x5, x6, 16) -- First Iteration
+
+1. Decode Phase - Look at InstrD[] and find 0062c863
+
+	- ImmSrcD is 0x02, this is the decode for B-type (branches)
+	- ImmExtD is 0x10 which is +16
+	
+2. Execute Phase - Look at InstrD[] and find 406282b3
+
+	- RD1E is 0x00 - because the lui x5, 15 instruction is still in flight
+	- RD2E is 0x00 - because the lui x6, 6 instruction is still in flight
+	
+	- ForwardAE = 1
+	- ForwardBE = 2
+
+	- SrcAE = 15d = 0x0f is the first parameter to the ALU
+	- SrcBE = 6d = 0x06 is the second parameter to the ALU
+	
+	- ALUControlE is 1 which is the subtract operation
+	- ALUResultE = 0x09
+	
+	- PCSrcE 
+		-- In the first iteration, BLT is not taken and the pipeline should not execute the jump.
+		Therefore, in the first iteration PCSrcE has to be 0.
+		-- In the second iteration, BLT is not taken and the pipeline should not execute the jump.
+		Therefore, in the second iteration PCSrcE has to be 0.
+		-- In the third iteration, BLT is taken and the pipeline should execute the jump.
+		Therefore, in the third iteration PCSrcE has to be 1 so that the pipeline takes the new PC 
+		value from the jump-ALU and so that it flushes the rest of the pipeline.
+
+### Instruction 0062c863 (blt x5, x6, 16) -- Second Iteration
+
+1. Decode Phase - Look at InstrD[] and find the second occurence of 0062c863
+		
+	- ImmSrcD is 0x02, this is the decode for B-type (branches)
+	- ImmExtD is 0x10 which is +16
+	
+2. Execute Phase - look at next instruction after the second occurence of 0062c863
+
+	- RD1E is 0x09 - from last iteration
+	- RD2E is 0x06 - from last iteration
+	
+	- ForwardAE = 0
+	- ForwardBE = 0
+	
+	- SrcAE = 9
+	- SrcBE = 6
+	
+	- ALUControlE is 1 which is the subtract operation
+	- ALUResultE = 0x03
+	
+	- PCSrcE = 0
+		-- In the second iteration, BLT is not taken and the pipeline should not execute the jump.
+		Therefore, in the second iteration PCSrcE has to be 0.
+		
+### Instruction 0062c863 (blt x5, x6, 16) -- Third Iteration
+
+1. Decode Phase - Look at InstrD[] and find the third occurence of 0062c863
+		
+	- ImmSrcD is 0x02, this is the decode for B-type (branches)
+	- ImmExtD is 0x10 which is +16
+	
+2. Execute Phase - look at next instruction after the third occurence of 0062c863
+
+	- RD1E is 0x03 - from last iteration
+	- RD2E is 0x06 - from last iteration
+	
+	- ForwardAE = 0
+	- ForwardBE = 0
+	
+	- SrcAE = 3
+	- SrcBE = 6
+	
+	- ALUControlE is 1 which is the subtract operation
+	- ALUResultE = -3d == 0xfffffffd
+	
+	- ZeroE = 0
+	- Negative = 1
+	
+	- PCSrcE = 1
+		-- In the third iteration, BLT is taken and the pipeline should execute the jump.
+		Therefore, in the third iteration PCSrcE has to be 1.
+		
+	- PCTargetE is 0x18 which is after the entire application at the end-label which is correct 
+
+### Instruction 406282b3 (sub x5, x5, x6)
+
+1. Decode Phase - Look at InstrD[] and find 406282b3
+	- ImmExtD = will not decode any important value since sub is a R-Type and stores only
+		registers but no immediate values in the instruction
+	- In the middle of the decode phase, with the falling clock edge (risign rf clock edge), the register file
+	has to latch/store the value 0x0f into the register x5!
+	
+2. Execute Phase - Look at InstrD[] and find 00028393
+	(ALU computes 15d - 6d = 9d to compute the first step in the modulo loop)
+
+	NOTE: In this phase, the second instruction (lui x6, 6) is still in transit and has not yet
+	written back the immediate value 6d into the register x6! A forward into the Execute Phase
+	of the sub x5, x5, x6 instruction has to happen! The signal ForwardBE has to be 1!
+	
+	- ForwardAE = 0 because no forward happens and the register file is read from RD1E (register x5 = 15d = 0x0f)
+	- ForwardBE = 1 because the register file is not written yet and the value for the immediate 2 (x6) is
+		taken from the forwarded value ResultW.
+		
+	- ResultW = 6d - this is the correct value that the instruction lui x6, 6 wants to place into register x6
+	
+	- ALUSrcE = 0 to read 2nd parameter from the forward muxer
+	
+	- rf[5] = 0x0f - register x5 in the register file contains the value 0x0f
+	
+	- RD1E is 15d = 0x0f which is the value stored in the register x5
+	- RD2E is 0, because this is the initial value for a register and the lui x6, 6 has not written the value
+		back just yet
+	
+	- SrcAE = 15d = 0x0f is the first parameter to the ALU
+	- SrcBE = 6d = 0x06 is the second parameter to the ALU
+	
+	- ALUResultE is 0x09 because this is the result of SrcAE - SrcBE = 15 - 6
+	
+
+
+
+### Instruction 00028393 (addi x7, x5, 0)
+
+
+### Instruction ff5ff06f (jal x0, -12)
+
+1. Decode Phase - Look at InstrD[] and find ff5ff06f
+
+	- ImmSrcD is 0x03, this is the decode for J-type jump instructions
+	- ImmExtD is fffffff4 which is -12
+	- PCF_wire is 0x18
+
+2. Execute Phase - Look at InstrD[] and find 00000000 after ff5ff06f
+
+	- FlushD = 1
+	- FlushE = 1
+	- ImmExtE is fffffff4 which is -12
+	- PCE is 20d = 0x14
+	- PCTargetE = 0x08. 20 + (-12) = 0x08. 0x08 is the address of the (blt x5, x6, 16) instruction
+	- PCFDash = 0x08 because the new PCTargetE computed based on the jump instruction is muxed into PCFDash
+
+.coe
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+0000f2b7,
+00006337,
+0062c863,
+406282b3,
+00028393,
+ff5ff06f;
+```
+
+Register
+
+x31: 0
+x30: 0
+x29: 0
+x28: 0
+x27: 0
+x26: 0
+x25: 0
+x24: 0
+x23: 0
+x22: 0
+x21: 0
+x20: 0
+x19: 0
+x18: 0
+x17: 0
+x16: 0
+x15: 0
+x14: 0
+x13: 0
+x12: 0
+x11: 0
+x10: 0
+x9: 0
+x8: 0
+x7: 3
+x6: 6
+x5: 3
+x4: 0
+x3: 0
+x2: 0
+x1: 0
+x0: 0
+
+
+
+
 
 ## Glitch with .coe Files
 

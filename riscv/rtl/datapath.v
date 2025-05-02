@@ -19,7 +19,7 @@ module datapath(
     // input EXECUTE stage
     input  wire [2:0]       ALUControlE,
     input  wire             ALUSrcE,
-    input  wire             FlushE,
+    input  wire             FlushE,         // from control logic. Defined as: assign FlushE = lwStall | PCSrcE;
     input  wire [1:0]       ForwardAE,
     input  wire [1:0]       ForwardBE,
     
@@ -41,6 +41,7 @@ module datapath(
     
     // output EXECUTE stage
     output  wire            ZeroE,           // the ALU has computed a result that is zero (for branching instructions)
+    output  wire            Negative,        // the ALU has computed a result that is negative (for branching instructions such as BLE)
     output  wire [4:0]      Rs1E_output,
     output  wire [4:0]      Rs2E_output,
     output  wire [4:0]      RdE_output,
@@ -68,7 +69,7 @@ module datapath(
     wire [31:0] PCD;
     wire [31:0] PCPlus4D;
     wire [31:0] RD1;
-    wire [31:0] RD1_muxed;
+    //wire [31:0] RD1_muxed;
     wire [31:0] RD2;
     wire [4:0]  RdD;
     
@@ -152,7 +153,7 @@ module datapath(
       .ena(resetn),             // input wire ena
       .wea({4{0}}),             // input wire [3 : 0]  // the instruction memory is never written to, therefore it is disabled by supplying 0
 //      .addra(PCF),              // input wire [31 : 0] addra
-        .addra(PCF_wire),              // input wire [31 : 0] addra
+      .addra(PCF_wire),              // input wire [31 : 0] addra
 //      .dina(WriteData),     // input wire [31 : 0] dina
       .dina(),
       .douta(ReadDataInstr),    // output wire [31 : 0] douta
@@ -170,8 +171,10 @@ module datapath(
     // FETCH pipeline registers to transfer state between FETCH and DECODE
     
     //                                              resetn              enable
-    flopenr #(32)   instrF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, ReadDataInstr, InstrD);
-    flopenr #(32)      pcF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, PCF, PCD);
+    //flopenr #(32)   instrF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, ReadDataInstr, InstrD); // the FlushD logic is broken! It resets the Pipeline register! I do no know why (test: modulo application shows the bug!)
+    //flopenr #(32)   instrF_PipelineRegister(clk,    !FlushD, !StallD, ReadDataInstr, InstrD);
+    flopenr #(32)   instrF_PipelineRegister(clk,    resetn, !StallD, ReadDataInstr, InstrD);
+    flopenr #(32)      pcF_PipelineRegister(clk,    (resetn & !FlushD), !StallD, PCF_wire, PCD);
     flopenr #(32) pcPlus4F_PipelineRegister(clk,    (resetn & !FlushD), !StallD, PCPlus4F, PCPlus4D);
 
 
@@ -190,7 +193,7 @@ module datapath(
     regfile rf (
 
         // clock write enable
-        .clk(clk),              // [in] clock
+        .clk(!clk),              // [in] clock
         .resetn(resetn),        // [in] resetn
 
         .we3(RegWriteW),         // [in] write enable for register 3. if high, register a3 is written with wd3
@@ -211,7 +214,7 @@ module datapath(
     // WBI: forward ReadDataW into the decode phase for lui instructions in their writeback phase affecting arithmetic instructions in their decode phase
     //                 input A          input B     selector    muxed output
     //mux2 #(32) srcRD1Mux2(RD1,    ResultW,     ForwardRD1,     RD1_muxed);
-    mux2 #(32) srcRD1Mux2(RD1,    ResultW,     0,     RD1_muxed);
+    //mux2 #(32) srcRD1Mux2(RD1,    ResultW,     0,     RD1_muxed);
     
     // sign extend module
     // param 1 = instruction bits (part of the instruction to sign extend)
@@ -228,11 +231,18 @@ module datapath(
     //flopenr_anyclock #(32)      RD1_PipelineRegister(clk, (resetn & !FlushE), 1,   RD1_muxed, RD1E);
     //flopenr_anyclock #(32)      RD2_PipelineRegister(clk, (resetn & !FlushE), 1,   RD2, RD2E);
     
-    flopenr_anyclock #(32)      RD1_PipelineRegister(clk, 1, 1,   RD1_muxed, RD1E);    
-    flopenr_anyclock #(32)      RD2_PipelineRegister(clk, 1, 1,   RD2, RD2E);
+    //flopenr_anyclock #(32)      RD1_PipelineRegister(clk, 1, 1,   RD1_muxed, RD1E);    
+    //flopenr_anyclock #(32)      RD1_PipelineRegister(clk, 1, 1,   RD1, RD1E);
+    //flopenr_anyclock #(32)      RD2_PipelineRegister(clk, 1, 1,   RD2, RD2E);
+    
+    
+    flopenr #(32)      RD1_PipelineRegister(clk, 1, 1,   RD1, RD1E);
+    flopenr #(32)      RD2_PipelineRegister(clk, 1, 1,   RD2, RD2E);
 
     
-    flopenr #(32)      pcD_PipelineRegister(clk, (resetn & !FlushE), 1,   PCD, PCE);
+    //flopenr #(32)      pcD_PipelineRegister(clk, (resetn & !FlushE), 1,   PCD, PCE);
+    flopenr #(32)      pcD_PipelineRegister(clk, (resetn), 1,   PCD, PCE);
+    
     flopenr #(5)      rs1D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[19:15], Rs1E);
     flopenr #(5)      rs2D_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[24:20], Rs2E);
     //flopenr #(5)       rdD_PipelineRegister(clk, (resetn & !FlushE), 1,         InstrD[11:7], Rs2E);
@@ -264,8 +274,8 @@ module datapath(
     mux2 #(32) srcBEMux2(WriteDataE,    ImmExtE,     ALUSrcE,     SrcBE);
     
     // ALU for arithmetic operations
-    //              input A         input B         operation           result output       zero flag
-    alu #(32) alu(  SrcAE,          SrcBE,          ALUControlE,        ALUResultE,          ZeroE);    
+    //              input A         input B         operation           result output       zero flag       Negative Result flag
+    alu #(32) alu(  SrcAE,          SrcBE,          ALUControlE,        ALUResultE,          ZeroE,         Negative);    
     
     // ALU to increment PC for jumps and branches
     //

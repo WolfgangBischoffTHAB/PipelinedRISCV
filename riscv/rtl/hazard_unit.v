@@ -56,7 +56,7 @@ module hazard_unit(
     // page 451
     
     // Flush when a branch is taken or a load introduces a bubble:
-    assign FlushD = PCSrcE;
+    assign FlushD = PCSrcE; // PCSrcE is computed inside the control logic as: assign PCSrcE = ( BranchE & ZeroE ) | JumpE;
     assign FlushE = lwStall | PCSrcE;
 
     // page 453

@@ -53,6 +53,7 @@ module riscv_multi(
     
     // output EXECUTE stage
     wire            ZeroE;           // the ALU has computed a result that is zero (for branching instructions)
+    wire            Negative;
     wire [4:0]      Rs1E_output;
     wire [4:0]      Rs2E_output;
     wire [4:0]      RdE_output;
@@ -82,6 +83,7 @@ module riscv_multi(
         
         // input EXECUTE stage
         /*input       wire */           .ZeroE(ZeroE),          // the ALU has computed a result that is zero (for branching instructions)
+                                        .Negative(Negative),
         
         // input MEMORY ACCESS stage
         
@@ -150,6 +152,7 @@ module riscv_multi(
     
     // output EXECUTE stage
     /*output  wire      */      .ZeroE(ZeroE),           // the ALU has computed a result that is zero (for branching instructions)
+                                .Negative(Negative),
     /*output  wire [4:0]  */    .Rs1E_output(Rs1E_output),
     /*output  wire [4:0]  */    .Rs2E_output(Rs2E_output),
     /*output  wire [4:0]  */    .RdE_output(RdE_output),

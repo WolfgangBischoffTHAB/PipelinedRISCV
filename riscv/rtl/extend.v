@@ -13,9 +13,9 @@ module extend(
 
         case (immsrc)
         
-                // R-Type is register type. Register type instructions have no immediates encoded in the instruction machine code
+            // R-Type is register type. Register type instructions have no immediates encoded in the instruction machine code
             // R-type 
-            // (and)
+            // (and, or)
             3'b111:
             begin
                 //$display("[extend] S Type");
@@ -39,7 +39,7 @@ module extend(
                 immext <= { { 20{instr[31]} }, instr[31:25], instr[11:7] };
             end
 
-            // B-type (branches) (BEQ, ...)
+            // B-type (branches) (BEQ, BLT, ...)
             3'b010:
             begin
                 //$display("[extend] B Type");

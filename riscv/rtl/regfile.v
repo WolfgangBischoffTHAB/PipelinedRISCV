@@ -39,6 +39,7 @@ module regfile(
     // Instead of returning the real value, the register 0 is intercepted during a 
     // read operation and the hardcoded value 0 is returned.
     always @(posedge clk)
+    //always @(negedge clk)
     begin
         if (resetn == 0)
         begin
@@ -82,20 +83,23 @@ module regfile(
         begin
             if (we3)
             begin
-                $display("[regfile] WriteBack. a3=%d, wd3=0x%h", a3, wd3);
+                //$display("[regfile] WriteBack. a3=%d, wd3=0x%h", a3, wd3);
                 rf[a3] <= wd3;
             end
         end
     end
 
-    // read in the second half cycle
-    always @(negedge clk)
-    begin
-        rd1_temp = (a1 != 0) ? rf[a1] : 0;
-        rd2_temp = (a2 != 0) ? rf[a2] : 0;
-    end
+//    // read in the second half cycle
+//    always @(negedge clk)
+//    begin
+//        rd1_temp = (a1 != 0) ? rf[a1] : 0;
+//        rd2_temp = (a2 != 0) ? rf[a2] : 0;
+//    end
     
-    assign rd1 = rd1_temp;
-    assign rd2 = rd2_temp;
+//    assign rd1 = rd1_temp;
+//    assign rd2 = rd2_temp;
+
+    assign rd1 = (a1 != 0) ? rf[a1] : 0;
+    assign rd2 = (a2 != 0) ? rf[a2] : 0;
 
 endmodule

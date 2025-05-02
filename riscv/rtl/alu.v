@@ -9,7 +9,9 @@ module alu #(parameter WIDTH = 32) (
 
     // output
     output reg  [WIDTH-1:0]     ALUResult,  // result to output
-    output reg                  Z           // zero
+    output reg                  Z,          // zero result
+    output reg                  NEG         // negative result
+    
 );
 
     // compute the result
@@ -37,6 +39,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
 
                 //$display("[ALU] sub. Z=%0d", Z);
             end
