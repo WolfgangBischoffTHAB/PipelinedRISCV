@@ -29,6 +29,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
             // sub
@@ -52,6 +53,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
             // xor, xori
@@ -62,6 +64,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
             // slt, slti
@@ -75,6 +78,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
             // or, ori
@@ -85,6 +89,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
             default:
@@ -95,6 +100,7 @@ module alu #(parameter WIDTH = 32) (
 
                 // compute zero
                 Z <= (ALUResult == 0);
+                NEG <= (ALUResult[WIDTH-1] == 1);
             end
 
         endcase

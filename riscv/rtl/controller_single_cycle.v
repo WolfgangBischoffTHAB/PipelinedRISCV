@@ -14,7 +14,9 @@ module controller_single_cycle(
     output  wire        Jump,
     output  wire [2:0]  ImmSrc,
     output  wire [2:0]  ALUControl,
-    output  wire        Branch
+    output  wire        BranchEQ,
+    output  wire        BranchLT
+    
 );
 
     wire [1:0] ALUOp;
@@ -23,9 +25,18 @@ module controller_single_cycle(
     
         // input
         op, 
+        funct3,
         
         // output
-        ResultSrc, MemWrite, Branch, ALUSrc, RegWrite, Jump, ImmSrc, ALUOp
+        ResultSrc, 
+        MemWrite, 
+        BranchEQ, 
+        BranchLT, 
+        ALUSrc, 
+        RegWrite, 
+        Jump, 
+        ImmSrc, 
+        ALUOp
     
     );
     

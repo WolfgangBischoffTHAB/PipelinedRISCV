@@ -51,7 +51,8 @@ module controller (
     wire [1:0]  ResultSrcD;
     wire        MemWriteD;
     wire        JumpD;
-    wire        BranchD;
+    wire        BranchEQ_D;
+    wire        BranchLT_D;
     wire [2:0]  ALUControlD;
     wire        ALUSrcD;
     
@@ -59,7 +60,8 @@ module controller (
     wire        RegWriteE;
     wire        MemWriteE;
     wire        JumpE;
-    wire        BranchE;
+    wire        BranchEQ_E;
+    wire        BranchLT_E;
 
     // Memory Access Pipeline Stage
     wire [1:0]  ResultSrcM;
@@ -70,10 +72,7 @@ module controller (
     wire ALUSrcE_wire;
     wire ALUSrcE_reg;
 */
-    
-    
-    
-    
+
 /*    
     // reset logic
     always @(posedge clk)
@@ -101,19 +100,25 @@ module controller (
     //
     
     controller_single_cycle internal_control_logic(
+        
+        // input
+        
         /*input   wire [6:0]*/  .op(op),
         /*input   wire [2:0]*/  .funct3(funct3),
         /*input   wire      */  .funct7b5(funct7b5),
         /*input   wire      */  .Zero(ZeroE),
+        
+        // output
+        
         /*output  wire [1:0]*/  .ResultSrc(ResultSrcD),
         /*output  wire      */  .MemWrite(MemWriteD),
-//        output  wire        PCSrc, 
         /*output  wire      */  .ALUSrc(ALUSrcD),
         /*output  wire      */  .RegWrite(RegWriteD), 
         /*output  wire      */  .Jump(JumpD),
         /*output  wire [1:0]*/  .ImmSrc(ImmSrcD),
         /*output  wire [2:0]*/  .ALUControl(ALUControlD),
-        .Branch(BranchD)
+                                .BranchEQ(BranchEQ_D),
+                                .BranchLT(BranchLT_D)
     );
     
     // DECODE pipeline registers to transfer state between DECODE and EXECUTE
@@ -123,7 +128,8 @@ module controller (
     flopenr #(2)       ResultSrcD_PipelineRegister(clk, resetn, 1,          ResultSrcD, ResultSrcE);
     flopenr #(1)        MemWriteD_PipelineRegister(clk, resetn, 1,          MemWriteD, MemWriteE);
     flopenr #(1)            JumpD_PipelineRegister(clk, resetn, 1,          JumpD, JumpE);
-    flopenr #(1)          BranchD_PipelineRegister(clk, resetn, 1,          BranchD, BranchE);
+    flopenr #(1)       BranchEQ_D_PipelineRegister(clk, resetn, 1,          BranchEQ_D, BranchEQ_E);
+    flopenr #(1)       BranchLT_D_PipelineRegister(clk, resetn, 1,          BranchLT_D, BranchLT_E);
     flopenr #(3)      ALUControlD_PipelineRegister(clk, resetn, 1,          ALUControlD, ALUControlE);
     flopenr #(1)          ALUSrcD_PipelineRegister(clk, resetn, 1,          ALUSrcD, ALUSrcE);
     
@@ -140,7 +146,15 @@ module controller (
     // EXECUTE section of the pipeline
     //
     
-    assign PCSrcE = ( BranchE & ( ZeroE | Negative ) ) | JumpE;
+    //assign PCSrcE = ( BranchE & ( ZeroE | Negative ) ) | JumpE;
+    
+    assign PCSrcE = ( 
+            ( BranchEQ_E & ZeroE ) // BEQ 
+            | 
+            ( BranchLT_E & Negative ) // BLT 
+        ) 
+        | 
+        JumpE;
     
     // EXECUTE pipeline registers to transfer state between EXECUTE and MEMORY ACCESS
     

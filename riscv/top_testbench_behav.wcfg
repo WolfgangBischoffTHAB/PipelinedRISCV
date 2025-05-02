@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="231.120 ns"></ZoomStartTime>
-      <ZoomEndTime time="502.993 ns"></ZoomEndTime>
-      <Cursor1Time time="318.483 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="248.341 ns"></ZoomEndTime>
+      <Cursor1Time time="139.710 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="178"></NameColumnWidth>
+      <NameColumnWidth column_width="142"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="119" />
+   <WVObjectSize size="126" />
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -91,6 +91,11 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/rf/rf" type="array">
       <obj_property name="ElementShortName">rf[31:0][31:0]</obj_property>
       <obj_property name="ObjectShortName">rf[31:0][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/PCSrcE" type="logic">
+      <obj_property name="ElementShortName">PCSrcE</obj_property>
+      <obj_property name="ObjectShortName">PCSrcE</obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/RD1" type="array">
       <obj_property name="ElementShortName">RD1[31:0]</obj_property>
@@ -232,10 +237,6 @@
       <obj_property name="ElementShortName">JumpE</obj_property>
       <obj_property name="ObjectShortName">JumpE</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/BranchE" type="logic">
-      <obj_property name="ElementShortName">BranchE</obj_property>
-      <obj_property name="ObjectShortName">BranchE</obj_property>
-   </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/ZeroE" type="logic">
       <obj_property name="ElementShortName">ZeroE</obj_property>
       <obj_property name="ObjectShortName">ZeroE</obj_property>
@@ -247,10 +248,6 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/JumpD" type="logic">
       <obj_property name="ElementShortName">JumpD</obj_property>
       <obj_property name="ObjectShortName">JumpD</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/BranchD" type="logic">
-      <obj_property name="ElementShortName">BranchD</obj_property>
-      <obj_property name="ObjectShortName">BranchD</obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/instrF_PipelineRegister/resetn" type="logic">
       <obj_property name="ElementShortName">resetn</obj_property>
@@ -428,10 +425,6 @@
       <obj_property name="ElementShortName">WriteDataM[31:0]</obj_property>
       <obj_property name="ObjectShortName">WriteDataM[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RdM" type="array">
-      <obj_property name="ElementShortName">RdM[4:0]</obj_property>
-      <obj_property name="ObjectShortName">RdM[4:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs1E" type="array">
       <obj_property name="ElementShortName">Rs1E[4:0]</obj_property>
       <obj_property name="ObjectShortName">Rs1E[4:0]</obj_property>
@@ -439,6 +432,10 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/Rs2E" type="array">
       <obj_property name="ElementShortName">Rs2E[4:0]</obj_property>
       <obj_property name="ObjectShortName">Rs2E[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/RdM" type="array">
+      <obj_property name="ElementShortName">RdM[4:0]</obj_property>
+      <obj_property name="ObjectShortName">RdM[4:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/ALUResultM" type="array">
       <obj_property name="ElementShortName">ALUResultM[31:0]</obj_property>
@@ -495,5 +492,37 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/PCFDash" type="array">
       <obj_property name="ElementShortName">PCFDash[31:0]</obj_property>
       <obj_property name="ObjectShortName">PCFDash[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/PCSrcE" type="logic">
+      <obj_property name="ElementShortName">PCSrcE</obj_property>
+      <obj_property name="ObjectShortName">PCSrcE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/hu/lwStall" type="logic">
+      <obj_property name="ElementShortName">lwStall</obj_property>
+      <obj_property name="ObjectShortName">lwStall</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/ALUResultW" type="array">
+      <obj_property name="ElementShortName">ALUResultW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ALUResultW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/rf/wd3" type="array">
+      <obj_property name="ElementShortName">wd3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wd3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/rf/we3" type="logic">
+      <obj_property name="ElementShortName">we3</obj_property>
+      <obj_property name="ObjectShortName">we3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/internal_control_logic/md/RegWrite" type="logic">
+      <obj_property name="ElementShortName">RegWrite</obj_property>
+      <obj_property name="ObjectShortName">RegWrite</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/ALUSrcE" type="logic">
+      <obj_property name="ElementShortName">ALUSrcE</obj_property>
+      <obj_property name="ObjectShortName">ALUSrcE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/internal_control_logic/md/ALUSrc" type="logic">
+      <obj_property name="ElementShortName">ALUSrc</obj_property>
+      <obj_property name="ObjectShortName">ALUSrc</obj_property>
    </wvobject>
 </wave_config>
