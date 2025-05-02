@@ -16,6 +16,41 @@ Some hardware duplication is added in order to make the pipeline possible. There
 
 A hazard unit is added. The hazard unit is working very similar to the control logic in that it takes in individual signals as input and creates signals that affect the datapath. The hazard unit creates the stall and clear signals that control the pipeline registers. The difference between the hazard unit and the control logic is that the control logic contains a statemachine whereas the hazard unit contains only combinational logic.
 
+
+
+
+# Verbesserungsvorschlag IDE
+
+Verbesserungsvorschlag für wiretrace-Darstellung: 
+Signale mit hierarchischen Namen anzeigen.
+Wenn zwei komponenten die gleichen Signalnamen verwenden, muss man erst mit der Maus hovern um einen
+Tooltip zu erhalten, der zeigt, welchen Wert aus welcher Komponente man gerade betrachtet.
+Es wäre schneller, wenn die Namen direkt hierarchisch angezeigt werden.
+Bsp. dp.RdM und hu.RdM
+
+Verbesserungsvorschlag für wiretrace-Darstellung: 
+Das WireTrace merkt sich die Zeit / den Ort des Markers.
+Die Ansicht sollte nach dem laden direkt zu diesem Marker springen, so dass der Benutzer nicht
+manuell dorthin scrollen muss. In einem Debugging Szenario wird geändert und neu simuliert um einen
+Fehler an einer bestimmten Position zu fixen, dann möchte man immer wieder zu dem Marker zurück.
+Eventuell sollte diese Funktion togglebar sein.
+
+Verbesserungvorschlag: Neue Signale sollten nicht immer ganz unten eingefügt werden sondern der Benutzer 
+sollte wählen aus: Unterhalb/Oberhalb markiertem Signal einfügen, am Start einfügen, am Ende einfügen.
+Oder das eingefügt Signal sollte erstmal am Cursor kleben und dann erst eingefügt werden, wenn der Benutzer
+den Ort mit dem Cursor gefunden hat und dann die linke Maustaste klickt.
+
+Verbesserungsvorschlag: The IDE should keep the same tabs open in the same order to allow the user
+to keep working where they took off last time more quickly and easily.
+
+Wenn ein input port mit einem signal belegt wird, welches nicht existierd / definiert ist, dann sollte das
+ein Compilerfehler und keine Warnung sein! Das synthetisierte Ergebnis funktioniert sowieso nicht!
+
+
+
+
+
+
 ## Testing
 
 The CPU does currently not use SDRAM to store instrucations or data. Instead it uses BRAM created using Vivado's Block Memory Generator. The generated BRAM allows the use of "Coefficient Files" .coe to initialze the BRAM. .coe files are ASCII text files that contain a very simple file format. The .coe file format is documented here: https://docs.amd.com/r/en-US/ug896-vivado-ip/COE-File-Syntax
@@ -86,16 +121,16 @@ addi x5, x5, 1
 Machine Code
 
 ```
-00128293
-00128293
-00128293
-00128293
-00128293
-00128293
-00128293
-00128293
-00128293
-00128293
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
+00128293	# addi x5, x5, 1
 ```
 
 .coe
@@ -114,6 +149,10 @@ memory_initialization_vector=
 00128293,
 00128293;
 ```
+
+Validation:
+
+Inspect the x5 register. It has to increment by 1 with every instruction.
 
 The result is:
 
@@ -416,6 +455,41 @@ memory_initialization_vector=
 007c7bb3;
 ```
 
+Register Values after execution
+
+x31: 6
+x30: 0
+x29: 0
+x28: 0
+x27: 0
+x26: 0
+x25: 15
+x24: 9
+x23: 0
+x22: 0
+x21: 5
+x20: 4
+x19: 3
+x18: 6
+x17: 0
+x16: 0
+x15: 0
+x14: 0
+x13: 0
+x12: 0
+x11: 0
+x10: 0
+x9: 0
+x8: 0
+x7: 2
+x6: 0
+x5: 0
+x4: 0
+x3: 0
+x2: 0
+x1: 0
+x0: 0
+
 ## Reading the WireChart diagram to see where errors are:
 
 ### Instruction 00000937
@@ -545,27 +619,12 @@ into the register RD2E of the execute Phase or-instruction
 
 
 
-Verbesserungsvorschlag für wiretrace-Darstellung: 
-Signale mit hierarchischen Namen anzeigen.
-Wenn zwei komponenten die gleichen Signalnamen verwenden, muss man erst mit der Maus hovern um einen
-Tooltip zu erhalten, der zeigt, welchen Wert aus welcher Komponente man gerade betrachtet.
-Es wäre schneller, wenn die Namen direkt hierarchisch angezeigt werden.
-Bsp. dp.RdM und hu.RdM
 
-Verbesserungsvorschlag für wiretrace-Darstellung: 
-Das WireTrace merkt sich die Zeit / den Ort des Markers.
-Die Ansicht sollte nach dem laden direkt zu diesem Marker springen, so dass der Benutzer nicht
-manuell dorthin scrollen muss. In einem Debugging Szenario wird geändert und neu simuliert um einen
-Fehler an einer bestimmten Position zu fixen, dann möchte man immer wieder zu dem Marker zurück.
-Eventuell sollte diese Funktion togglebar sein.
 
-Verbesserungvorschlag: Neue Signale sollten nicht immer ganz unten eingefügt werden sondern der Benutzer 
-sollte wählen aus: Unterhalb/Oberhalb markiertem Signal einfügen, am Start einfügen, am Ende einfügen.
-Oder das eingefügt Signal sollte erstmal am Cursor kleben und dann erst eingefügt werden, wenn der Benutzer
-den Ort mit dem Cursor gefunden hat und dann die linke Maustaste klickt.
 
-Verbesserungsvorschlag: The IDE should keep the same tabs open in the same order to allow the user
-to keep working where they took off last time more quickly and easily.
+
+
+
 
 
 ## Pipeline Stall (page 449)
@@ -795,8 +854,6 @@ Machine Code:
 ff5ff06f		# jal x0, -12			# 0x14
 ```
 
-
-
 ### Instruction 0062c863 (blt x5, x6, 16) -- First Iteration
 
 1. Decode Phase - Look at InstrD[] and find 0062c863
@@ -989,6 +1046,251 @@ x0: 0
 
 
 
+
+
+
+### Example Blinky
+
+
+Pseudo Application
+
+```
+while (true) {
+
+	x5 = 0;
+	x6 = 0;
+	x7 = 9999999;
+
+	// busy loop
+	while (x5 != x7) 
+	{
+		x5++;
+	}
+	
+	// access memory mapped peripherals
+	// togle x6. If a LED is mapped to this memory cell, the LED will then blink
+	x6 = *(52);
+	x6 ^= x6;
+	*(52) = x6;
+	
+}
+```
+
+Assembly (counting to 2)
+
+```
+loop_start:
+	addi x5, x0, 0x0
+	addi x6, x0, 0x0
+	lui x7, 0
+	addi x7, x7, 2
+
+busy_loop_start:	
+	beq x5, x7, 0xC     		# if (x5 == x7) jump to loop_end (pc relative jump of +12 bytes)
+	addi x5, x5, 1
+	jal x0, inner_loop_start    # jal loop head (pc relative jump back -8 bytes)
+
+busy_loop_end:
+	lw x6, 52(x0)
+	xori x6, x6, 1
+	sw x6, 52(x0)
+
+	jal x0, loop_start
+```
+
+Machine Code (Counting to 2)
+
+```
+00000293	# addi x5, x0, 0
+00000313	# addi x6, x0, 0
+000003b7	# lui x7, 0
+00238393	# addi x7, x7, 2
+00728663	# beq x5, x7, 12
+00128293	# addi x5, x5, 1
+ff9ff06f 	# jal x0, -8
+03402303	# lw x6, 52(x0)
+00134313	# xori x6, x6, 1
+02602a23	# sw x6, 52(x0)
+fd9ff06f	# jal x0, -40
+```
+
+Assembly with labels resolved and counting to 9999999
+
+```
+addi x5, x0, 0x0
+addi x6, x0, 0x0
+li x7, 9999999
+beq x5, x7, 0xC     # if (x5 == x7) jump to loop_end (pc relative jump of +12 bytes)
+addi x5, x5, 1
+jal x0, -8          # jal loop head (pc relative jump back -8 bytes)
+lw x6, 52(x0)
+xori x6, x6, 1
+sw x6, 52(x0)
+jal x0, -40
+```
+
+Machine Code:
+
+```
+...
+```
+
+
+
+.coe (Counting to 2)
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00000293,
+00000313,
+000003b7,
+00238393,
+00728663,
+00128293,
+ff9ff06f,
+03402303,
+00134313,
+02602a23,
+fd9ff06f;
+```
+
+
+
+
+Validation
+
+
+```
+00000293	# addi x5, x0, 0
+00000313	# addi x6, x0, 0
+000003b7	# lui x7, 0
+00238393	# addi x7, x7, 2
+00728663	# beq x5, x7, 12
+00128293	# addi x5, x5, 1
+ff9ff06f 	# jal x0, -8
+03402303	# lw x6, 52(x0)
+00134313	# xori x6, x6, 1
+02602a23	# sw x6, 52(x0)
+fd9ff06f	# jal x0, -40
+```
+
+
+### Instruction 00000293 (addi x5, x0, 0)
+x5 has to be zero
+
+### Instruction 00000313 (addi x6, x0, 0)
+x6 has to be zero
+
+### Instruction 000003b7 (lui x7, 0)
+x7 has to be zero
+
+### Instruction 00238393 (addi x7, x7, 2)
+
+
+1. Decode Phase - Look at InstrD[] and find 00238393
+
+ctr.internal_control_logic.md.RegWrite = 1 [ERROR]
+ctr.RegWriteD = 1 [ERROR]
+
+2. Execute Phase - Look at InstrD[] and find 00728663
+
+ctr.RegWriteE = 1 [ERROR]
+
+3. Memory Phase - Look at InstrD[] and find 00128293
+
+ctr.RegWriteM = 1 [ERROR]
+
+4. WriteBack Phase - Look at InstrD[] and find ff9ff06f
+
+dp.RegWriteW = 1 [ERROR]
+
+dp.ALUResultW = 2
+dp.rf.wd3 = 2
+dp.rf.we3 = 1 [ERROR]
+
+x7 has to be 2
+
+### Instruction 00728663 (beq x5, x7, 12)
+
+1. Decode Phase - Look at InstrD[] and find 00728663
+	- ImmExtD = will not decode any important value since sub is a R-Type and stores only
+		registers but no immediate values in the instruction
+	- In the middle of the decode phase, with the falling clock edge (risign rf clock edge), the register file
+	has to latch/store the value 0x0f into the register x5!
+	
+	- ctr.internal_control_logic.md.funct3 = 3'b000
+	- ctr.internal_control_logic.md.ALUSrc = 0
+	
+	
+2. Execute Phase - Look at InstrD[] and find 00128293
+
+	NOTE: In this phase, the predecessor instruction (addi x7, x7, 2) is still in transit and has not yet
+	written back the immediate value 2d into the register x7 yet! The value is currently in the memory
+	phase!
+	
+	A forward into the execute phase of the beq x5, x7, 12 instruction has to happen! 
+	The signal ForwardBE has to be 1!
+	
+	- dp.ResultSrcW = 0
+	
+	- dp.ALUResultE = 7 
+	- dp.ALUResultW = 0 [ERROR]
+	- dp.ALUResultM = 2
+	- dp.ALUSrcE = 0 muss 0 sein, damit der Wert dp.ALUResultM aus der memory phase geforwarded wird.
+	dp.ALUSrcE wird berechnet in control logic und kommt erst aus ctr.ALUSrcD. ctr.ALUSrcD kommt aus.
+	internal_control_logic.ALUSrcD kommt aus controller_single_cycle.
+	
+	- dp.SrcAE = 0d = 0x00 is the first parameter to the ALU (value of x5)
+	- dp.SrcBE = 2d = 0x02 is the second parameter to the ALU (forwarded value of x7)
+	
+	- ctr.ZeroE = 0
+	- ctr.PCSrcE = 1
+	
+	- hu.FlushE = 0 - computed by hu: assign FlushE = lwStall | PCSrcE;
+	- hu.PCSrcE = 0
+	
+	- ForwardAE = 0 because no forward happens and the register file is read from RD1E (register x5 = 15d = 0x0f)
+	- ForwardBE = 2 because the register file is not written yet and the value for the immediate 2 (x6) is
+		taken from the forwarded value ResultW.
+	  ForwardBE is computed in the hazard unit: (((Rs2E == RdM) & RegWriteM) & (Rs2E != 5'b0))
+	  
+	- hu.RdM = 7d. RdM is the target register of the preceding instruction. In this case: 7
+	- hu.Rs2E = ?. Rs2E is the register used as 2nd parameter in the current instruction: 7
+	
+		
+	- ResultW = 6d - this is the correct value that the instruction lui x6, 6 wants to place into register x6
+	
+	- dp.ALUSrcE = 0 to read 2nd parameter from the forward muxer
+	
+	- rf[5] = 0x0f - register x5 in the register file contains the value 0x0f
+	
+	
+	
+	- RD1E is 15d = 0x0f which is the value stored in the register x5
+	- RD2E is 0, because this is the initial value for a register and the lui x6, 6 has not written the value
+		back just yet
+	
+	
+	
+	- ALUResultE is 0xfe because this is the result of SrcAE - SrcBE = 0 - 2
+	
+	- Negative = 1
+	
+	
+	- PCSrcE = 1
+	
+	todo: extend the branching logic. Differentiate the BEQ, BLT, BLTE ... cases with inidividual cases
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 ## Glitch with .coe Files
