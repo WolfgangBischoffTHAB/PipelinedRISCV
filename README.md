@@ -1049,6 +1049,201 @@ x0: 0
 
 
 
+### BEQ test
+
+Pseudo Code
+
+```
+start:
+	x5 = 0
+	x6 = 0
+	
+	... // waste cycles for the above two statements to finish
+	
+	if (x5 == x6) {
+		goto start
+	}
+```
+
+Assembly Code
+
+```
+start:
+    addi x5, x0, 0x0    # initialize register 5 with the same value as register 6	## PC = 0d
+    addi x6, x0, 0x0    # initialize register 6 with the same value as register 5	## PC = 4d
+
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 8d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 12d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 16d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 20d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 24d = 0x18
+
+    beq x5, x6, start
+
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline	## PC = 28d
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+```
+
+Without Labels
+
+```
+SourceLine: 1 [0] start:
+SourceLine: 2 [0] addi x5, x0, 0x0
+SourceLine: 3 [4] addi x6, x0, 0x0
+SourceLine: 4 [8]
+SourceLine: 5 [8] addi x0, x0, 0x0
+SourceLine: 6 [12] addi x0, x0, 0x0
+SourceLine: 7 [16] addi x0, x0, 0x0
+SourceLine: 8 [20] addi x0, x0, 0x0
+SourceLine: 9 [24] addi x0, x0, 0x0
+SourceLine: 10 [28]
+SourceLine: 11 [28] beq x5, x6, 0xFFFFFFE4
+SourceLine: 12 [32]
+SourceLine: 13 [32] sub x0, x5, x6
+SourceLine: 14 [36] sub x0, x5, x6
+SourceLine: 15 [40] sub x0, x5, x6
+SourceLine: 16 [44] sub x0, x5, x6
+SourceLine: 17 [48] sub x0, x5, x6
+SourceLine: 18 [52]
+```
+
+Machine Code
+
+```
+00000293
+00000313
+00000013
+00000013
+00000013
+00000013
+00000013
+fe6282e3
+40628033
+40628033
+40628033
+40628033
+40628033
+```
+
+.coe
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00000293,
+00000313,
+00000013,
+00000013,
+00000013,
+00000013,
+00000013,
+fe6282e3,
+40628033,
+40628033,
+40628033,
+40628033,
+40628033;
+```
+
+
+
+
+
+### Instruction fe6282e3 (beq x5, x6, -28)
+
+1. Decode Phase - Look at InstrD[] and find fe6282e3
+
+
+	dp.RD1 = 0x00
+	dp.RD2 = 0x00
+	dp.PCD = 0x1c
+	dp.RS1D_output = 0x05
+	dp.RS2D_output = 0x05
+	dp.ImmExtD = -28d = 0xFFFFFFE4
+	dp.PCPlus4D
+	
+	
+		
+	
+2. Execute Phase - Look at InstrD[] and find 40628033
+
+	First check if all values have been transferred through the gate registers from Decode to Execute correctly!
+	
+	dp.RD1 -> dp.RD1E = 0x00
+	dp.RD2 -> dp.RD2E = 0x00
+	dp.PCD -> dp.PCE  = 0x1c
+	dp.RS1D_output -> dp.Rs1E = 0x05 [ERROR! should be 0x05 is 0x00]
+	dp.RS2D_output -> dp.Rs2E = 0x05 [ERROR! should be 0x05 is 0x00]
+	dp.ImmExtD -> dp.ImmExtE = -28d = 0xFFFFFFE4 [ERROR! should be 0xFFFFFFE4 is 0x00]
+	
+
+
+	No Forward happens
+	- dp.ForwardAE = 0 because no forward happens
+	- dp.ForwardBE = 0 because no forward happens
+	
+	The pipeline has remember the PC of the beq instruction
+	PCE = check this?!?
+	
+	dp.ImmExtE = -28d = 0xFFFFFFE4 [ERROR this value is 0!!! but should be -28d] 
+	
+	The target is computed:
+	dp.PCTargetE = 0x18
+	
+	- dp.ResultSrcW = 0	
+	- dp.ALUResultE = 7 
+	- dp.ALUResultW = 0 [ERROR]
+	- dp.ALUResultM = 2
+	- dp.ALUSrcE = 0 muss 0 sein, damit der Wert dp.ALUResultM aus der memory phase geforwarded wird.
+	dp.ALUSrcE wird berechnet in control logic und kommt erst aus ctr.ALUSrcD. ctr.ALUSrcD kommt aus.
+	internal_control_logic.ALUSrcD kommt aus controller_single_cycle.
+	
+	- dp.SrcAE = 0d = 0x00 is the first parameter to the ALU (value of x5)
+	- dp.SrcBE = 2d = 0x02 is the second parameter to the ALU (forwarded value of x7)
+	
+	- ctr.ZeroE = 0
+	- ctr.PCSrcE = 1
+	
+	- hu.FlushE = 0 - computed by hu: assign FlushE = lwStall | PCSrcE;
+	- hu.PCSrcE = 0
+	
+	
+	  
+	- hu.RdM = 7d. RdM is the target register of the preceding instruction. In this case: 7
+	- hu.Rs2E = ?. Rs2E is the register used as 2nd parameter in the current instruction: 7
+	
+		
+	- ResultW = 6d - this is the correct value that the instruction lui x6, 6 wants to place into register x6
+	
+	- dp.ALUSrcE = 0 to read 2nd parameter from the forward muxer
+	
+	- rf[5] = 0x0f - register x5 in the register file contains the value 0x0f
+	
+	
+	
+	- RD1E is 15d = 0x0f which is the value stored in the register x5
+	- RD2E is 0, because this is the initial value for a register and the lui x6, 6 has not written the value
+		back just yet
+	
+	
+	
+	- ALUResultE is 0xfe because this is the result of SrcAE - SrcBE = 0 - 2
+	
+	- Negative = 1
+	
+	
+	- PCSrcE = 1
+	
+	todo: extend the branching logic. Differentiate the BEQ, BLT, BLTE ... cases with inidividual cases
+	
+	
+
+
+
+
 ### Example Blinky
 
 
@@ -1186,7 +1381,6 @@ x6 has to be zero
 x7 has to be zero
 
 ### Instruction 00238393 (addi x7, x7, 2)
-
 
 1. Decode Phase - Look at InstrD[] and find 00238393
 
