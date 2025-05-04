@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="248.341 ns"></ZoomEndTime>
-      <Cursor1Time time="139.710 ns"></Cursor1Time>
+      <ZoomStartTime time="99.870 ns"></ZoomStartTime>
+      <ZoomEndTime time="390.866 ns"></ZoomEndTime>
+      <Cursor1Time time="191.119 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="142"></NameColumnWidth>
+      <NameColumnWidth column_width="118"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="126" />
+   <WVObjectSize size="131" />
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -43,6 +43,10 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/Negative" type="logic">
       <obj_property name="ElementShortName">Negative</obj_property>
       <obj_property name="ObjectShortName">Negative</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/PCFDash" type="array">
+      <obj_property name="ElementShortName">PCFDash[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PCFDash[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/PCF_wire" type="array">
       <obj_property name="ElementShortName">PCF_wire[31:0]</obj_property>
@@ -91,7 +95,6 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/dp/rf/rf" type="array">
       <obj_property name="ElementShortName">rf[31:0][31:0]</obj_property>
       <obj_property name="ObjectShortName">rf[31:0][31:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/PCSrcE" type="logic">
       <obj_property name="ElementShortName">PCSrcE</obj_property>
@@ -489,10 +492,6 @@
       <obj_property name="ElementShortName">PCTargetE[31:0]</obj_property>
       <obj_property name="ObjectShortName">PCTargetE[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/PCFDash" type="array">
-      <obj_property name="ElementShortName">PCFDash[31:0]</obj_property>
-      <obj_property name="ObjectShortName">PCFDash[31:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/top_testbench/dut/rvmulti/hu/PCSrcE" type="logic">
       <obj_property name="ElementShortName">PCSrcE</obj_property>
       <obj_property name="ObjectShortName">PCSrcE</obj_property>
@@ -524,5 +523,25 @@
    <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/internal_control_logic/md/ALUSrc" type="logic">
       <obj_property name="ElementShortName">ALUSrc</obj_property>
       <obj_property name="ObjectShortName">ALUSrc</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/BranchEQ_D" type="logic">
+      <obj_property name="ElementShortName">BranchEQ_D</obj_property>
+      <obj_property name="ObjectShortName">BranchEQ_D</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/ctr/BranchEQ_E" type="logic">
+      <obj_property name="ElementShortName">BranchEQ_E</obj_property>
+      <obj_property name="ObjectShortName">BranchEQ_E</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/execute_alu_addonly/a_in" type="array">
+      <obj_property name="ElementShortName">a_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">a_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/execute_alu_addonly/b_in" type="array">
+      <obj_property name="ElementShortName">b_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">b_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_testbench/dut/rvmulti/dp/execute_alu_addonly/ALUResult" type="array">
+      <obj_property name="ElementShortName">ALUResult[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ALUResult[31:0]</obj_property>
    </wvobject>
 </wave_config>

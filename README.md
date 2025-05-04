@@ -1049,7 +1049,7 @@ x0: 0
 
 
 
-### BEQ test
+### BEQ test (zero arguments)
 
 Pseudo Code
 
@@ -1073,14 +1073,14 @@ start:
     addi x6, x0, 0x0    # initialize register 6 with the same value as register 5	## PC = 4d
 
     addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 8d
-    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 12d
-    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 16d
-    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 20d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 12d = 0x0c
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 16d = 0x10
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 20d = 0x14
     addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 24d = 0x18
 
-    beq x5, x6, start
+    beq x5, x6, start	# fe6282e3													## PC = 28d = 0x1c
 
-    sub x0, x5, x6		# these statements should be flushed out of the pipeline	## PC = 28d
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline	## PC = 32d = 
     sub x0, x5, x6		# these statements should be flushed out of the pipeline
     sub x0, x5, x6		# these statements should be flushed out of the pipeline
     sub x0, x5, x6		# these statements should be flushed out of the pipeline
@@ -1115,12 +1115,15 @@ Machine Code
 ```
 00000293
 00000313
+
 00000013
 00000013
 00000013
 00000013
 00000013
+
 fe6282e3
+
 40628033
 40628033
 40628033
@@ -1157,11 +1160,11 @@ fe6282e3,
 1. Decode Phase - Look at InstrD[] and find fe6282e3
 
 
-	dp.RD1 = 0x00
-	dp.RD2 = 0x00
+	dp.RD1 = 0x00 - first register value before mux
+	dp.RD2 = 0x00 - second register value before mux
 	dp.PCD = 0x1c
 	dp.RS1D_output = 0x05
-	dp.RS2D_output = 0x05
+	dp.RS2D_output = 0x06
 	dp.ImmExtD = -28d = 0xFFFFFFE4
 	dp.PCPlus4D
 	
@@ -1172,26 +1175,31 @@ fe6282e3,
 
 	First check if all values have been transferred through the gate registers from Decode to Execute correctly!
 	
-	dp.RD1 -> dp.RD1E = 0x00
-	dp.RD2 -> dp.RD2E = 0x00
+	dp.RD1 -> dp.RD1E = 0x00 [TODO: test this with values that are not 0x00. E.g. 0x01 == 0x01]
+	dp.RD2 -> dp.RD2E = 0x00 [TODO: test this with values that are not 0x00. E.g. 0x01 == 0x01]
 	dp.PCD -> dp.PCE  = 0x1c
-	dp.RS1D_output -> dp.Rs1E = 0x05 [ERROR! should be 0x05 is 0x00]
-	dp.RS2D_output -> dp.Rs2E = 0x05 [ERROR! should be 0x05 is 0x00]
-	dp.ImmExtD -> dp.ImmExtE = -28d = 0xFFFFFFE4 [ERROR! should be 0xFFFFFFE4 is 0x00]
+	ctr.BranchEQ_E = 1
+	ctr.JumpE = 0 # Because the branch instruction is not a unconditional jump instruction!
+	ctr.PCSrcE = 1 # Computed by ctr: 
+	dp.FlushE = 1 # Computed by hu: assign FlushE = lwStall | PCSrcE;
+	dp.RS1D_output -> dp.Rs1E = 0x05 [ERROR! Should be 0x05 but is 0x00 because the register is flushed]
+	dp.RS2D_output -> dp.Rs2E = 0x06 [ERROR! Should be 0x06 but is 0x00 because the register is flushed]
+	dp.ImmExtD -> dp.ImmExtE = -28d = 0xFFFFFFE4
 	
-
+	The target is computed:
+	dp.execute_alu_addonly.a_in = 28d = 0x1c
+	dp.execute_alu_addonly.b_in = -28d = 0xFFFFFFE4
+	dp.execute_alu_addonly.ALUResult = 0 # 0x00 is the correct address since the sample application jumps back to the first instruction
+	dp.PCTargetE = 0x00 = 0d # 0x00 is the correct address since the sample application jumps back to the first instruction 
 
 	No Forward happens
 	- dp.ForwardAE = 0 because no forward happens
 	- dp.ForwardBE = 0 because no forward happens
 	
-	The pipeline has remember the PC of the beq instruction
-	PCE = check this?!?
 	
 	dp.ImmExtE = -28d = 0xFFFFFFE4 [ERROR this value is 0!!! but should be -28d] 
 	
-	The target is computed:
-	dp.PCTargetE = 0x18
+-------------------------------------------------------------------------------------	
 	
 	- dp.ResultSrcW = 0	
 	- dp.ALUResultE = 7 
@@ -1240,6 +1248,321 @@ fe6282e3,
 	todo: extend the branching logic. Differentiate the BEQ, BLT, BLTE ... cases with inidividual cases
 	
 	
+
+
+
+
+
+
+### BEQ test (one arguments)
+
+Pseudo Code
+
+```
+start:
+	x5 = 1
+	x6 = 1
+	
+	... // waste cycles for the above two statements to finish
+	
+	if (x5 == x6) {
+		goto start
+	}
+```
+
+Assembly Code
+
+```
+start:
+    addi x5, x0, 0x1    # initialize register 5 with the same value as register 6	## PC = 0d
+    addi x6, x0, 0x1    # initialize register 6 with the same value as register 5	## PC = 4d
+
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 8d
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 12d = 0x0c
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 16d = 0x10
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 20d = 0x14
+    addi x0, x0, 0x0    # waste time for the above statements to write back			## PC = 24d = 0x18
+
+    beq x5, x6, start	# fe6282e3													## PC = 28d = 0x1c
+
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline	## PC = 32d = 
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+    sub x0, x5, x6		# these statements should be flushed out of the pipeline
+```
+
+Without Labels
+
+```
+SourceLine: 1 [0] start: 
+SourceLine: 2 [0] addi x5, x0, 0x1        
+SourceLine: 3 [4] addi x6, x0, 0x1        
+SourceLine: 4 [8] 
+SourceLine: 5 [8] addi x0, x0, 0x0
+SourceLine: 6 [12] addi x0, x0, 0x0
+SourceLine: 7 [16] addi x0, x0, 0x0
+SourceLine: 8 [20] addi x0, x0, 0x0
+SourceLine: 9 [24] addi x0, x0, 0x0
+SourceLine: 10 [28] 
+SourceLine: 11 [28] beq x5, x6, 0xFFFFFFE4
+SourceLine: 12 [32] 
+SourceLine: 13 [32] sub x0, x5, x6
+SourceLine: 14 [36] sub x0, x5, x6
+SourceLine: 15 [40] sub x0, x5, x6
+SourceLine: 16 [44] sub x0, x5, x6
+SourceLine: 17 [48] sub x0, x5, x6
+SourceLine: 18 [52]
+```
+
+Machine Code
+
+```
+00100293
+00100313
+
+00000013
+00000013
+00000013
+00000013
+00000013
+
+fe6282e3
+
+40628033
+40628033
+40628033
+40628033
+40628033
+```
+
+.coe
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00100293,
+00100313,
+00000013,
+00000013,
+00000013,
+00000013,
+00000013,
+fe6282e3,
+40628033,
+40628033,
+40628033,
+40628033,
+40628033;
+```
+
+
+
+
+
+### JAL (Jump and Link) test including wait instructions
+
+Pseudo Code
+
+```
+start:
+	addi x5, x0, 0x01
+	
+	... // waste cycles for the above two statements to finish
+	
+	jal start
+```
+
+Assembly
+
+```
+start:
+	addi x5, x0, 0x01
+	
+	addi x0, x0, 0x0
+	addi x0, x0, 0x0
+	addi x0, x0, 0x0
+	addi x0, x0, 0x0
+	addi x0, x0, 0x0
+
+	jal x0, start
+	
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+```
+
+Assembly without Labels
+
+```
+SourceLine: 1 [0,0x0] start:
+SourceLine: 2 [0,0x0] addi x5, x0, 0x1
+SourceLine: 3 [4,0x4]
+SourceLine: 4 [4,0x4] addi x0, x0, 0x0
+SourceLine: 5 [8] addi x0, x0, 0x0
+SourceLine: 6 [12] addi x0, x0, 0x0
+SourceLine: 7 [16] addi x0, x0, 0x0
+SourceLine: 8 [20] addi x0, x0, 0x0
+SourceLine: 9 [24]
+SourceLine: 10 [24] jal x0, 0xFFFFFFE8
+SourceLine: 11 [28]
+SourceLine: 12 [28] sub x0, x5, x6
+SourceLine: 13 [32] sub x0, x5, x6
+SourceLine: 14 [36] sub x0, x5, x6
+SourceLine: 15 [40] sub x0, x5, x6
+SourceLine: 16 [44] sub x0, x5, x6
+SourceLine: 17 [48]
+```
+
+Machine Code
+
+```
+00100293
+00000013
+00000013
+00000013
+00000013
+00000013
+fe9ff06f
+40628033
+40628033
+40628033
+40628033
+40628033
+```
+
+.coe (Counting to 2)
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00100293,
+00000013,
+00000013,
+00000013,
+00000013,
+00000013,
+fe9ff06f,
+40628033,
+40628033,
+40628033,
+40628033,
+40628033;
+```
+
+
+### Instruction fe9ff06f (jal x0, -24)
+
+1. Decode Phase - Look at InstrD[] and find fe9ff06f
+
+
+	dp.RD1 = 0x00 - first register value before mux
+	dp.RD2 = 0x00 - second register value before mux
+	dp.PCD = 0x18
+	dp.RS1D_output = N/A # The value does not matter for the JAL instruction!
+	dp.RS2D_output =  N/A # The value does not matter for the JAL instruction!
+	dp.ImmExtD = -24d = 0xFFFFFFE8
+		
+	
+2. Execute Phase - Look at InstrD[] and find 40628033
+
+	First check if all values have been transferred through the gate registers from Decode to Execute correctly!
+	
+	dp.RD1 -> dp.RD1E = 0x00 [TODO: test this with values that are not 0x00. E.g. 0x01 == 0x01]
+	dp.RD2 -> dp.RD2E = 0x00 [TODO: test this with values that are not 0x00. E.g. 0x01 == 0x01]
+	dp.PCD -> dp.PCE  = 0x1c
+	ctr.BranchEQ_E = 0
+	ctr.JumpE = 1 # Because the JAL instruction is a jump instruction!
+	ctr.PCSrcE = 1 # Computed by ctr: 
+	dp.FlushE = 1 # Computed by hu: assign FlushE = lwStall | PCSrcE;
+	dp.RS1D_output -> dp.Rs1E = 0x05 [ERROR! Should be 0x05 but is 0x00 because the register is flushed]
+	dp.RS2D_output -> dp.Rs2E = 0x06 [ERROR! Should be 0x06 but is 0x00 because the register is flushed]
+	dp.ImmExtD -> dp.ImmExtE = -28d = 0xFFFFFFE4
+	
+	The target is computed:
+	dp.execute_alu_addonly.a_in = 24d = 0x18
+	dp.execute_alu_addonly.b_in = -24d = 0xFFFFFFE8
+	dp.execute_alu_addonly.ALUResult = 0 # 0x00 is the correct address since the sample application jumps back to the first instruction
+	dp.PCTargetE = 0x00 = 0d # 0x00 is the correct address since the sample application jumps back to the first instruction 
+
+	No Forward happens
+	- dp.ForwardAE = 0 because no forward happens
+	- dp.ForwardBE = 0 because no forward happens
+
+
+
+
+
+
+### JAL (Jump and Link) test including wait instructions
+
+Pseudo Code
+
+```
+start:
+	addi x5, x0, 0x01
+	jal start
+```
+
+Assembly
+
+```
+start:
+	addi x5, x0, 0x01
+
+	jal x0, start
+	
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+	sub x0, x5, x6
+```
+
+Assembly without Labels
+
+```
+SourceLine: 1 [0, 0x0] start:
+SourceLine: 2 [0, 0x0] addi x5, x0, 0x1
+SourceLine: 3 [4, 0x4]
+SourceLine: 4 [4, 0x4] jal x0, 0xFFFFFFFC
+SourceLine: 5 [8, 0x8]
+SourceLine: 6 [8, 0x8] sub x0, x5, x6
+SourceLine: 7 [12, 0xC] sub x0, x5, x6
+SourceLine: 8 [16, 0x10] sub x0, x5, x6
+SourceLine: 9 [20, 0x14] sub x0, x5, x6
+SourceLine: 10 [24, 0x18] sub x0, x5, x6
+SourceLine: 11 [28, 0x1C]
+```
+
+Machine Code
+
+```
+00100293
+ffdff06f
+40628033
+40628033
+40628033
+40628033
+40628033
+```
+
+.coe
+
+```
+memory_initialization_radix=16;
+memory_initialization_vector=
+00100293,
+ffdff06f,
+40628033,
+40628033,
+40628033,
+40628033,
+40628033;
+```
+
 
 
 

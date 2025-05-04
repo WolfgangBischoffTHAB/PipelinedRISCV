@@ -10,6 +10,7 @@ verilog xil_defaultlib  \
 "../../../../rtl/datapath.v" \
 "../../../../rtl/extend.v" \
 "../../../../rtl/flopenr.v" \
+"../../../../rtl/flopenr_two_clock.v" \
 "../../../../rtl/hazard_unit.v" \
 "../../../../rtl/maindec.v" \
 "../../../../rtl/mux2.v" \

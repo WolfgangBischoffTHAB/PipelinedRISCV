@@ -84,6 +84,7 @@ read_verilog -library xil_defaultlib {
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v
+  C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v
   C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v

@@ -8,7 +8,7 @@
   **** SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
   **** IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
   **** SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-  **** Start of session at: Fri May  2 13:56:03 2025
+  **** Start of session at: Sun May  4 18:24:28 2025
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
@@ -25,15 +25,10 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 4892
+INFO: [Synth 8-7075] Helper process launched with PID 10656
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1045.594 ; gain = 468.289
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1042.645 ; gain = 465.574
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-10929] literal value 'b1_000_1_0_01_0_0_00_0 truncated to fit in 12 bits [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:29]
-WARNING: [Synth 8-10929] literal value 'b1_111_0_0_00_0_0_10_0 truncated to fit in 12 bits [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:33]
-WARNING: [Synth 8-10929] literal value 'b1_000_1_0_00_0_0_10_0 truncated to fit in 12 bits [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:45]
-WARNING: [Synth 8-10929] literal value 'b1_011_0_0_10_0_0_00_1 truncated to fit in 12 bits [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:47]
-WARNING: [Synth 8-10929] literal value 'b1_100_1_0_00_0_0_00_0 truncated to fit in 12 bits [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:49]
 INFO: [Synth 8-11241] undeclared symbol 'RegWriteM', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:104]
 INFO: [Synth 8-11241] undeclared symbol 'FlushD', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:126]
 INFO: [Synth 8-11241] undeclared symbol 'StallD', assumed default net type 'wire' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/riscv_multi.v:127]
@@ -43,14 +38,8 @@ INFO: [Synth 8-6157] synthesizing module 'riscv_multi' [C:/dev/fpga/PipelinedRIS
 INFO: [Synth 8-6157] synthesizing module 'controller' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v:5]
 INFO: [Synth 8-6157] synthesizing module 'controller_single_cycle' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:1]
 INFO: [Synth 8-6157] synthesizing module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:2]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:40]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:46]
 INFO: [Synth 8-6155] done synthesizing module 'maindec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:2]
-WARNING: [Synth 8-689] width (2) of port connection 'func3' does not match port width (3) of module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:30]
-WARNING: [Synth 8-689] width (1) of port connection 'ResultSrc' does not match port width (2) of module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:30]
-WARNING: [Synth 8-689] width (3) of port connection 'Jump' does not match port width (1) of module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:30]
-WARNING: [Synth 8-689] width (2) of port connection 'ImmSrc' does not match port width (3) of module 'maindec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:30]
-WARNING: [Synth 8-7071] port 'ALUOp' of module 'maindec' is unconnected for instance 'md' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:24]
-WARNING: [Synth 8-7023] instance 'md' of module 'maindec' has 11 connections declared, but only 10 given [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:24]
 INFO: [Synth 8-6157] synthesizing module 'aludec' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
 INFO: [Synth 8-6155] done synthesizing module 'aludec' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v:2]
 INFO: [Synth 8-6155] done synthesizing module 'controller_single_cycle' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:1]
@@ -71,8 +60,8 @@ INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/dev/fpga/Pipeline
 INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized2' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-17628-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-17628-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7664-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7664-DESKTOP-91CSLS9/realtime/blk_mem_gen_0_stub.v:6]
 INFO: [Synth 8-6157] synthesizing module 'alu_addonly' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v:24]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'alu_addonly' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v:24]
@@ -84,16 +73,19 @@ INFO: [Synth 8-6155] done synthesizing module 'extend' (0#1) [C:/dev/fpga/Pipeli
 INFO: [Synth 8-6157] synthesizing module 'flopenr__parameterized3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
 	Parameter WIDTH bound to: 5 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'flopenr__parameterized3' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v:2]
+INFO: [Synth 8-6157] synthesizing module 'flopenr_two_clock' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:2]
+	Parameter WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'flopenr_two_clock' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:2]
 INFO: [Synth 8-6157] synthesizing module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'mux3' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v:1]
 INFO: [Synth 8-6157] synthesizing module 'alu' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
 	Parameter WIDTH bound to: 32 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v:3]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_1' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-17628-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-17628-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
-WARNING: [Synth 8-689] width (1) of port connection 'q' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:327]
-WARNING: [Synth 8-689] width (1) of port connection 'd2' does not match port width (32) of module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:340]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_1' [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7664-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_1' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/.Xil/Vivado-7664-DESKTOP-91CSLS9/realtime/blk_mem_gen_1_stub.v:6]
+WARNING: [Synth 8-689] width (1) of port connection 'q' does not match port width (32) of module 'flopenr__parameterized2' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:331]
+WARNING: [Synth 8-689] width (1) of port connection 'd2' does not match port width (32) of module 'mux3' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:344]
 INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:1]
 INFO: [Synth 8-6157] synthesizing module 'hazard_unit' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'hazard_unit' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v:1]
@@ -101,7 +93,6 @@ INFO: [Synth 8-6155] done synthesizing module 'riscv_multi' (0#1) [C:/dev/fpga/P
 INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:1]
 WARNING: [Synth 8-85] always block has no event control specified [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top_testbench.v:78]
 INFO: [Synth 8-6155] done synthesizing module 'top_testbench' (0#1) [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top_testbench.v:4]
-WARNING: [Synth 8-3848] Net ResultSrc in module/entity controller_single_cycle does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v:10]
 WARNING: [Synth 8-3848] Net toggle_value in module/entity datapath does not have driver. [C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v:56]
 WARNING: [Synth 8-6014] Unused sequential element uart_tx_counter_reg was removed.  [C:/dev/fpga/PipelinedRISCV/riscv/rtl/top.v:124]
 WARNING: [Synth 8-7129] Port ResultSrcE[1] in module hazard_unit is either unconnected or has no load
@@ -147,18 +138,18 @@ WARNING: [Synth 8-7129] Port toggle_value[0] in module datapath is either unconn
 WARNING: [Synth 8-7129] Port ForwardRD1 in module datapath is either unconnected or has no load
 WARNING: [Synth 8-7129] Port Zero in module controller_single_cycle is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1158.520 ; gain = 581.215
+Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1156.855 ; gain = 579.785
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1158.520 ; gain = 581.215
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1156.855 ; gain = 579.785
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1158.520 ; gain = 581.215
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1156.855 ; gain = 579.785
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 1158.520 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.045 . Memory (MB): peak = 1156.855 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -180,22 +171,22 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_testbench_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1242.938 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1244.754 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1242.938 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1244.754 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1242.938 ; gain = 665.633
+Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1244.754 ; gain = 667.684
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1242.938 ; gain = 665.633
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1244.754 ; gain = 667.684
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -203,12 +194,12 @@ Start Applying 'set_property' XDC Constraints
 Applied set_property KEEP_HIERARCHY = SOFT for dut/rvmulti/dp/data_memory. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for dut/rvmulti/dp/instruction_memory. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1242.938 ; gain = 665.633
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1244.754 ; gain = 667.684
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'controls_reg' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:21]
+WARNING: [Synth 8-327] inferring latch for variable 'controls_reg' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v:26]
 WARNING: [Synth 8-327] inferring latch for variable 'immext_reg' [C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v:23]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 1242.938 ; gain = 665.633
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 1244.754 ; gain = 667.684
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -221,7 +212,7 @@ Detailed RTL Component Info :
 +---XORs : 
 	   2 Input     32 Bit         XORs := 1     
 +---Registers : 
-	               32 Bit    Registers := 47    
+	               32 Bit    Registers := 46    
 	                5 Bit    Registers := 6     
 	                3 Bit    Registers := 1     
 	                2 Bit    Registers := 3     
@@ -251,36 +242,68 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[11]) is unused and will be removed from module top_testbench.
-WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[6]) is unused and will be removed from module top_testbench.
-WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[2]) is unused and will be removed from module top_testbench.
-WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[1]) is unused and will be removed from module top_testbench.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1299.898 ; gain = 722.594
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1290.473 ; gain = 713.402
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 1359.875 ; gain = 782.570
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 1355.398 ; gain = 778.328
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:47 ; elapsed = 00:00:48 . Memory (MB): peak = 1360.172 ; gain = 782.867
+Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 1355.773 ; gain = 778.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[31] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[31]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[30] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[30]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[29] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[29]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[28] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[28]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[27] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[27]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[26] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[26]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[25] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[25]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[24] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[24]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[23] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[23]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[22] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[22]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[21] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[21]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[20] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[20]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[19] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[19]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[18] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[18]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[17] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[17]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[16] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[16]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[15] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[15]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[14] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[14]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[13] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[13]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[12] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[12]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[11] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[11]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[10] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[10]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[9] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[9]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[8] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[8]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[7] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[7]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[6] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[6]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[5] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[5]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[4] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[4]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[3] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[3]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[2] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[2]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[1] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[1]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
+INFO: [Synth 8-5966] Removing register instance (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[0] ) from module (top_testbench) as it has self-loop and (\dut/rvmulti/dp/immExtD_PipelineRegister/q_reg[0]__0 ) is actual driver [C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v:27]
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[12]) is unused and will be removed from module top_testbench.
-WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[3]) is unused and will be removed from module top_testbench.
+WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[11]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[10]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[9]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[8]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[7]) is unused and will be removed from module top_testbench.
+WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[6]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[5]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[4]) is unused and will be removed from module top_testbench.
+WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[3]) is unused and will be removed from module top_testbench.
+WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[2]) is unused and will be removed from module top_testbench.
+WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[1]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/ctr/internal_control_logic/md/controls_reg[0]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/dp/ext/immext_reg[31]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/dp/ext/immext_reg[30]) is unused and will be removed from module top_testbench.
@@ -315,7 +338,7 @@ WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/dp/ext/immext_reg[2]) is
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/dp/ext/immext_reg[1]) is unused and will be removed from module top_testbench.
 WARNING: [Synth 8-3332] Sequential element (dut/rvmulti/dp/ext/immext_reg[0]) is unused and will be removed from module top_testbench.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:47 ; elapsed = 00:00:48 . Memory (MB): peak = 1389.152 ; gain = 811.848
+Finished Technology Mapping : Time (s): cpu = 00:00:47 ; elapsed = 00:00:48 . Memory (MB): peak = 1379.930 ; gain = 802.859
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -365,37 +388,37 @@ CRITICAL WARNING: [Synth 8-4442] BlackBox module \dut/rvmulti/dp/instruction_mem
 CRITICAL WARNING: [Synth 8-4442] BlackBox module \dut/rvmulti/dp/instruction_memory  has unconnected pin dina[1]
 CRITICAL WARNING: [Synth 8-4442] BlackBox module \dut/rvmulti/dp/instruction_memory  has unconnected pin dina[0]
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished IO Insertion : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -416,25 +439,25 @@ Report Cell Usage:
 |1     |blk_mem_gen |     2|
 +------+------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 32 critical warnings and 48 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:39 ; elapsed = 00:00:52 . Memory (MB): peak = 1583.633 ; gain = 921.910
-Synthesis Optimization Complete : Time (s): cpu = 00:00:53 ; elapsed = 00:00:55 . Memory (MB): peak = 1583.633 ; gain = 1006.328
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:39 ; elapsed = 00:00:52 . Memory (MB): peak = 1579.078 ; gain = 914.109
+Synthesis Optimization Complete : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1579.078 ; gain = 1002.008
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1583.633 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1579.078 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1591.438 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1579.078 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 Synth Design complete | Checksum: 8eea012c
 INFO: [Common 17-83] Releasing license: Synthesis
-67 Infos, 115 Warnings, 32 Critical Warnings and 0 Errors encountered.
+101 Infos, 103 Warnings, 32 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1595.430 ; gain = 1180.652
+synth_design: Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1579.078 ; gain = 1165.762
 INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
 INFO: [Common 17-1381] The checkpoint 'C:/dev/fpga/PipelinedRISCV/riscv/riscv.runs/synth_1/top_testbench.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file top_testbench_utilization_synth.rpt -pb top_testbench_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri May  2 13:57:17 2025...
+INFO: [Common 17-206] Exiting Vivado at Sun May  4 18:25:40 2025...

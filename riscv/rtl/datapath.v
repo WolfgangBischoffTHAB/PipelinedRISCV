@@ -254,8 +254,9 @@ module datapath(
     //flopenr #(5)       rdD_PipelineRegister(clk, 1, 1,         RdD, RdE);
     //flopenr #(5)       rdD_PipelineRegister(clk, (resetn), 1,         RdD, RdE);
     
-    flopenr #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
+    //flopenr #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
     //flopenr #(32)  immExtD_PipelineRegister(clk, 1, 1,         ImmExtD, ImmExtE);
+    flopenr_two_clock #(32)  immExtD_PipelineRegister(clk, (resetn & !FlushE), 1,         ImmExtD, ImmExtE);
     
     flopenr #(32) pcPlus4D_PipelineRegister(clk, (resetn & !FlushE), 1,         PCPlus4D, PCPlus4E);
     
@@ -285,7 +286,7 @@ module datapath(
     
     // ALU to increment PC for jumps and branches
     //
-    alu_addonly #(32) extract_alu_addonly(
+    alu_addonly #(32) execute_alu_addonly(
         PCE,
         ImmExtE,
         PCTargetE

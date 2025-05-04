@@ -18,6 +18,8 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/dev/fpga/PipelinedRISCV/riscv/rt
 INFO: [VRFC 10-311] analyzing module extend
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module flopenr
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flopenr_two_clock
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module hazard_unit
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v" into library xil_defaultlib

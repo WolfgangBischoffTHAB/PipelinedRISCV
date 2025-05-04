@@ -2,7 +2,7 @@
 2020.2
 Nov  8 2024
 22:36:57
-C:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,1746248769,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v,,blk_mem_gen_0,,,,,,,,
+C:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,1746381176,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v,,blk_mem_gen_0,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_1/sim/blk_mem_gen_1.v,1745060031,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/riscv.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,,blk_mem_gen_1,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/riscv.sim/sim_1/behav/xsim/glbl.v,1724786425,verilog,,,,glbl,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/riscv.srcs/sources_1/new/alu_addonly.v,1745426339,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v,,alu_addonly,,,,,,,,
@@ -10,9 +10,10 @@ C:/dev/fpga/PipelinedRISCV/riscv/rtl/alu.v,1746176359,verilog,,C:/dev/fpga/Pipel
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/aludec.v,1746090224,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v,,aludec,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller.v,1746188541,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v,,controller,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/controller_single_cycle.v,1746192180,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v,,controller_single_cycle,,,,,,,,
-C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v,1746189751,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v,,datapath,,,,,,,,
+C:/dev/fpga/PipelinedRISCV/riscv/rtl/datapath.v,1746376490,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v,,datapath,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/extend.v,1746169757,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v,,extend,,,,,,,,
-C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v,1746101961,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v,,flopenr,,,,,,,,
+C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr.v,1746374562,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v,,flopenr,,,,,,,,
+C:/dev/fpga/PipelinedRISCV/riscv/rtl/flopenr_two_clock.v,1746376225,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v,,flopenr_two_clock,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/hazard_unit.v,1746168654,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v,,hazard_unit,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/maindec.v,1746192404,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v,,maindec,,,,,,,,
 C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux2.v,1745334122,verilog,,C:/dev/fpga/PipelinedRISCV/riscv/rtl/mux3.v,,mux2,,,,,,,,
